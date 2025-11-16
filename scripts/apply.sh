@@ -5,7 +5,7 @@ applyWAL() {
 	[ "$4" = "static" ] && wallCYCLE="" || wallCYCLE="--$4"
 	[ "$theming_mode" = "light" ] && colorscheme="-l" || colorscheme=
 	generateGTKTHEME ; generateICONSTHEME ; verbose "Running 'pywal' to generate the colorscheme"
-	wal "$wallCYCLE" $colorscheme --backend "$2" $3 -i "$1" -n --out-dir "$PYWAL16_OUT_DIR" || pywalerror
+	wal -q "$wallCYCLE" $colorscheme --backend "$2" $3 -i "$1" -n --out-dir "$PYWAL_CACHE_DIR" || pywalerror
 	[ -f "${PYWAL16_OUT_DIR}/colors.sh" ] && . "${PYWAL16_OUT_DIR}/colors.sh" # Load Colors & other values to be used
 	generateGTKTHEME 4 ; reloadTHEMES &
 }
@@ -70,8 +70,8 @@ reloadTHEMES() {
 
 # Still pywalfox uses 'The Default OutDir in pywal so just link them to the default'
 linkCONF_DIR() {
-	if [ -d "$DEFAULT_PYWAL16_OUT_DIR" ] && [ "$DEFAULT_PYWAL16_OUT_DIR" != "$PYWAL16_OUT_DIR" ]; then
-		for outFile in "$PYWAL16_OUT_DIR"/*; do
+	if [ -d "$DEFAULT_PYWAL16_OUT_DIR" ] && [ "$DEFAULT_PYWAL16_OUT_DIR" != "$PYWAL_CACHE_DIR" ]; then
+		for outFile in "$PYWAL_CACHE_DIR"/*; do
 			local filename="$(basename "$outFile")"
 			if [ ! -e "$DEFAULT_PYWAL16_OUT_DIR/$filename" ]; then
 				ln -s "$outFile" "$DEFAULT_PYWAL16_OUT_DIR/" >/dev/null

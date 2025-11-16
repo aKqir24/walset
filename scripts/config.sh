@@ -6,7 +6,7 @@ VERBOSE=false SETUP=false GUI=false LOAD=false RESET=false
 # Write config file
 verbose "Writting & verifying config file"
 [ -e "$WALLPAPER_CONF_PATH" ] || touch "$WALLPAPER_CONF_PATH"
-[ -d "$PYWAL16_OUT_DIR" ] || mkdir -p "$PYWAL16_OUT_DIR"
+[ -d "$PYWAL_CACHE_DIR" ] || mkdir -p "$PYWAL16_OUT_DIR"
 
 # Read the config
 verbose "Reading config file"

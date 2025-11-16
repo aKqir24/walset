@@ -30,8 +30,8 @@ for gtkCSSFile in "${GTK_CSS_FILES[@]}"; do
 
   # Apply colors
   sed -i "s/{active}/$activeColor/g" "$base_file"
-  temp_file_path="$PYWAL16_OUT_DIR/templates/$gtk_tmp_file"
+  temp_file_path="$PYWAL_TEMPLATES/$gtk_tmp_file"
   theme_style_file="$USER_THEME_FOLDER/$base_name/$(basename "$gtkCSSFile")"
   [ ! -e "$temp_file_path" ] && ln -s "$base_file" "$temp_file_path"
-  [ ! -e "$theme_style_file" ] && ln -sf "$PYWAL16_OUT_DIR/$gtk_tmp_file" "$theme_style_file"
+  [ ! -e "$theme_style_file" ] && ln -sf "$PYWAL_CACHE_DIR/$gtk_tmp_file" "$theme_style_file"
 done

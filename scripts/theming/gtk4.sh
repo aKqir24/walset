@@ -2,8 +2,8 @@
 # Now gtk4 has its seperate generation, If a developer is reading this, then please consider that!!
 # this part part of the script is used as a workaround in the syntax error in template file 'gtk-4.0.base' on line '5069-5075' in `pywal16`.
 # Removing those lines might solve the problem but I am not too sure, what do you think?
-gtk4_base_file="$PYWAL16_OUT_DIR/templates/gtk-4.0.base"
-gtk4_theme_file="$PYWAL16_OUT_DIR/gtk-4.0.base"
+gtk4_base_file="$PYWAL_CACHE_DIR/templates/gtk-4.0.base"
+gtk4_theme_file="$PYWAL_CACHE_DIR/gtk-4.0.base"
 
 # Remove template after generation of colors
 [ -f "$gtk4_theme_file" ] && rm $gtk4_theme_file

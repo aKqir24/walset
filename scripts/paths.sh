@@ -4,7 +4,8 @@
 THEMING_ASSETS="$(pwd)/assets"
 DEFAULT_PYWAL16_OUT_DIR="$HOME/.cache/wal"
 WALLPAPER_CONF_PATH="$HOME/.config/walset.toml"
-WALLPAPER_CACHE="$PYWAL16_OUT_DIR/wallpaper.png"
+WALLPAPER_CACHE="$PYWAL_CACHE_DIR/wallpaper.png"
+PYWAL_TEMPLATES="$PYWAL_CACHE_DIR/templates/"
 
 # ARRAY OF THE PATHS TO PROGRAMS SCRIPTS
 for program in "terminal" "notification" "status" "launcher"; do
@@ -27,4 +28,3 @@ USER_ICONS_FOLDER="$HOME/.icons/pywal"
 USER_MAIN_ICONS="$USER_ICONS_FOLDER/places/scalable"
 BASE_PLACES_ICONS="$ICONS_WORK_DIR/base/main/places/scalable"
 BASE_FOLDER_ICONS="$ICONS_WORK_DIR/base/templates/places/scalable/folders"
-PYWAL_ICON_TEMPLATE="$PYWAL16_OUT_DIR/templates/"
