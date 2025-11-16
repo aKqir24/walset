@@ -678,7 +678,7 @@ button.opaque {
 
 button.destructive-action {
   color: @destructive_fg_color; }
-  
+
   button.destructive-action,
   button.destructive-action:checked {
     background-color: @destructive_bg_color; }
@@ -686,7 +686,7 @@ button.destructive-action {
 
 button.suggested-action {
   color: @accent_fg_color; }
-  
+
   button.suggested-action,
   button.suggested-action:checked {
     background-color: @accent_bg_color; }
@@ -880,40 +880,40 @@ button.card {
   background-clip: padding-box;
   font-weight: inherit;
   padding: 0; }
-  
+
   button.card {
     outline: 0 solid transparent;
     outline-offset: 5px;
     transition: outline-color 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94), outline-width 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94), outline-offset 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94), background 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-  
+
   button.card:focus:focus-visible {
     outline-color: alpha(@accent_color,0.5);
     outline-width: 2px;
     outline-offset: -1px; }
-  
+
   button.card:hover {
     background-image: image(alpha(currentColor,0.04)); }
-  
+
   button.card.keyboard-activating,
   button.card:active {
     background-image: image(alpha(currentColor,0.08)); }
-  
+
   button.card:checked {
     background-color: @card_bg_color;
     background-image: image(alpha(@accent_bg_color,0.25)); }
-    
+
     button.card:checked:hover {
       background-image: image(alpha(@accent_bg_color,0.32)); }
-    
+
     button.card:checked.keyboard-activating,
     button.card:checked:active {
       background-image: image(alpha(@accent_bg_color,0.39)); }
-    
+
     button.card:checked.has-open-popup {
       background-image: image(alpha(@accent_bg_color,0.32)); }
     .osd button.card:checked {
       background-color: alpha(currentColor,0.1); }
-  
+
   button.card:drop(active) {
     color: @accent_bg_color;
     box-shadow: inset 0 0 0 1px @accent_bg_color; }
@@ -4969,7 +4969,7 @@ window.ssd {
 
 /* Only normal state is handle */
 .open-document-selector-match {
-    color: shade (@theme_fg_color, 0.6);
+    color: shade(@theme_fg_color, 0.6);
     background-color: alpha(@warning_color, 0.4);
 }
 
@@ -5029,7 +5029,7 @@ statusbar {
 .gedit-search-entry-occurrences-tag {
     background-color: @theme_base_color;
     background-image: none;
-    color: shade (@theme_unfocused_fg_color, 0.8);
+    color: shade(@theme_unfocused_fg_color, 0.8);
     border: 0px;
     margin: 2px;
     padding: 2px;
@@ -5060,13 +5060,12 @@ statusbar {
 }
 
 .nautilus-canvas-item.dim-label:selected {
-    color: mix (@theme_selected_fg_color, @theme_selected_bg_color, 0.20);
+    color: mix(@theme_selected_fg_color, @theme_selected_bg_color, 0.20);
 }
 
 /* Toolbar */
 
-/* Here we use the .button background-image colors from Adwaita, but ligthen them,
- * since is not possible to use lighten () in common css. */
+/* Here we use the .button background-image colors from Adwaita, but ligthen them, since is not possible to use lighten () in common css. */
 @keyframes needs_attention_keyframes {
     0% {background-image: linear-gradient(to bottom, #fafafa, #ededed 40%,  #e0e0e0); border-color: @borders; }
     /* can't do animation-direction, so holding the color on two keyframes */
@@ -5261,7 +5260,7 @@ entry.search > * {
 
 /* Icon view */
 flowbox {
-  padding: 18px
+  padding: 18px;
 }
 
 flowboxchild {

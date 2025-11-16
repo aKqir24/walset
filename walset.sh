@@ -20,7 +20,9 @@ while true; do
 done
 
 # Verify reset option
-$RESET && . "$SCRIPT_PATH/reset.sh"
+if $RESET; then
+	. "$SCRIPT_PATH/reset.sh" ; sleep 1
+fi
 
 # GUI dialog Configuration
 if $GUI && $SETUP; then
@@ -50,8 +52,7 @@ applyWAL "$wallpaper_path" "$pywal16_backend" "$PYWAL_GENERATE_LIGHT" "$wallpape
 		 applyWAL "$wallpaper_path" "wal" "$PYWAL_GENERATE_LIGHT" "$wallpaper_cycle" )
 
 # Make a wallpaper cache to expand the features in setting the wallpaper
-[ -f "${PYWAL16_OUT_DIR}/colors.sh" ] && . "${PYWAL16_OUT_DIR}/colors.sh"
 [ -f "$WALLPAPER_CACHE" ] && rm "$WALLPAPER_CACHE"
 
 # Finalize Process and making them faster by Functions
-linkCONF_DIR & select_wallpaper && verbose "Process finished!!"	
+linkCONF_DIR & select_wallpaper ; setup_wallpaper && verbose "Process finished!!"	

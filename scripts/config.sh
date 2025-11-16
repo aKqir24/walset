@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Default options config values
-VERBOSE=false SETUP=false GUI=false LOAD=false
+VERBOSE=false SETUP=false GUI=false LOAD=false RESET=false
 
 # Write config file
 verbose "Writting & verifying config file"
