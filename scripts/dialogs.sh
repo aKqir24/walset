@@ -16,7 +16,7 @@ SETUPS=( wallBACK "Backend In Use" off \
 	GTKCOLORS=() && for color_number in {0..15}; do GTKCOLORS+=("$color_number") ; done
 
 # Start Configuration dialogs
-verbose "Running kdialog for configuration..." &
+verbose info "Running kdialog for configuration..." &
 ToCONFIG=$( kdialog --checklist "Available Configs" "${SETUPS[@]}" --separate-output )
 assignTEMPCONF >/dev/null && [ -z "$ToCONFIG" ] && cancelCONFIG ; select_wallpaper
 theming_values() {

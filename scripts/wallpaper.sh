@@ -1,6 +1,6 @@
 # Wallpaper selection
 select_wallpaper() {
-	verbose "Identifying wallpaper mode!"
+	verbose info "Identifying wallpaper mode!"
 	if [ -z "$WALL_SELECT" ] && [ "$SETUP" = true ]; then
 		WALL_SELECT=$( kdialog --yes-label "From Image" --no-label "From Folder" \
 			       --yesno "Changing your pywal Wallpaper Selection Method?" && echo "image" || echo "folder")
@@ -60,7 +60,7 @@ set_wallpaper_with_mode() {
 			break
 		else
 			ANIMATED_WALLPAPER=false
-			kdialog --sorry "Animated wallpaper is set to false, falling back to static image..."
+			verbose sorry "Animated wallpaper is set to false, falling back to static image..."
 		fi
 		if command -v "$wallSETTER" >/dev/null && [[ $wallpaper != '*.gif' ]]; then
 			local CH_WALLSETTER="$wallSETTER"
@@ -84,13 +84,13 @@ set_wallpaper_with_mode() {
 		;;
 		"${WALL_SETTERS[7]}") pcmanfm --set-wallpaper "$image_path" --wallpaper-mode "$pcmanfmMode" || wallsetERROR ;;
 		"${WALL_SETTERS[8]}") xgifwallpaper -s $xgifwallpaperMode "$image_path" ;;
-		*) kdialog --error "No supported wallpaper setter found!" return 1 ;;
+		*) verbose error "No supported wallpaper setter found!" return 1 ;;
 	esac
 }
 
 # set the wallpaperIMAGE in display
 setup_wallpaper() {
-	verbose "Setting the wallpaper..."
+	verbose info "Setting the wallpaper..."
 	case "$wallpaper" in
 		*.png) cp "$wallpaper" "$WALLPAPER_CACHE" ;;
 		*.gif)
@@ -103,6 +103,6 @@ setup_wallpaper() {
 			convert -size 10x10 xc:"$color8" "$WALLPAPER_CACHE"
 			set_wallpaper_with_mode "$WALLPAPER_CACHE" || wallSETTERError ;;
 		"image") set_wallpaper_with_mode "$WALLPAPER_CACHE" || wallSETTERError ;;
-		*) kdialog --msgbox "Wallpaper type is not configured!\nSo wallpaper is not set...";; 
+		*) verbose warning "Wallpaper type is not configured!\nSo wallpaper is not set...";; 
 	esac
 }

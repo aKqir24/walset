@@ -26,14 +26,14 @@ fi
 
 # GUI dialog Configuration
 if $GUI && $SETUP; then
-	VERBOSE=true ; verbose "You can only select one of the config optios." ; exit 1
+	VERBOSE=true ; verbose sorry "You can only select one of the config optios." ; exit 1
 elif $SETUP; then
 	. "$SCRIPT_PATH/dialogs.sh"
 elif $GUI; then
-	VERBOSE=true ; verbose "The '--gui' option is still in development..." ; exit 1
+	VERBOSE=true ; verbose sorry "The '--gui' option is still in development..." ; exit 1
 else
 	if $LOAD; then
-		verbose "Using the previously configured settings" ; assignTEMPCONF 
+		verbose info "Using the previously configured settings" ; assignTEMPCONF 
 	else
 		$RESET || echo "$HELP_MESSAGE"; exit 0	
 	fi
@@ -43,7 +43,7 @@ fi
 [ "$SETUP" = true ] || [ "$GUI" = true ] && saveCONFIG ; assignTEMPCONF
 
 # Check if --color16 option is enabled
-$pywal16_light && verbose "Enabling 16 colors in pywal..."; \
+$pywal16_light && verbose info "Enabling 16 colors in pywal..."; \
 	PYWAL_GENERATE_LIGHT="--cols16 $pywal16_colorscheme"
 
 # call the pywal to get colorsheme
@@ -55,4 +55,4 @@ applyWAL "$wallpaper_path" "$pywal16_backend" "$PYWAL_GENERATE_LIGHT" "$wallpape
 [ -f "$WALLPAPER_CACHE" ] && rm "$WALLPAPER_CACHE"
 
 # Finalize Process and making them faster by Functions
-linkCONF_DIR & select_wallpaper ; setup_wallpaper && verbose "Process finished!!"	
+linkCONF_DIR & select_wallpaper ; setup_wallpaper && verbose info "Process finished!!"	

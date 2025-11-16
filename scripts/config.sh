@@ -4,7 +4,7 @@
 VERBOSE=false SETUP=false GUI=false LOAD=false RESET=false
 
 # Write config file
-verbose "Writting & verifying config file"
+verbose info "Writting & verifying config file"
 [ -e "$WALLPAPER_CONF_PATH" ] || touch "$WALLPAPER_CONF_PATH"
 [ -d "$PYWAL_CACHE_DIR" ] || mkdir -p "$PYWAL16_OUT_DIR"
 
@@ -29,7 +29,7 @@ assignTEMPCONF() {
 
 # Save config then read it
 saveCONFIG() {
-	verbose "Saving configurations"
+	verbose info "Saving configurations"
 	[ -z "$ANIMATED_WALLPAPER" ] && ANIMATED_WALLPAPER=false
 	[ -z "$PYWAL_BACKEND" ] && PYWAL_BACKEND="wal"
 	[ -z "$WALLPAPER_CYCLE" ] && WALLPAPER_CYCLE="static"

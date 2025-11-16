@@ -12,25 +12,19 @@ fi
 
 # Check for PYWAL16_OUT_DIR
 if [ -z "$PYWAL_CACHE_DIR" ]; then
-	kdialog --msgbox "The 'PYWAL_OUT_DIR' environment variable is not defined!\n
-	Adding it in your .bashrc file"
-	echo "export PYWAL16_OUT_DIR=$DEFAULT_PYWAL_OUT_DIR" >> "$HOME"/.bashrc || \
-		$(kdialog --error "The 'PYWAL_OUT_DIR' environment variable is not defined!\n
-			You can define it in your '.bashrc', '.xinitrc', '.profile', etc. using:\n
-			export PYWAL16_OUT_DIR=/path/to/folder" ; exit 1 )
-	verbose "Setting up output directory"
+	verbose warning "The 'PYWAL_OUT_DIR' environment variable is not defined!\nAdding it in your .bashrc file or It will the default!!"
+	verbose info "Setting up output directory"
+	$PYWAL_OUT_DIR=$DEFAULT_PYWAL16_OUT_DIR	
 elif [ ! -d "$PYWAL_CACHE_DIR" ]; then
 	mkdir -p "$PYWAL_CACHE_DIR"
 fi
 
-# Check for PYWAL16_OUT_DIR temp folder
+# Check for PYWAL_OUT_DIR temp folder
 if [ ! -d "$PYWAL_CACHE_DIR/templates" ]; then
 	mkdir -p $PYWAL_CACHE_DIR/templates
-else
-	mkdir -p $DEFAULT_PYWAL16_OUT_DIR/templates
 fi
 
 # Check if some features are already present
 INSTALLED_TAG='(installed)'
-[ -f "$HOME/.icons/pywal/index.theme" ] && ICON_INS_TAG="$INSTALLED_TAG"
-[ -f "$HOME/.themes/pywal/index.theme" ] && GTK_INS_TAG="$INSTALLED_TAG"
+[ -f "$USER_ICONS_FOLDER/index.theme" ] && ICON_INS_TAG="$INSTALLED_TAG"
+[ -f "$USER_THEME_FOLDER/index.theme" ] && GTK_INS_TAG="$INSTALLED_TAG"
