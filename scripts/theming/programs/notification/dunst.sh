@@ -7,8 +7,6 @@ write_toml "
 .urgency_low.frame_color = \"$color3\" |
 .urgency_critical.background = \"$color0\" |
 .urgency_critical.foreground = \"$color15\" |
-.urgency_critical.frame_color = \"$color1\"" "$1" 
+.urgency_critical.frame_color = \"$color1\"" "$1"
 
-if pgrep -x dunst; then 
-	pkill dunst && dunst &>/dev/null
-fi
+dunstctl reload >/dev/null

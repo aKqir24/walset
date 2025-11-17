@@ -9,7 +9,7 @@ PYWAL_TEMPLATES="$PYWAL_CACHE_DIR/templates/"
 
 # ARRAY OF THE PATHS TO PROGRAMS SCRIPTS
 for program in "terminal" "notification" "status" "launcher"; do
-	PROGRAMS_DIR+=("$SCRIPT_PATH/programs/$program")
+	PROGRAMS_DIR+=("$SCRIPT_PATH/theming/programs/$program")
 done
 
 # GTK THEMING PATHS

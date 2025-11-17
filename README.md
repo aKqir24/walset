@@ -4,7 +4,7 @@
 
 A bash script using the kdialog library to ease the configuration in [pywal16](https://github.com/eylles/pywal16).
 
-> [!important] 
+> [!important]
 > The script may work in the using the normal `pywal` but it may fail to complete some steps of this script, so please use this fork of pywal called [pywal16](https://github.com/eylles/pywal16) in order to complete some steps in the script, also the wallpapers are not uploaded in the repo, so please configure the wallpaper directory first.
 
 ## FEATURES
@@ -13,7 +13,7 @@ A bash script using the kdialog library to ease the configuration in [pywal16](h
 - Uses the pywal16 option to either have a wallpaper in a folder or just an image.
 - A wallpaper can be set either to `solid_color` or `image`
 - Wallpaper setup options include[ fill, scale, max, fit, etc ]
-- Dialog configuration with the --gui option explained below 
+- Dialog configuration with the --gui option explained below
 - Gtk theming based [Flat-Remix-GTK](https://github.com/daniruiz/Flat-Remix-GTK) as base theme.
 - Icon colors based [Flat-Remix](https://github.com/daniruiz/Flat-Remix) icon pack.
 - Reload gtk and icon themes using `xsettingd`.
@@ -25,14 +25,14 @@ _**DEPENDENCIES**_
 - `imagemagick`
 - `yq`
 - `xsettingsd` (optional)
-- `python` & `python-gi`(for gui configuration)
+- `python` & `python-gi`(for gui configuration) - In development
 - A wallpaper setter (optional):
   - `feh`
   - `hsetroot`
   - `xwallpaper`
   - `nitrogen`
   - `xgifwallpaper` (for gif wallpaper animations)
- 
+
 _**DISTRO**_
   - Debian ( or Other Debian based distro )
   ```bash
@@ -51,7 +51,7 @@ Run the following commands in your terminal:
 
 ```bash
   git clone https://github.com/aKqir24/pywal16_scripts.git
-  cd ~/pywal16_scripts
+  cd ~/walset
 ```
 
 then use these option to configure it:
@@ -62,7 +62,7 @@ then use these option to configure it:
   --reset: To remove all set features, and set them all to default.
   --verbose: To show log messages when each step of the script is executed.
   --help: to show how to use this script.
-  --load:loads/applies the configurations
+  --load: loads/applies the configurations
 ```
 > [!note]
 > Not all are covered like changing the values of a wm config file, in this script yet, so feel free to commit some improvements to it...
@@ -71,7 +71,7 @@ then use these option to configure it:
 Things that I might add:
 - [x] Add verbose option.
 - [x] Merge `waloml` & `walsetup` into one.
-- [x] Live wallpaper support in GIF.
+- [x] Live wallpaper support in GIF(I nave not tested it with other devices).
 - [ ] Add a custom config_dir option.
 - [ ] Custom bg-color & bgsetup setup.
 - [x] Improve wallpaper setter support in some de's.

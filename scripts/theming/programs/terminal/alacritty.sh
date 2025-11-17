@@ -32,4 +32,4 @@ write_toml "
 .colors.bright.blue = \"$color12\" |
 .colors.bright.magenta = \"$color13\" |
 .colors.bright.cyan = \"$color14\" |
-.colors.bright.white = \"$color15\"" "$1" &
+.colors.bright.white = \"$color15\"" "$1"

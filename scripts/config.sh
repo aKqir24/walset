@@ -2,11 +2,12 @@
 
 # Default options config values
 VERBOSE=false SETUP=false GUI=false LOAD=false RESET=false
+THEMED_PROGRAMS=( 'i3status_rust' 'alacritty' 'rofi' 'dunst' )
 
 # Write config file
 verbose info "Writting & verifying config file"
 [ -e "$WALLPAPER_CONF_PATH" ] || touch "$WALLPAPER_CONF_PATH"
-[ -d "$PYWAL_CACHE_DIR" ] || mkdir -p "$PYWAL16_OUT_DIR"
+[ -d "$PYWAL_CACHE_DIR" ] || mkdir -p "$PYWAL_DIR_CACHE"
 
 # Read the config
 verbose "Reading config file"
@@ -17,12 +18,13 @@ assignTEMPCONF() {
 	for section in "${tables[@]}"; do
 		case $section in
 			"${tables[0]}") keys=( "cycle" "type" "path" "mode" "animated" ) ;;
-			"${tables[1]}") keys=( "gtk" "icons" "mode" "accent" ) ;;
+			"${tables[1]}") keys=( "gtk" "icons" "mode" "accent" "programs" ) ;;
 			"${tables[2]}") keys=( "backend" "light" "colorscheme" ) ;;
 		esac
 		for key in "${keys[@]}"; do
 			value="$(reader "$section"."$key")"
-			declare -g "${section}_$key=$value"	
+			declare -g "${section}_$key=$value"
+			
 		done
 	done
 }

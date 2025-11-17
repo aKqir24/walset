@@ -6,8 +6,7 @@ gtk4_base_file="$PYWAL_CACHE_DIR/templates/gtk-4.0.base"
 gtk4_theme_file="$PYWAL_CACHE_DIR/gtk-4.0.base"
 
 # Remove template after generation of colors
-[ -f "$gtk4_theme_file" ] && rm $gtk4_theme_file
-ln -sf "$gtk4_base_file" "$gtk4_theme_file"
+[ -f "$gtk4_theme_file" ] || ln -sf "$gtk4_base_file" "$gtk4_theme_file"
 
 # Apply sed in-place
 sed -i \
