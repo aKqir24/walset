@@ -67,6 +67,33 @@ then use these option to configure it:
 > [!note]
 > Not all are covered like changing the values of a wm config file, in this script yet, so feel free to commit some improvements to it...
 
+## CONFIG 
+Here is a sample config, I recommend use it cause it is much easier to setup::
+````TOML
+[wallpaper]
+cycle = "iterative"
+type = "image"
+path = "/home/akqir24/Pictures/Wallpapers"
+mode = "fill"
+animated = true
+
+[theming]
+gtk = true
+icons = true
+mode = "dark"
+accent = "color2"
+[theming.programs]
+i3status_rust="/home/akqir24/.files/.config/i3/status/config.toml" 
+alacritty="/home/akqir24/.config/alacritty.toml"
+rofi="/home/akqir24/.config/rofi/config.rasi"
+dunst="/home/akqir24/.config/dunst/dunstrc"
+
+[pywal16]
+backend = "wal"
+light = "true"
+colorscheme = "darken"
+````
+
 ## FUTURE PLANS
 Things that I might add:
 - [x] Add verbose option.

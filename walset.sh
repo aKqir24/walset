@@ -1,7 +1,11 @@
 #!/bin/bash
 
 # Import all the scripts
-SCRIPT_PATH="$(pwd)/scripts"
+if [ ! -e "$(pwd)/scripts" ]; then 
+	SCRIPT_PATH="$(dirname "$0")/scripts"
+else
+	SCRIPT_PATH="$(pwd)/scripts"
+fi
 SCRIPT_FILES=(paths messages config startup wallpaper apply)
 for script in "${SCRIPT_FILES[@]}"; do . "$SCRIPT_PATH/$script.sh"; done
 
