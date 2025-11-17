@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Manage Options
 HELP_MESSAGE="
 Info:
@@ -6,15 +8,32 @@ to ease the configuration in pywal, also it adds more functionality in pywal16 w
 are writen in the https://github.com/aKqir24/pywal16_scripts.
 
 Usage: $0 [OPTIONS]
-  --gui: To launch a configuration dialogs and apply the configurations.
+  --gui: To launch a configuration GUI and apply the configurations.
+  --setup: Show dialogs that sets up the configurations in order.
+  --reset: To remove all set features, and set them all to default.
   --verbose: To show log messages when each step of the script is executed.
   --help: to show how to use this script.
-  *: 'not putting any options' loads/applies the configurations.
+  --load:loads/applies the configurations.
 "
 
 # Functions than is defined to handle disagreements, errors, and info's
-verbose() { [ "$VERBOSE" = true ] && echo "walsetup: $1"; }
-wallsetERROR() { kdialog --error "Failed to set wallpaper..."; exit 1; }
-pywalerror() { kdialog --msgbox "pywal ran into an error!\nplease run 'bash $0 --gui' first" ; exit 1 ; }
-wallSETTERError() { kdialog --msgbox "No Wallpaper setter found!\nSo wallpaper is not set..."; }
-cancelCONFIG() { verbose "Configuration Dialog was canceled!, it might cause some problems when loading the configuration!"; exit 0; }
+verbose() { 
+	if [ "$VERBOSE" = true ]; then
+		message="\033[1;97m$2\033[1;97m"
+		case "$1" in
+		"sorry")
+			echo -e "walsetup \033[1;33m[WARNING]: $message";;
+		"error")
+			echo -e "walsetup \033[1;31m[ERROR]: $message";;
+		"info")
+			echo -e "walsetup \033[1;34m[INFO]: $message";;
+		esac
+		if ! $VERBOSE && ! $SETUP && ! $GUI && [ "$1" != 'info' ]; then 
+			kdialog "--$1" "There was a '$1' message found in the program.\nPlease consider using the terminal to run this script with the '--verbose' option ti identify the problem!!"
+		fi
+	fi
+}
+wallsetERROR() { verbose error "Failed to set wallpaper..."; exit 1; }
+pywalerror() { verbose error "pywal ran into an error!\nplease run 'bash $0 --gui' first" ; exit 1 ; }
+wallSETTERError() { verbose warning "No Wallpaper setter found!\nSo wallpaper is not set..."; }
+cancelCONFIG() { verbose warning "Configuration Dialog was canceled!, it might cause some problems when loading the configuration!"; exit 0; }

@@ -11,3 +11,5 @@ write_toml "
 .theme.overrides.critical_fg = \"$color0\" |
 .theme.overrides.alternating_tint_bg = \"$color0\" |
 .theme.overrides.alternating_tint_fg = \"$color0\"" "$1"
+
+i3-msg reload

@@ -1,11 +1,12 @@
 #!/bin/sh
+
+# Verify the import in the config file
 ROFI_THEME_FILE=$HOME/.config/rofi/colors.rasi
 [ -e $ROFI_THEME_FILE ] || touch $ROFI_THEME_FILE
-if . "$(eval echo $PYWAL16_OUT_DIR)/colors.sh"; then
-  echo "Wal Colors Script Found!!, exporting..."
-else
-  die "Wal colors not found, exiting script. Have you executed Wal before?"
-fi
+grep -q "@import \"colors.rasi\"" "$1" || \
+    { sed -i "1i@import \"$ROFI_THEME_FILE\"" "$1"; }
+
+
 cat > $ROFI_THEME_FILE <<EOF
 *{
 	/* Colorscheme */
@@ -20,5 +21,3 @@ cat > $ROFI_THEME_FILE <<EOF
 }
 
 EOF
-
-echo Colorsheme is Applied!!

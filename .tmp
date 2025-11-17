@@ -1,0 +1,173 @@
+ROFI_THEME_FILE="/home/akqir24/.config/rofi/colors.rasi"
+/* pywal Colors */
+
+* {
+
+	/* Fonts */
+	icon-font:		     "EnvyCodeR Nerd Font Bold 14";
+	icon-font-2:	    "EnvyCodeR Nerd Font Propo 18";
+    text-font:						   		 "Lilex 8";
+	search-text-font:					    "Lilex 10";
+	emoji-font:					 "noto-fonts-emoji 12";
+
+	/* UI Colors */
+	border-colour:						var(selected);
+    handle-colour:						var(selected);
+    background-colour:				  var(background);
+    foreground-colour:			      var(foreground);
+    alternate-background:		  var(background-alt);
+    normal-background:				  var(background);
+    normal-foreground:				  var(foreground);
+    urgent-background:					  var(urgent);
+    urgent-foreground:				  var(background);
+    active-background:					  var(active);
+    active-foreground:				  var(background);
+    selected-normal-background:		    var(selected);
+    selected-normal-foreground:		  var(background);
+    selected-urgent-background:			  var(active);
+    selected-urgent-foreground:		  var(background);
+    selected-active-background:			  var(urgent);
+    selected-active-foreground:		  var(background);
+    alternate-normal-background:      var(background);
+    alternate-normal-foreground:      var(foreground);
+    alternate-urgent-background:		  var(urgent);
+    alternate-urgent-foreground:      var(background);
+    alternate-active-background:		  var(active);
+    alternate-active-foreground:	  var(background);
+
+}
+
+/* ------------ Inputbar ------------*/
+inputbar {
+    enabled:									  true;
+    spacing:									  10px;
+    margin:										   0px;
+    padding:					    8px  1px  4px  8px;
+    background-color:					   @background;
+    text-color:							   @foreground;
+    children:                    [ "prompt", "entry" ];
+}
+
+prompt {
+    enabled:							    true;
+	padding:                     2px 6px 4px 0px;
+	font:							  @icon-font;
+    background-color:					 inherit;
+    text-color:							 inherit;
+}
+
+textbox-prompt-colon {
+    enabled:						   true;
+    expand:							   true;
+    background-color:				inherit;
+    text-color:						inherit;
+}
+
+entry {
+	font:						 @search-text-font;
+    enabled:								  true;
+	padding:                  0px  10px  10px  0px;
+    background-color:					   inherit;
+    border:						0px	 0px  2px  0px;
+	border-radius:							   0px;
+    border-color:						 @selected;
+    text-color:							   inherit;
+    cursor:									  text;
+    placeholder:					  " Search...";
+    placeholder-color:				     @disabled;
+}
+
+/* --------------- General setting ----------------*/
+configuration {
+	modi:	"drun,run,combi,filebrowser";
+	font:		 "EnvyCodeR Nerd Font Bold 12";
+	case-sensitive:				   false;
+	cycle:							true;
+	filter:							  "";
+	scroll-method:					   1;
+	normalize-match:				true;
+	show-icons:					   false;
+	steal-focus:					true;
+    dpi:							 124;
+
+	/*  Matching setting */
+	matching:							"normal";
+	tokenize:								true;
+
+	/* SSH settings */
+	ssh-client:											   "ssh";
+	ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";
+	parse-hosts:											true;
+	parse-known-hosts:										true;
+
+	/*---------- Drun settings ----------*/
+	drun-categories:																		 "";
+	drun-match-fields:									"name,generic,exec,categories,keywords";
+	drun-display-format: "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
+	drun-show-actions:																	  false;
+	drun-url-launcher:																 "xdg-open";
+	drun-use-desktop-cache:																  false;
+	drun-reload-desktop-cache:															  false;
+	drun {
+		/** Parse user desktop files. */
+		parse-user:   true;
+		/** Parse system desktop files. */
+		parse-system: true;
+    }
+
+	/* Run */
+	run-command:					 "{cmd}";
+	run-list-command:					  "";
+	run-shell-command: "{terminal} -e {cmd}";
+
+	/* Fallback Icon */
+	run,drun {
+		fallback-icon:			   "application-x-addon";
+	}
+
+	/* Window switcher */
+	window-match-fields: "title,class,role,name,desktop";
+	window-command:				 "wmctrl -i -R {window}";
+	window-format:					 "{w} - {c} - {t:0}";
+	window-thumbnail:							    true;
+
+	/* History and Sorting */
+	disable-history:	   false;
+	sorting-method:		"normal";
+	max-history-size:		  25;
+
+	/* Display */
+	display-window:				  "";
+	display-windowcd:			  "";
+    display-drun:               " ";
+    display-run:                " ";
+    display-filebrowser:        " ";
+    display-window:             " ";
+	display-ssh:				  "";
+	display-combi:			    " ";
+	display-keys:				  "";
+	display-passphrase:			  "";
+	display-wifi:		   	    " ";
+	display-emoji:				"󰞅 ";
+
+	wifi-display-format:    "{name}";
+	drun-display-format:    "{name}";
+	emoji-display-format:   "{name}";
+
+	/*---------- Misc setting ----------*/
+	terminal: "rofi-sensible-terminal";
+	sort: false;
+	threads: 0;
+	click-to-exit: true;
+
+    filebrowser {
+	  directory: "$HOME";
+      directories-first: true;
+      sorting-method:    "name";
+    }
+
+    timeout {
+      action: "kb-cancel";
+      delay:  0;
+    }
+}
