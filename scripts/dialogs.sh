@@ -35,18 +35,16 @@ for config in $ToCONFIG; do
 		theming_values() { echo "" ; }	
 	fi
 	case "$config" in
-		wallICONS) unset THEMING_ICONS ; THEMING_ICONS=true ;;
 		wallGTK) unset THEMING_GTK ; THEMING_GTK=true ;;
+		wallICONS) unset THEMING_ICONS ; THEMING_ICONS=true ;;
 		wallANIM) unset ANIMATED_WALLPAPER ; ANIMATED_WALLPAPER=true ;;
 		wallBACK) PYWAL_BACKEND=$(kdialog --combobox "Pywal Backend In Use" "${BACKENDS[@]}" || cancelCONFIG) ;;
 		wallPROG) THEMED_ALLOWED_PROGRAMS=$(kdialog --checklist "Themed Programs" "${THEME_PROGRAMS[@]}" || cancelCONFIG) ;;
-		wallTYPE)
-			WALLPAPER_TYPE=$(kdialog --radiolist "Wallpaper Setup Type" "${TYPE[@]}" || cancelCONFIG)
-			WALLPAPER_MODE=$(kdialog --radiolist "Wallpaper Setup Mode" "${MODE[@]}" || cancelCONFIG) ;;
-		wallCLR16)
-			unset PYWAL_LIGHT ; PYWAL_LIGHT=true
-			PYWAL_COLORSCHEME=$(kdialog --yes-label "Darken" --no-label "Lighten" --yesno \
-			"Generating 16 Colors must be either:" && echo "darken" || echo "lighten" ) ;;
+		wallTYPE) WALLPAPER_TYPE=$(kdialog --radiolist "Wallpaper Setup Type" "${TYPE[@]}" || cancelCONFIG)
+				  WALLPAPER_MODE=$(kdialog --radiolist "Wallpaper Setup Mode" "${MODE[@]}" || cancelCONFIG) ;;
+		wallCLR16) unset PYWAL_LIGHT ; PYWAL_LIGHT=true
+				   PYWAL_COLORSCHEME=$(kdialog --yes-label "Darken" --no-label "Lighten" --yesno \
+					   "Generating 16 Colors must be either:" && echo "darken" || echo "lighten" ) ;;
     esac
 done
 
@@ -68,8 +66,7 @@ wall_select_options() {
 			fi
 			;;
 		"image")
-			$SETUP && WALLPAPER_IMAGE=$(kdialog --getopenfilename \
-				"$START_FOLDER" || echo "$wallpaper_path")
+			$SETUP && WALLPAPER_IMAGE=$(kdialog --getopenfilename "$START_FOLDER" || echo "$wallpaper_path")
 			;;
 		*)
 			kdialog --msgbox "Wallpaper type is not configured!\nSo wallpaper is not set..."

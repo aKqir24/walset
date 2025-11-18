@@ -54,19 +54,19 @@ set_wallpaper_with_mode() {
 	
 	# Set wallpaper with mode according to the available wallpaper setter
 	local WALL_SETTERS=( xwallpaper hsetroot feh nitrogen swaybg xfconf-query gnome-shell pcmanfm xgifwallpaper )
-	for wallSETTER in "${WALL_SETTERS[@]}"; do
-		if command -v "$wallSETTER" >/dev/null && [ "$ANIMATED_WALLPAPER" == true ]; then
-			local CH_WALLSETTER="${WALL_SETTERS[8]}"
-			break
-		else
-			ANIMATED_WALLPAPER=false
-			verbose sorry "Animated wallpaper is set to false, falling back to static image..."
-		fi
-		if command -v "$wallSETTER" >/dev/null && [[ $wallpaper != '*.gif' ]]; then
-			local CH_WALLSETTER="$wallSETTER"
-			break
-		fi
-	done
+	if $wallpaper_animated && [[ $wallpaper == *.gif ]] && command -v "${WALL_SETTERS[8]}" >/dev/null; then
+		local CH_WALLSETTER="${WALL_SETTERS[8]}" image_path="$image_path.gif"
+		verbose sorry "Animated wallpaper is only limited to gif wallpapers and small size gifs!!"
+	else
+		$wallpaper_animated && verbose sorry "Animated wallpaper is set to false, falling back to static image..."
+		ANIMATED_WALLPAPER=false ; pgrep -x "${WALL_SETTERS[8]}">/dev/null && pkill "${WALL_SETTERS[8]}">/dev/null
+		for wallSETTER in "${WALL_SETTERS[@]}"; do
+			if command -v "$wallSETTER" >/dev/null && [ "$wallSETTER" != "${WALL_SETTERS[8]}" ]; then
+				local CH_WALLSETTER="$wallSETTER"
+				break
+			fi
+		done
+	fi
     case "$CH_WALLSETTER" in 
 		"${WALL_SETTERS[0]}") xwallpaper "--$xWallMode" "$image_path" --daemon || wallsetERROR;;
         "${WALL_SETTERS[1]}") hsetroot "$hsetrootMode" "$image_path" || wallsetERROR;;
@@ -74,16 +74,21 @@ set_wallpaper_with_mode() {
         "${WALL_SETTERS[3]}") nitrogen --set-$nitrogenMode "$image_path" || wallsetERROR;;
         "${WALL_SETTERS[4]}") swaybg -i "$image_path" --mode "$swayMode" || wallsetERROR;;
 		"${WALL_SETTERS[5]}")
-			xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-style --set $xfceMode &&
-			xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-path --set "$image_path" || \
-			wallsetERROR
+			if xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-style --set $xfceMode ;then
+				xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-path --set "$image_path"
+			else
+				wallsetERROR
+			fi
 		;;
 		"${WALL_SETTERS[6]}")
-			gsettings set org.gnome.desktop.background picture-uri "file://$image_path" &&
-			gsettings set org.gnome.desktop.background picture-options "$gnomeMode" || wallsetERROR
+			if gsettings set org.gnome.desktop.background picture-uri "file://$image_path" ;then
+				gsettings set org.gnome.desktop.background picture-options "$gnomeMode" 
+			else
+				wallsetERROR
+			fi
 		;;
 		"${WALL_SETTERS[7]}") pcmanfm --set-wallpaper "$image_path" --wallpaper-mode "$pcmanfmMode" || wallsetERROR ;;
-		"${WALL_SETTERS[8]}") xgifwallpaper -s $xgifwallpaperMode "$image_path" ;;
+		"${WALL_SETTERS[8]}") $(nohup xgifwallpaper -s $xgifwallpaperMode "$image_path" >/dev/null 2>&1 & disown) || wallsetERROR ;;
 		*) verbose error "No supported wallpaper setter found!" return 1 ;;
 	esac
 }
@@ -93,9 +98,9 @@ setup_wallpaper() {
 	verbose info "Setting the wallpaper..."
 	case "$wallpaper" in
 		*.png) cp "$wallpaper" "$WALLPAPER_CACHE" ;;
-		*.gif)
+		*.gif) 
 			convert "$wallpaper" -coalesce -flatten "$WALLPAPER_CACHE">/dev/null
-			[ "ANIMATED_WALLPAPER" = true ] && cp "$wallpaper" "$WALLPAPER_CACHE.gif" && WALLPAPER_CACHE="$WALLPAPER_CACHE.gif";;
+			$wallpaper_animated && cp "$wallpaper" "$WALLPAPER_CACHE.gif";;
 		*)  convert "$wallpaper" $WALLPAPER_CACHE>/dev/null
 	esac
 	case "$wallpaper_type" in

@@ -29,7 +29,8 @@ verbose() {
 			echo -e "walsetup \033[1;34m[INFO]: $message";;
 		esac
 		if ! $VERBOSE && ! $SETUP && ! $GUI && [ "$1" != 'info' ]; then 
-			kdialog "--$1" "There was a '$1' message found in the program.\nPlease consider using the terminal to run this script with the '--verbose' option ti identify the problem!!"
+			kdialog "--$1" "There was a '$1' message found in the program.\n
+			Please consider running this script in your terminal using the '--verbose' option, to the identify the problem!!"
 		fi
 	fi
 }

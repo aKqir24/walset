@@ -1,19 +1,19 @@
 ![Prev](prev.gif)
 
-<img src="thumb.png" align="center"></img>
 
-A bash script using the kdialog library to ease the configuration in [pywal16](https://github.com/eylles/pywal16).
+# walset
+A bash script that expands the usage of pywal colors and to ease the configuration in [pywal16](https://github.com/eylles/pywal16).
 
 > [!important]
 > The script may work in the using the normal `pywal` but it may fail to complete some steps of this script, so please use this fork of pywal called [pywal16](https://github.com/eylles/pywal16) in order to complete some steps in the script, also the wallpapers are not uploaded in the repo, so please configure the wallpaper directory first.
 
 ## FEATURES
-- Gui Dialog configuration along with pywal options.
+- Gui or Dialog configuration along with pywal options.
 - Pywal colors to some configurable programs. ( as toml config arrays )
 - Uses the pywal16 option to either have a wallpaper in a folder or just an image.
 - A wallpaper can be set either to `solid_color` or `image`
-- Wallpaper setup options include[ fill, scale, max, fit, etc ]
-- Dialog configuration with the --gui option explained below
+- Support for animated gif wallpapersc ( Does not support some gifs | it is a `pywal16` limitation )
+- Wallpaper setup options include [ fill, scale, max, fit, etc ]
 - Gtk theming based [Flat-Remix-GTK](https://github.com/daniruiz/Flat-Remix-GTK) as base theme.
 - Icon colors based [Flat-Remix](https://github.com/daniruiz/Flat-Remix) icon pack.
 - Reload gtk and icon themes using `xsettingd`.
@@ -57,6 +57,7 @@ Run the following commands in your terminal:
 then use these option to configure it:
 
 ```bash
+bash walsetup [OPTION]
   --gui: To launch a configuration GUI and apply the configurations.
   --setup: Show dialogs that sets up the configurations in order.
   --reset: To remove all set features, and set them all to default.
@@ -68,7 +69,8 @@ then use these option to configure it:
 > Not all are covered like changing the values of a wm config file, in this script yet, so feel free to commit some improvements to it...
 
 ## CONFIG 
-Here is a sample config, I recommend use it cause it is much easier to setup::
+The config file is located in `$HOME/.config/walset.toml`.
+Here is a sample config, I recommend to use it cause it is much easier to setup:
 ````TOML
 [wallpaper]
 cycle = "iterative"
@@ -97,14 +99,14 @@ colorscheme = "darken"
 ## FUTURE PLANS
 Things that I might add:
 - [x] Add verbose option.
-- [x] Merge `waloml` & `walsetup` into one.
-- [x] Live wallpaper support in GIF(I nave not tested it with other devices).
-- [ ] Add a custom config_dir option.
-- [ ] Custom bg-color & bgsetup setup.
 - [x] Improve wallpaper setter support in some de's.
+- [x] Merge `waloml` & `walsetup` into one.
+- [x] Live wallpaper support in GIF.
+- [x] Fix dunst color generation.
 - [x] Full icon pywal adptation support
 - [ ] Theming support for more terminals & appplications configs.
-- [x] Fix dunst color generation.
+- [ ] Add a custom config_dir option.
+- [ ] Custom bg-color & bgsetup setup.
 
 ## SPEACIAL THANKS
 - `deviantfero`: [wpgtk's templates](https://github.com/deviantfero/wpgtk-templates) for the _gtk2/3_ base theme.

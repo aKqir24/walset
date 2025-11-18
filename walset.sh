@@ -50,6 +50,9 @@ fi
 $pywal16_light && verbose info "Enabling 16 colors in pywal..."; \
 	PYWAL_GENERATE_LIGHT="--cols16 $pywal16_colorscheme"
 
+# A workaround in the gif support feature
+# if "$wallpaper_path"
+
 # call the pywal to get colorsheme
 applyWAL "$wallpaper_path" "$pywal16_backend" "$PYWAL_GENERATE_LIGHT" "$wallpaper_cycle" || \
 	$( kdialog --msgbox "Backend is not found, using default instead!!" ; 
