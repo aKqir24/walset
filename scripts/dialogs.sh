@@ -19,7 +19,7 @@ SETUPS=( wallBACK "Backend In Use" off \
 # Start Configuration dialogs
 verbose info "Running kdialog for configuration..." &
 ToCONFIG=$( kdialog --checklist "Available Configs" "${SETUPS[@]}" --separate-output )
-assignTEMPCONF >/dev/null && [ -z "$ToCONFIG" ] && cancelCONFIG ; select_wallpaper
+assignTEMPCONF >/dev/null && [ -z "$ToCONFIG" ] && cancelCONFIG 
 theming_values() {
 	THEME_MODE=$( kdialog --yes-label "Light" --no-label "Dark" \
 				  --yesno "Select an theme mode, it can be either:" && echo "light" || echo "dark")
@@ -30,21 +30,20 @@ theming_values() {
 
 # Configuration Dialogs
 for config in $ToCONFIG; do
-	if [ "$config" = wallGTK ] || [ "$config" = wallICONS ]; then
+	if [ "$config" = "wallGTK" ] || [ "$config" = "wallICONS" ]; then
 		theming_values >/dev/null ; unset -f theming_values
 		theming_values() { echo "" ; }	
 	fi
 	case "$config" in
-		wallGTK) unset THEMING_GTK ; THEMING_GTK=true ;;
-		wallICONS) unset THEMING_ICONS ; THEMING_ICONS=true ;;
-		wallANIM) unset ANIMATED_WALLPAPER ; ANIMATED_WALLPAPER=true ;;
-		wallBACK) PYWAL_BACKEND=$(kdialog --combobox "Pywal Backend In Use" "${BACKENDS[@]}" || cancelCONFIG) ;;
-		wallPROG) THEMED_ALLOWED_PROGRAMS=$(kdialog --checklist "Themed Programs" "${THEME_PROGRAMS[@]}" || cancelCONFIG) ;;
-		wallTYPE) WALLPAPER_TYPE=$(kdialog --radiolist "Wallpaper Setup Type" "${TYPE[@]}" || cancelCONFIG)
-				  WALLPAPER_MODE=$(kdialog --radiolist "Wallpaper Setup Mode" "${MODE[@]}" || cancelCONFIG) ;;
-		wallCLR16) unset PYWAL_LIGHT ; PYWAL_LIGHT=true
-				   PYWAL_COLORSCHEME=$(kdialog --yes-label "Darken" --no-label "Lighten" --yesno \
-					   "Generating 16 Colors must be either:" && echo "darken" || echo "lighten" ) ;;
+		"wallGTK") unset THEMING_GTK ; THEMING_GTK=true ;;
+		"wallICONS") unset THEMING_ICONS ; THEMING_ICONS=true ;;
+		"wallANIM") unset ANIMATED_WALLPAPER ; ANIMATED_WALLPAPER=true ;;
+		"wallBACK") PYWAL_BACKEND=$(kdialog --combobox "Pywal Backend In Use" "${BACKENDS[@]}" || cancelCONFIG) ;;
+		"wallPROG") unset THEMED_PROGRAMS ; THEMED_PROGRAMS=true ;;
+		"wallTYPE") WALLPAPER_TYPE=$(kdialog --radiolist "Wallpaper Setup Type" "${TYPE[@]}" || cancelCONFIG)
+					WALLPAPER_MODE=$(kdialog --radiolist "Wallpaper Setup Mode" "${MODE[@]}" || cancelCONFIG) ;;
+		"wallCLR16") PYWAL_LIGHT=true ; PYWAL_COLORSCHEME=$(kdialog --yes-label "Darken" --no-label "Lighten" --yesno \
+					"Generating 16 Colors must be either:" && echo "darken" || echo "lighten" ) ;;
     esac
 done
 

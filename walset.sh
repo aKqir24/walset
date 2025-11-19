@@ -7,7 +7,7 @@ else
 	WORK_PATH="$(pwd)"
 fi
 SCRIPT_PATH="$WORK_PATH/scripts"
-SCRIPT_FILES=(paths messages config startup wallpaper apply)
+SCRIPT_FILES=(paths messages config startup apply)
 for script in "${SCRIPT_FILES[@]}"; do . "$SCRIPT_PATH/$script.sh"; done
 
 # Options To be used
@@ -24,11 +24,6 @@ while true; do
 	esac
 done
 
-# Verify reset option
-if $RESET; then
-	. "$SCRIPT_PATH/reset.sh" ; sleep 1
-fi
-
 # GUI dialog Configuration
 if $GUI && $SETUP; then
 	VERBOSE=true ; verbose sorry "You can only select one of the config optios." ; exit 1
@@ -44,15 +39,16 @@ else
 	fi
 fi
 
+# Import some features
+$RESET && . "$SCRIPT_PATH/reset.sh"
+. "$SCRIPT_PATH/wallpaper.sh" && select_wallpaper
+
 # Only save the config when configured!
 [ "$SETUP" = true ] || [ "$GUI" = true ] && saveCONFIG ; assignTEMPCONF
 
 # Check if --color16 option is enabled
 $pywal16_light && verbose info "Enabling 16 colors in pywal..."; \
 	PYWAL_GENERATE_LIGHT="--cols16 $pywal16_colorscheme"
-
-# A workaround in the gif support feature
-# if "$wallpaper_path"
 
 # call the pywal to get colorsheme
 applyWAL "$wallpaper_path" "$pywal16_backend" "$PYWAL_GENERATE_LIGHT" "$wallpaper_cycle" || \
@@ -63,4 +59,4 @@ applyWAL "$wallpaper_path" "$pywal16_backend" "$PYWAL_GENERATE_LIGHT" "$wallpape
 [ -f "$WALLPAPER_CACHE" ] && rm "$WALLPAPER_CACHE"
 
 # Finalize Process and making them faster by Functions
-linkCONF_DIR & select_wallpaper ; setup_wallpaper && verbose info "Process finished!!"	
+linkCONF_DIR ; setup_wallpaper && verbose info "Process finished!!"	

@@ -5,7 +5,7 @@ applyWAL() {
 	[ "$4" = "static" ] && wallCYCLE="" || wallCYCLE="--$4"
 	[ "$theming_mode" = "light" ] && colorscheme="-l" || colorscheme=
 	generateGTKTHEME ; generateICONSTHEME ; verbose info "Running 'pywal' to generate the colorscheme"
-	wal "$wallCYCLE" $colorscheme --backend "$2" $3 -i "$1" -n --out-dir "$PYWAL_CACHE_DIR" || pywalerror
+	wal -q "$wallCYCLE" $colorscheme --backend "$2" $3 -i "$1" -n --out-dir "$PYWAL_CACHE_DIR" || pywalerror
 	[ -f "$PYWAL_CACHE_DIR/colors.sh" ] && . "${PYWAL_CACHE_DIR}/colors.sh" # Load Colors & other values to be used
 	generateGTKTHEME 4 ; applyToPrograms ; reloadTHEMES &
 }
@@ -82,7 +82,7 @@ linkCONF_DIR() {
 		for outFile in "$PYWAL_CACHE_DIR"/*; do
 			local filename="$(basename "$outFile")"
 			if [ ! -e "$DEFAULT_PYWAL16_OUT_DIR/$filename" ]; then
-				ln -s "$outFile" "$DEFAULT_PYWAL16_OUT_DIR/" >/dev/null
+				ln -sf "$outFile" "$DEFAULT_PYWAL16_OUT_DIR/" >/dev/null
 			fi
 		done
 	fi

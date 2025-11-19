@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Default options config values
-VERBOSE=false SETUP=false GUI=false LOAD=false RESET=false
+VERBOSE=false SETUP=false GUI=false LOAD=false RESET=false THEMING_GTK=true THEMING_ICONS=true
 THEMED_PROGRAMS=( 'i3status_rust' 'alacritty' 'rofi' 'dunst' )
 
 # Write config file
