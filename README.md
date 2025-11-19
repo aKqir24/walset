@@ -1,5 +1,4 @@
-![Prev](prev.gif)
-
+https://github.com/user-attachments/assets/b4b66d0b-c6f2-418f-aafa-efdc0ce85fc0
 
 # walset
 A bash script that expands the usage of pywal colors and to ease the configuration in [pywal16](https://github.com/eylles/pywal16).

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # DEFAULT PATHS FOR CONFIG:
-THEMING_ASSETS="$(pwd)/assets"
+THEMING_ASSETS="$WORK_PATH/assets"
 DEFAULT_PYWAL16_OUT_DIR="$HOME/.cache/wal"
 WALLPAPER_CONF_PATH="$HOME/.config/walset.toml"
 WALLPAPER_CACHE="$PYWAL_CACHE_DIR/wallpaper.png"
@@ -13,7 +13,7 @@ for program in "terminal" "notification" "status" "launcher"; do
 done
 
 # GTK THEMING PATHS
-USER_THEME_FOLDER="$HOME/.themes/pywal"
+USER_THEME_FOLDER="$HOME/.local/share/themes/pywal"
 GTK_WORK_DIR="$THEMING_ASSETS/gtk"
 BASE_THEME_FOLDER="$GTK_WORK_DIR/base"
 for gtk_file in \
@@ -24,7 +24,7 @@ done
 
 # GTK ICONS PATHS
 ICONS_WORK_DIR="$THEMING_ASSETS/icons"
-USER_ICONS_FOLDER="$HOME/.icons/pywal"
+USER_ICONS_FOLDER="$HOME/.local/share/icons/pywal"
 USER_MAIN_ICONS="$USER_ICONS_FOLDER/places/scalable"
 BASE_PLACES_ICONS="$ICONS_WORK_DIR/base/main/places/scalable"
 BASE_FOLDER_ICONS="$ICONS_WORK_DIR/base/templates/places/scalable/folders"
