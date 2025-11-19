@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Import paths to managed
-. "$(pwd)/scripts/paths.sh"
+. "$SCRIPT_PATH/paths.sh"
 
 # Remove pywal generated files
 remove_files() {
 	verbose info "Reset pywal generated files..."
 	PATHS_TO_REMOVE=(
-		"$DEFAULT_PYWAL16_OUT_DIR" "$PYWAL16_OUT_DIR"
+		"$DEFAULT_PYWAL16_OUT_DIR" "$PYWAL_CACHE_DIR"
 		"$USER_THEME_FOLDER" "$USER_ICONS_FOLDER")
 	
 	for FILE_PATH in "${PATHS_TO_REMOVE[@]}"; do
@@ -15,4 +15,4 @@ remove_files() {
 	done
 }
 
-remove_files ; $SHELL "$(pwd)/scripts/startup.sh" 
+remove_files ; $SHELL "SCRIPT_PATH/startup.sh" 

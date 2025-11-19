@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Wallpaper selection
 select_wallpaper() {
 	verbose info "Identifying wallpaper mode!"
@@ -16,7 +18,8 @@ select_wallpaper() {
 	elif [ -f "$WALLPAPER_IMAGE" ]; then
 		WALLPAPER_PATH=$WALLPAPER_IMAGE
 	else
-		WALLPAPER_PATH="$wallpaper_path"
+		[ -z "$wallpaper_path" ] && [ -e "$wallpaper_path" ] && \
+			verbose error "Wallpaper path is empty, cannot find input image" || WALLPAPER_PATH="$wallpaper_path"
 	fi
 }
 
