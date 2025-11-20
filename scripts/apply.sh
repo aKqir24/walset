@@ -10,9 +10,6 @@ applyWAL() {
 	generateGTKTHEME 4 ; applyToPrograms ; reloadTHEMES &
 }
 
-# To clean the theme folder when option = false
-clean_theme_folder() { [ -e "$1" ] && rm -r "$1" ; }
-
 # Apply gtk theme / reload gtk theme
 generateGTKTHEME() {
 	if $theming_gtk && [ -z "$GTK_INS_TAG" ] || $RESET; then
@@ -24,17 +21,16 @@ generateGTKTHEME() {
 			. "$SCRIPT_PATH/theming/gtk4.sh" "{$theming_accent}" &
 		fi
 	else
-		$theming_gtk && [ "$1" != 4 ] && verbose info "Gtk theme is already installed!!" || $theming_gtk || clean_theme_folder "$USER_THEME_FOLDER"
+		$theming_gtk && [ "$1" != 4 ] && verbose info "Gtk theme is already installed!!" || $theming_gtk || clean_path "$USER_THEME_FOLDER"
 	fi
 }
 
 # Apply icon theme / reload icon theme
 generateICONSTHEME() {
-	if $theming_icons && [ -z "$ICON_INS_TAG" ] || $RESET; then
-		verbose info "Preparing Icon theme templates"
-		[ -z "$ICON_INS_TAG" ] && . "$SCRIPT_PATH/theming/icons.sh" "$theming_mode" &
+	if $theming_icons || $RESET; then
+		[ -z "$ICON_INS_TAG" ] && verbose info "Preparing Icon theme templates" ;  . "$SCRIPT_PATH/theming/icons.sh" "$theming_mode" &
 	else
-		$theming_icons && verbose info "Icon theme is already installed!!" || clean_theme_folder "$USER_ICONS_FOLDER" 
+		$theming_icons && verbose info "Icon theme is already installed!!" || clean_path "$USER_ICONS_FOLDER" 
 	fi
 }
 
@@ -47,21 +43,19 @@ setGTK_THEME() {
 		else
 			echo 'Net/ThemeName "pywal"' >> "$1"
 		fi
-	else
-		verbose info "Gtk theme is already set"
 	fi
 }
 
 setICON_THEME() {
 	if ! grep -q '^Net/IconThemeName "pywal"' "$xsettingsd_config"; then
 		verbose info "Setting Icon Theme..."
+		gsettings set org.gnome.desktop.interface icon-theme "pywal"
 		if grep -q "^Net/IconThemeName " "$1"; then
 			sed -i 's|\(Net/IconThemeName \)"[^"]*"|\1"pywal"|' "$1"
 		else
 			echo 'Net/IconThemeName "pywal"' >> "$1"
 		fi
-	else
-		verbose info "Icon theme is already set"
+		
 	fi
 }
 
@@ -72,17 +66,19 @@ reloadTHEMES() {
 	[ -f "$xsettingsd_config" ] || xsettingsd_config="$default_xsettings_config"
 	setGTK_THEME "$xsettingsd_config" & setICON_THEME "$xsettingsd_config"
 	verbose info "Reloading Gtk & Icon themes"
-	command -v xsettingsd >/dev/null && pkill xsettingsd >/dev/null 2>&1 ;\
-		xsettingsd -c "$xsettingsd_config" >/dev/null 2>&1 &
+	pgrep -x xsettingsd >/dev/null && pkill xsettingsd >/dev/null 2>&1
+	xsettingsd -c "$xsettingsd_config" >/dev/null 2>&1
+	gtk-update-icon-cache "$USER_ICONS_FOLDER/" >/dev/null &
 }
 
 # Still pywalfox uses 'The Default OutDir in pywal so just link them to the default'
 linkCONF_DIR() {
+	mkdir -p "$DEFAULT_PYWAL16_OUT_DIR"
 	if [ -d "$DEFAULT_PYWAL16_OUT_DIR" ] && [ "$DEFAULT_PYWAL16_OUT_DIR" != "$PYWAL_CACHE_DIR" ]; then
 		for outFile in "$PYWAL_CACHE_DIR"/*; do
 			local filename="$(basename "$outFile")"
 			if [ ! -e "$DEFAULT_PYWAL16_OUT_DIR/$filename" ]; then
-				ln -sf "$outFile" "$DEFAULT_PYWAL16_OUT_DIR/" >/dev/null
+				ln -s "$outFile" "$DEFAULT_PYWAL16_OUT_DIR/"
 			fi
 		done
 	fi

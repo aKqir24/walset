@@ -3,15 +3,10 @@
 # Variables that contain settings & paths
 BASE_ICON_PATHS=("$ICONS_WORK_DIR/base/$1" "$ICONS_WORK_DIR/base/main")
 
-# Get hash from the index.file
-get_hash() { echo "$(sha256sum $1 | cut -d' ' -f1)" ; }
-
 # Copy the base icons
 [ -d $USER_ICONS_FOLDER ] || mkdir -p $USER_ICONS_FOLDER
 for icon_path in "${BASE_ICON_PATHS[@]}"; do
 	for some_icons in $icon_path/*; do
-		[ -f "$some_icons" ] && [ "$(get_hash $some_icons)" = \
-		"$(get_hash $USER_ICONS_FOLDER/$(basename $some_icons))" ] && ! $RESET && break
 		cp -r "$some_icons" "$USER_ICONS_FOLDER/"
 	done
 done
