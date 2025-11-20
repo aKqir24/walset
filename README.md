@@ -63,7 +63,7 @@ Run the following commands in your terminal:
 then use these option to configure it:
 
 ```bash
-bash walsetup [OPTION]
+bash walsetup.sh [OPTION]
   --gui: To launch a configuration GUI and apply the configurations.
   --setup: Show dialogs that sets up the configurations in order.
   --reset: To remove all set features, and set them all to default.
