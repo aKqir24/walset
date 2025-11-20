@@ -61,7 +61,7 @@ _**DISTRO**_
 Run the following commands in your terminal:
 
 ```bash
-  git clone https://github.com/aKqir24/pywal16_scripts.git
+  git clone https://github.com/aKqir24/walset.git
   cd ~/walset
 ```
 
