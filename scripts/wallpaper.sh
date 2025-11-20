@@ -71,7 +71,7 @@ set_wallpaper_with_mode() {
 		done
 	fi
     case "$CH_WALLSETTER" in 
-		"${WALL_SETTERS[0]}") xwallpaper "--$xWallMode" "$image_path" --daemon || wallsetERROR;;
+		"${WALL_SETTERS[0]}") xwallpaper "--$xWallMode" "$image_path" || wallsetERROR;;
         "${WALL_SETTERS[1]}") hsetroot "$hsetrootMode" "$image_path" || wallsetERROR;;
         "${WALL_SETTERS[2]}") feh --bg-"$fehMode" "$image_path" || wallsetERROR;;
         "${WALL_SETTERS[3]}") nitrogen --set-$nitrogenMode "$image_path" || wallsetERROR;;

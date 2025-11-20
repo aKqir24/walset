@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Import paths to managed
-. "$SCRIPT_PATH/paths.sh"
+# To clean the theme folder when option = false
+clean_path() { [ -e "$1" ] && rm -r "$1" ; }
 
 # Remove pywal generated files
 remove_files() {
@@ -11,8 +11,8 @@ remove_files() {
 		"$USER_THEME_FOLDER" "$USER_ICONS_FOLDER")
 	
 	for FILE_PATH in "${PATHS_TO_REMOVE[@]}"; do
-		rm -rf "$FILE_PATH"
+		[ -e "$FILE_PATH" ] && clean_path "$FILE_PATH"
 	done
 }
 
-remove_files ; $SHELL "SCRIPT_PATH/startup.sh" 
+remove_files ; $SHELL "$SCRIPT_PATH/startup.sh" 
