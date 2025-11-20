@@ -7,15 +7,21 @@ A bash script that expands the usage of pywal colors and to ease the configurati
 > The script may work in the using the normal `pywal` but it may fail to complete some steps of this script, so please use this fork of pywal called [pywal16](https://github.com/eylles/pywal16) in order to complete some steps in the script, also the wallpapers are not uploaded in the repo, so please configure the wallpaper directory first.
 
 ## FEATURES
-- Gui or Dialog configuration along with pywal options.
-- Pywal colors to some configurable programs. ( as toml config arrays )
-- Uses the pywal16 option to either have a wallpaper in a folder or just an image.
-- A wallpaper can be set either to `solid_color` or `image`
-- Support for animated gif wallpapersc ( Does not support some gifs | it is a `pywal16` limitation )
-- Wallpaper setup options include [ fill, scale, max, fit, etc ]
-- Gtk theming based [Flat-Remix-GTK](https://github.com/daniruiz/Flat-Remix-GTK) as base theme.
-- Icon colors based [Flat-Remix](https://github.com/daniruiz/Flat-Remix) icon pack.
-- Reload gtk and icon themes using `xsettingd`.
+- **Finished**
+    - Dialog configuration along with pywal options.
+    - Pywal colors to some configurable programs. ( as toml config arrays )
+    - Uses the pywal16 option to either have a wallpaper in a folder or just an image.
+    - A wallpaper can be set either to `solid_color` or `image`
+    - Support for animated gif wallpapersc ( Does not support some gifs | it is a `pywal16` limitation )
+    - Wallpaper setup options include [ fill, scale, max, fit, etc ]
+    - Gtk theming based [Flat-Remix-GTK](https://github.com/daniruiz/Flat-Remix-GTK) as base theme.
+    - Icon colors based [Flat-Remix](https://github.com/daniruiz/Flat-Remix) icon pack.
+    - Reload gtk and icon themes using `xsettingd` & `gsettings`.
+
+- **Unfinished**
+    - Gui config support using `python-gi`
+    - Programs theming configs in `--setup` & `--gui` option.
+    - Gif wallpaper support limitation fix.
 
 ## SETUP
 _**DEPENDENCIES**_
