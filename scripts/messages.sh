@@ -35,6 +35,6 @@ verbose() {
 	fi
 }
 wallsetERROR() { verbose error "Failed to set wallpaper..."; exit 1; }
-pywalerror() { verbose error "pywal ran into an error!\nplease run 'bash $0 --gui' first" ; exit 1 ; }
+pywalerror() { verbose error "Pywal16 ran into an error!\nplease run 'bash $0 --reset --load --verbose'" ; exit 1 ; }
 wallSETTERError() { verbose warning "No Wallpaper setter found!\nSo wallpaper is not set..."; }
 cancelCONFIG() { verbose warning "Configuration Dialog was canceled!, it might cause some problems when loading the configuration!"; exit 0; }
