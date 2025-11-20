@@ -27,15 +27,11 @@ select_wallpaper() {
 set_wallpaper_with_mode() {
     local image_path="$1"
 	
-	# Default mode mapping values is (fill)
-    local xWallMode="zoom"; local fehMode="fill"; local nitrogenMode="auto"; local swayMode="fill"
-    local hsetrootMode="-fill"; local xfceMode=5; local gnomeMode="zoom"; local pcmanfmMode="fit"
+	# Default xgifwallpaperMode values 
 	local xgifwallpaperMode="NONE"
 
     # Mode mappings
     case "$wallpaper_mode" in
-        "fill") xgifwallpaperMode="FILL" # This the default condition no need to duplicate
-            ;;
         "full")
             local xWallMode="maximize"; local fehMode="max"; local nitrogenMode="scaled"; local swayMode="fit"
             local hsetrootMode="-full"; local xfceMode=4; local gnomeMode="scaled"; local pcmanfmMode="stretch"
@@ -52,6 +48,11 @@ set_wallpaper_with_mode() {
         "cover")
             local xWallMode="stretch"; local fehMode="scale"; local nitrogenMode="zoom"; local swayMode="stretch"
             local hsetrootMode="-full"; local xfceMode=5; local gnomeMode="zoom"; local pcmanfmMode="stretch"
+            ;;
+		*) 
+			local xWallMode="zoom" ; local fehMode="fill"; local nitrogenMode="auto"; local swayMode="fill"
+			local hsetrootMode="-fill"; local xfceMode=5; local gnomeMode="zoom"; local pcmanfmMode="fit"
+			local xgifwallpaperMode="FILL" 
             ;;
     esac
 	
@@ -101,10 +102,9 @@ setup_wallpaper() {
 	verbose info "Setting the wallpaper..."
 	case "$wallpaper" in
 		*.png) cp "$wallpaper" "$WALLPAPER_CACHE" ;;
-		*.gif) 
-			convert "$wallpaper" -coalesce -flatten "$WALLPAPER_CACHE">/dev/null
-			$wallpaper_animated && cp "$wallpaper" "$WALLPAPER_CACHE.gif";;
-		*)  convert "$wallpaper" $WALLPAPER_CACHE>/dev/null
+		*.gif) convert "$wallpaper" -coalesce -flatten "$WALLPAPER_CACHE">/dev/null
+			   $wallpaper_animated && cp "$wallpaper" "$WALLPAPER_CACHE.gif";;
+		*)  convert "$wallpaper" "$WALLPAPER_CACHE">/dev/null
 	esac
 	case "$wallpaper_type" in
 		"solid")

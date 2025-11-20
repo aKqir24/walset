@@ -13,7 +13,7 @@ Usage: $0 [OPTIONS]
   --reset: To remove all set features, and set them all to default.
   --verbose: To show log messages when each step of the script is executed.
   --help: to show how to use this script.
-  --load:loads/applies the configurations.
+  --load: loads/applies the configurations.
 "
 
 # Functions than is defined to handle disagreements, errors, and info's
