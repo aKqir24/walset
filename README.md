@@ -1,7 +1,8 @@
 https://github.com/user-attachments/assets/b4b66d0b-c6f2-418f-aafa-efdc0ce85fc0
 
-# walset
-A bash script that expands the usage of pywal colors and to ease the configuration in [pywal16](https://github.com/eylles/pywal16).
+<div align="center" ><img height=220 src="https://github.com/user-attachments/assets/a270165b-8fd3-421b-916d-516dca8b364f"></img></div>
+
+A bash script that expands the usage of pywal colors and to ease the configuration in [pywal16](https://github.com/eylles/pywal16). <br><br>
 
 > [!important]
 > The script may work in the using the normal `pywal` but it may fail to complete some steps of this script, so please use this fork of pywal called [pywal16](https://github.com/eylles/pywal16) in order to complete some steps in the script, also the wallpapers are not uploaded in the repo, so please configure the wallpaper directory first.
