@@ -65,10 +65,10 @@ reloadTHEMES() {
 	local xsettingsd_config="$HOME/.config/xsettingsd/xsettingsd.conf"
 	[ -f "$xsettingsd_config" ] || xsettingsd_config="$default_xsettings_config"
 	setGTK_THEME "$xsettingsd_config" & setICON_THEME "$xsettingsd_config"
-	verbose info "Reloading Gtk & Icon themes"
-	pgrep -x xsettingsd >/dev/null && pkill xsettingsd >/dev/null 2>&1
+	verbose info "Reloading Gtk & Icon themes"	
+	pgrep -x xsettingsd >/dev/null 2>&1 && { pkill xsettingsd >/dev/null 2>&1 && echo "quit"; }
 	xsettingsd -c "$xsettingsd_config" >/dev/null 2>&1
-	gtk-update-icon-cache "$USER_ICONS_FOLDER/" >/dev/null &
+	gtk-update-icon-cache "$USER_ICONS_FOLDER/" >/dev/null 2>&1 &
 }
 
 # Still pywalfox uses 'The Default OutDir in pywal so just link them to the default'
@@ -88,6 +88,6 @@ linkCONF_DIR() {
 applyToPrograms() {
 	verbose info "Attempting to apply themes to programs"
 	for themed_program in ${THEMED_PROGRAMS[@]}; do
-		. "$SCRIPT_PATH/theming/programs/generate.sh" "$themed_program"
+		. "$SCRIPT_PATH/theming/programs/generate.sh" "$themed_program" 
 	done
 }

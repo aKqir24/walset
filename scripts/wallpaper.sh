@@ -60,10 +60,11 @@ set_wallpaper_with_mode() {
 	local WALL_SETTERS=( xwallpaper hsetroot feh nitrogen swaybg xfconf-query gnome-shell pcmanfm xgifwallpaper )
 	if $wallpaper_animated && [[ $wallpaper == *.gif ]] && command -v "${WALL_SETTERS[8]}" >/dev/null; then
 		local CH_WALLSETTER="${WALL_SETTERS[8]}" image_path="$image_path.gif"
-		verbose sorry "Animated wallpaper is only limited to gif wallpapers and small size gifs!!"
+		[ "$(wal -v 2>&1 | grep -oE '3.*')" = '3.8.11' ] && \
+			verbose sorry "Animated GIF wallpapers may not work in the latest pywal16. Please downgrade to 3.8.11!!"
 	else
-		$wallpaper_animated && verbose sorry "Animated wallpaper is set to false, falling back to static image..."
-		ANIMATED_WALLPAPER=false ; pgrep -x "${WALL_SETTERS[8]}">/dev/null && pkill "${WALL_SETTERS[8]}">/dev/null
+		$wallpaper_animated && verbose sorry "Wallpaper doesn’t support animation, using static instead." ; ANIMATED_WALLPAPER=false 
+		pgrep -x "${WALL_SETTERS[8]}">/dev/null && pkill "${WALL_SETTERS[8]}">/dev/null 2>&1
 		for wallSETTER in "${WALL_SETTERS[@]}"; do
 			if command -v "$wallSETTER" >/dev/null && [ "$wallSETTER" != "${WALL_SETTERS[8]}" ]; then
 				local CH_WALLSETTER="$wallSETTER"
@@ -111,6 +112,6 @@ setup_wallpaper() {
 			convert -size 10x10 xc:"$color8" "$WALLPAPER_CACHE"
 			set_wallpaper_with_mode "$WALLPAPER_CACHE" || wallSETTERError ;;
 		"image") set_wallpaper_with_mode "$WALLPAPER_CACHE" || wallSETTERError ;;
-		*) verbose warning "Wallpaper type is not configured!\nSo wallpaper is not set...";; 
+		*) verbose warning "Wallpaper type is not configured, so wallpaper is not set...";; 
 	esac
 }

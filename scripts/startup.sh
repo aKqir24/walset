@@ -1,18 +1,18 @@
 #!/bin/bash
 
 # Check for required dependencies
-command -v wal > /dev/null || echo "pywal16 is not installed, Please install it!"
+command -v wal > /dev/null || verbose error "pywal16 is not installed, Please install it!"
 if $LOAD; then
 	if $SETUP && ! command -v kdialog >/dev/null; then
-		echo "kdialog is not installed, Please install it!" ; exit 1
+		verbose error "kdialog is not installed, Please install it!" 
 	elif $SETUP && ! command -v python3 >/dev/null; then
-		echo "python is not installed, Please install it!" ; exit 1
+		verbose error "python is not installed, Please install it!"
 	fi
 fi
 
 # Check for PYWAL16_OUT_DIR
 if [ -z "$PYWAL_CACHE_DIR" ]; then
-	verbose warning "The 'PYWAL_OUT_DIR' environment variable is not defined!\nAdding it in your .bashrc file or It will the default!!"
+	verbose warning "'PYWAL_CACHE_OUT' is not set! Add it to your .bashrc or the default will be used!!"
 	verbose info "Setting up output directory"
 	$PYWAL_OUT_DIR=$DEFAULT_PYWAL16_OUT_DIR	
 elif [ ! -d "$PYWAL_CACHE_DIR" ]; then

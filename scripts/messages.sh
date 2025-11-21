@@ -24,7 +24,7 @@ verbose() {
 		"sorry")
 			echo -e "walsetup \033[1;33m[WARNING]: $message";;
 		"error")
-			echo -e "walsetup \033[1;31m[ERROR]: $message";;
+			echo -e "walsetup \033[1;31m[ERROR]: $message" ; exit 1;;
 		"info")
 			echo -e "walsetup \033[1;34m[INFO]: $message";;
 		esac
