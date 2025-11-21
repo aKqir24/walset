@@ -11,8 +11,8 @@ remove_files() {
 		"$USER_THEME_FOLDER" "$USER_ICONS_FOLDER")
 	
 	for FILE_PATH in "${PATHS_TO_REMOVE[@]}"; do
-		[ -e "$FILE_PATH" ] && clean_path "$FILE_PATH"
+		clean_path "$FILE_PATH"
 	done
 }
 
-remove_files ; $SHELL "$SCRIPT_PATH/startup.sh" 
+remove_files ; . "$SCRIPT_PATH/startup.sh" 

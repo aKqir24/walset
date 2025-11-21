@@ -13,11 +13,11 @@ for script in "${SCRIPT_FILES[@]}"; do . "$SCRIPT_PATH/$script.sh"; done
 # Options To be used
 OPTS=$(getopt -o -v --long verbose,reset,load,setup,gui,help -- "$@") ; eval set -- "$OPTS"
 while true; do
-	case "$1" in
-		--verbose) VERBOSE=true; shift ;;
+	case "$1" in	
 		--gui) GUI=true; shift;;
 		--setup) SETUP=true; shift;;
 		--reset) RESET=true; shift ;;
+		--verbose) VERBOSE=true; shift ;;
 		--load) LOAD=true; shift;;
 		--help) echo "$HELP_MESSAGE"; exit 0;;
 		--) shift; break ;;
@@ -35,7 +35,10 @@ else
 	if $LOAD; then
 		verbose info "Using the previously configured settings" ; assignTEMPCONF 
 	else
-		$RESET || echo "$HELP_MESSAGE"; exit 0	
+		if ! $RESET; then
+			echo "$HELP_MESSAGE"
+			exit 0	
+		fi
 	fi
 fi
 

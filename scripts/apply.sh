@@ -12,10 +12,10 @@ applyWAL() {
 
 # Apply gtk theme / reload gtk theme
 generateGTKTHEME() {
-	if $theming_gtk && [ -z "$GTK_INS_TAG" ] || $RESET; then
-		if [ "$1" != 4 ]; then
+	if $theming_gtk || $RESET; then
+		if [ -z "$GTK_INS_TAG" ] && [ "$1" != 4 ]; then
 			verbose info "Preparing Gtk theme templates"
-			. "$SCRIPT_PATH/theming/gtk.sh" "@$theming_accent" &
+			. "$SCRIPT_PATH/theming/gtk.sh" "@$theming_accent"
 		else
 			# Used as a workaround in the syntax error in template file 'gtk-4.0.base' on line '5069-5075' in `pywal16`.
 			. "$SCRIPT_PATH/theming/gtk4.sh" "{$theming_accent}" &
@@ -66,8 +66,8 @@ reloadTHEMES() {
 	[ -f "$xsettingsd_config" ] || xsettingsd_config="$default_xsettings_config"
 	setGTK_THEME "$xsettingsd_config" & setICON_THEME "$xsettingsd_config"
 	verbose info "Reloading Gtk & Icon themes"	
-	pgrep -x xsettingsd >/dev/null 2>&1 && { pkill xsettingsd >/dev/null 2>&1 && echo "quit"; }
-	xsettingsd -c "$xsettingsd_config" >/dev/null 2>&1
+	(pgrep -x xsettingsd && pkill -HUP xsettingsd)>/dev/null 2>&1	
+	xsettingsd --config "$xsettingsd_config" >/dev/null 2>&1
 	gtk-update-icon-cache "$USER_ICONS_FOLDER/" >/dev/null 2>&1 &
 }
 
