@@ -1,6 +1,6 @@
 <div align="center" >
     <img height=220 src="https://github.com/user-attachments/assets/a270165b-8fd3-421b-916d-516dca8b364f"></img>
-    <img src="https://img.shields.io/badge/LATEST-1.1.0-brightgreen?style=for-the-badge"></img>
+    <br><img src="https://img.shields.io/badge/LATEST-1.1.0-brightgreen?style=for-the-badge"></img>
     <p>A bash script that expands the usage of pywal colors and to ease the configuration in <a href="https://github.com/eylles/pywal16">pywal16</a>.</p></div>
 
 > [!important]
