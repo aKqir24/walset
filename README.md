@@ -109,18 +109,6 @@ light = "true"
 colorscheme = "darken"
 ````
 
-## FUTURE PLANS
-Things that I might add:
-- [x] Add verbose option.
-- [x] Improve wallpaper setter support in some de's.
-- [x] Merge `waloml` & `walsetup` into one.
-- [x] Live wallpaper support in GIF.
-- [x] Fix dunst color generation.
-- [x] Full icon pywal adptation support
-- [ ] Theming support for more terminals & appplications configs.
-- [ ] Add a custom config_dir option.
-- [ ] Custom bg-color & bgsetup setup.
-
 ## SPEACIAL THANKS
 - `deviantfero`: [wpgtk's templates](https://github.com/deviantfero/wpgtk-templates) for the _gtk2/3_ base theme.
 - `daniruiz`: [Flat-Remix-GTK](https://github.com/daniruiz/Flat-Remix-GTK) for the _gtk4_ base theme.
