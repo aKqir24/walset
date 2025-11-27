@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Import all the scripts
 if [[ ! -e "$(pwd)/scripts" ]]; then
