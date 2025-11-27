@@ -1,54 +1,45 @@
 @define-color accent_color {color3};
 @define-color accent_bg_color @accent_color;
-@define-color accent_fg_color lighten_color({color15}, 30);
-
+@define-color accent_fg_color {color15};
 @define-color destructive_color {color11};
 @define-color destructive_bg_color {color13};
-@define-color destructive_fg_color lighten_color({color11}, 70);
-
+@define-color destructive_fg_color {color11};
 @define-color success_color {color13};
 @define-color success_bg_color {color5};
 @define-color success_fg_color @accent_fg_color;
-
 @define-color warning_color {color14};
 @define-color warning_fg_color @accent_fg_color;
 @define-color warning_bg_color {color6};
-
 @define-color error_color {color11};
 @define-color error_fg_color @accent_fg_color;
 @define-color error_bg_color {color3};
-
 @define-color window_bg_color {color0};
 @define-color window_fg_color @accent_fg_color;
-
-@define-color view_bg_color darken_color({color0}, 20);
+@define-color view_bg_color {color0};
 @define-color view_fg_color @accent_fg_color;
-
 @define-color headerbar_bg_color {color0};
 @define-color headerbar_fg_color @accent_fg_color;
 @define-color headerbar_border_color @accent_fg_color;
 @define-color headerbar_backdrop_color @view_bg_color;
 @define-color headerbar_shade_color {color2};
 @define-color headerbar_darker_shade_color {color3};
-
 @define-color sidebar_bg_color {color0};
 @define-color sidebar_fg_color @accent_fg_color;
 @define-color sidebar_backdrop_color {color1};
 @define-color sidebar_shade_color {color2};
 @define-color sidebar_border_color {color3};
-
 @define-color secondary_sidebar_bg_color mix(@sidebar_bg_color, @window_bg_color, .5);
 @define-color secondary_sidebar_fg_color @accent_fg_color;
 @define-color secondary_sidebar_backdrop_color mix(@secondary_sidebar_bg_color, @window_bg_color, .5);
 @define-color secondary_sidebar_shade_color rgba(0, 0, 0, 0.25);
 @define-color secondary_sidebar_border_color rgba(0, 0, 0, 0.36);
 @define-color card_bg_color rgba(255, 255, 255, 0.05);
-@define-color card_fg_color @accent_fg_color;;
+@define-color card_fg_color @accent_fg_color;
 @define-color card_shade_color rgba(0, 0, 0, 0.36);
 @define-color dialog_bg_color {color8};
-@define-color dialog_fg_color @accent_fg_color;;
-@define-color popover_bg_color {color8};
-@define-color popover_fg_color @accent_fg_color;;
+@define-color dialog_fg_color @accent_fg_color;
+@define-color popover_bg_color {color0};
+@define-color popover_fg_color @accent_fg_color;
 @define-color popover_shade_color rgba(0, 0, 0, 0.25);
 @define-color thumbnail_bg_color {color8};
 @define-color thumbnail_fg_color @accent_fg_color;
@@ -945,7 +936,7 @@ menubutton.destructive-action {
   color: @destructive_fg_color; }
 
 menubutton.opaque {
-  background-color: mix(@window_bg_color,@window_fg_color,0.15);
+  background-color: @window_bg_color;
   color: @window_fg_color; }
 
 menubutton.suggested-action, menubutton.destructive-action, menubutton.opaque {
@@ -1630,7 +1621,7 @@ paned .sidebar.left, paned .sidebar.right, paned .sidebar.left:dir(rtl), paned .
 dropdown > button > box, combobox > button > box {
   border-spacing: 6px; }
   dropdown > button > box > stack > row.activatable:hover, combobox > button > box > stack > row.activatable:hover, dropdown > button > box > stack > row.activatable:active, combobox > button > box > stack > row.activatable:active {
-    background: none; }
+    background: green; }
 
 dropdown arrow, combobox arrow {
   -gtk-icon-source: -gtk-icontheme("pan-down-symbolic");

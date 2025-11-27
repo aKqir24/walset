@@ -2,7 +2,7 @@
 
 # Manage Options
 HELP_MESSAGE="
-Info:
+Information:
 'walsetup.sh' is a wrapper for pywal16 purely in shell script and made by aKqir24,
 to ease the configuration in pywal, also it adds more functionality in pywal16 which
 are writen in the https://github.com/aKqir24/pywal16_scripts.
@@ -15,10 +15,11 @@ Usage: $0 [OPTIONS]
   --help: to show how to use this script.
   --load: loads/applies the configurations.
 "
+applied=()
 
 # Functions than is defined to handle disagreements, errors, and info's
-verbose() { 
-	if [ "$VERBOSE" = true ]; then
+verbose() {
+	if $VERBOSE; then
 		message="\033[1;97m$2\033[1;97m"
 		case "$1" in
 		"sorry")
@@ -28,7 +29,7 @@ verbose() {
 		"info")
 			echo -e "walsetup \033[1;34m[INFO]: $message";;
 		esac
-		if ! $VERBOSE && ! $SETUP && ! $GUI && [ "$1" != 'info' ]; then 
+		if ! $VERBOSE && ! $SETUP && ! $GUI && [ "$1" != 'info' ]; then
 			kdialog "--$1" "There was a '$1' message found in the program.\n
 			Please consider running this script in your terminal using the '--verbose' option, to the identify the problem!!"
 		fi

@@ -1,13 +1,24 @@
 #!/bin/bash
 
 # Default options config values
-VERBOSE=false SETUP=false GUI=false LOAD=false RESET=false THEMING_GTK=true THEMING_ICONS=true
+GUI=false
+LOAD=false
+RESET=false
+SETUP=false
+VERBOSE=false
+THEMING_GTK=true
+THEME_MODE="dark"
+THEMING_ICONS=true
+PYWAL_BACKEND="wal"
+THEME_ACCENT_COLOR=2
+WALLPAPER_CYCLE="static"
+ANIMATED_WALLPAPER=false
 THEMED_PROGRAMS=( 'i3status_rust' 'alacritty' 'rofi' 'dunst' )
 
 # Write config file
 verbose info "Writting & verifying config file"
-[ -e "$WALLPAPER_CONF_PATH" ] || touch "$WALLPAPER_CONF_PATH"
-[ -d "$PYWAL_CACHE_DIR" ] || mkdir -p "$PYWAL_DIR_CACHE"
+[[ -e "$WALLPAPER_CONF_PATH" ]] || touch "$WALLPAPER_CONF_PATH"
+[[ -d "$PYWAL_CACHE_DIR" ]] || mkdir -p "$PYWAL_DIR_CACHE"
 
 # Read the config
 verbose "Reading config file"
@@ -24,7 +35,7 @@ assignTEMPCONF() {
 		for key in "${keys[@]}"; do
 			value="$(reader "$section"."$key")"
 			declare -g "${section}_$key=$value"
-			
+
 		done
 	done
 }
@@ -32,13 +43,6 @@ assignTEMPCONF() {
 # Save config then read it
 saveCONFIG() {
 	verbose info "Saving configurations"
-	[ -z "$ANIMATED_WALLPAPER" ] && ANIMATED_WALLPAPER=false
-	[ -z "$PYWAL_BACKEND" ] && PYWAL_BACKEND="wal"
-	[ -z "$WALLPAPER_CYCLE" ] && WALLPAPER_CYCLE="static"
-	[ -z "$THEME_MODE" ] && THEME_MODE="dark"
-	[ -z "$THEME_ACCENT" ] && THEME_ACCENT_COLOR="color2" || \
-		THEME_ACCENT_COLOR="color$THEME_ACCENT"
-
 	tomlq -i -t "
 		.wallpaper.cycle = \"$WALLPAPER_CYCLE\" |
 		.wallpaper.type = \"$WALLPAPER_TYPE\" |
