@@ -19,7 +19,7 @@ SETUPS=( wallBACK "Backend In Use" off \
 # Start Configuration dialogs
 verbose info "Running kdialog for configuration..." &
 ToCONFIG=$( kdialog --checklist "Available Configs" "${SETUPS[@]}" --separate-output )
-assignTEMPCONF >/dev/null && [ -z "$ToCONFIG" ] && cancelCONFIG 
+assignTEMPCONF >/dev/null && [[ -z $ToCONFIG ]] && cancelCONFIG
 theming_values() {
 	THEME_MODE=$( kdialog --yes-label "Light" --no-label "Dark" \
 				  --yesno "Select an theme mode, it can be either:" && echo "light" || echo "dark")
@@ -30,9 +30,9 @@ theming_values() {
 
 # Configuration Dialogs
 for config in $ToCONFIG; do
-	if [ "$config" = "wallGTK" ] || [ "$config" = "wallICONS" ]; then
+	if [[ $config == 'wallGTK' ]] || [[ $config == 'wallICONS' ]]; then
 		theming_values >/dev/null ; unset -f theming_values
-		theming_values() { echo "" ; }	
+		theming_values() { echo "" ; }
 	fi
 	case "$config" in
 		"wallGTK") unset THEMING_GTK ; THEMING_GTK=true ;;
@@ -54,14 +54,14 @@ wall_select_options() {
 			if $SETUP; then
 				WALLPAPER_CYCLE=$( kdialog --yes-label "Orderly" --no-label "Randomly" --yesno \
 							"How to choose you wallpaper in a folder?" && echo "iterative" || echo "recursive" )
-				WALL_CHANGE_FOLDER=$(kdialog --yesno "Do you want to change the wallpaper folder?" && echo "YES")	
+				WALL_CHANGE_FOLDER=$(kdialog --yesno "Do you want to change the wallpaper folder?" && echo "YES")
 			fi
-			[ -d "$wallpaper_path" ] && START_FOLDER=$wallpapers_path || START_FOLDER=$HOME
-			if [ "$WALL_CHANGE_FOLDER" = "YES" ]; then
+			[[ -d $wallpaper_path ]] && START_FOLDER=$wallpapers_path || START_FOLDER=$HOME
+			if [[ $WALL_CHANGE_FOLDER = 'YES' ]]; then
 				WALLPAPER_FOLDER=$(kdialog --getexistingdirectory "$START_FOLDER" || exit 0)
-			elif [ ! -d "$wallpaper_path" ]; then
+			elif [[ ! -d $wallpaper_path ]]; then
 				kdialog --msgbox "To set wallpapers from a directory, you need to select a folder containing them."
-				WALLPAPER_FOLDER=$(kdialog --getexistingdirectory "$START_FOLDER" || exit 0)	
+				WALLPAPER_FOLDER=$(kdialog --getexistingdirectory "$START_FOLDER" || exit 0)
 			fi
 			;;
 		"image")
