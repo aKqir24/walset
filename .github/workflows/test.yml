@@ -35,7 +35,8 @@ jobs:
         wget https://raw.githubusercontent.com/aKqir24/.files/refs/heads/main/.config/walset.toml -O "$HOME/.config/walset.toml"
         sed -i \
         -e 's/akqir24/runner/g' \
-        -e 's/colorz/wal/g' \ 
+        -e 's/colorz/wal/g' \
+        -e 's/image/none/g' \
         "$HOME/.config/walset.toml"
         wget https://raw.githubusercontent.com/aKqir24/.files/main/Pictures/Wallpapers/wallpaper.jpg -O "$HOME/Pictures/Wallpapers/wallpaper.jpg"
     - name: Test the program
