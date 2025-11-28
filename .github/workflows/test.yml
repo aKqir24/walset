@@ -26,7 +26,6 @@ jobs:
         pipx install pywal16==3.8.10
         git clone https://github.com/aKqir24/.files.git
         cd ".files" && stow . --adopt
-        cd "$HOME" && cat .bashrc
     - name: Test the program
       run: |
         bash walset.sh --load --verbose

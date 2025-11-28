@@ -6,6 +6,7 @@ if [[ ! -e "$(pwd)/scripts" ]]; then
 else
 	WORK_PATH="$(pwd)"
 fi
+echo "$WORK_PATH"
 SCRIPT_PATH="$WORK_PATH/scripts"
 SCRIPT_FILES=(paths messages config startup apply)
 for script in "${SCRIPT_FILES[@]}"; do . "$SCRIPT_PATH/$script.sh"; done
