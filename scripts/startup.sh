@@ -24,7 +24,7 @@ fi
 if [[ ! -d $PYWAL_CACHE_DIR"/templates" ]]; then
 	mkdir -p "$PYWAL_CACHE_DIR/templates"
 fi
-echo "$PYWAL_CACHE_DIR"
+
 # Check if some features are already present
 INSTALLED_TAG='(installed)'
 if [[ -f $USER_ICONS_FOLDER"/index.theme" ]]; then ICON_INS_TAG="$INSTALLED_TAG"; else unset ICON_INS_TAG; fi

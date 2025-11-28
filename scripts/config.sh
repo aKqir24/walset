@@ -18,7 +18,7 @@ THEMED_PROGRAMS=( 'i3status_rust' 'alacritty' 'rofi' 'dunst' )
 # Write config file
 verbose info "Writting & verifying config file"
 [[ -e "$WALLPAPER_CONF_PATH" ]] || touch "$WALLPAPER_CONF_PATH"
-[[ -d "$PYWAL_CACHE_DIR" ]] || mkdir -p "$PYWAL_DIR_CACHE"
+[[ -d "$PYWAL_CACHE_DIR" ]] || mkdir -p "$PYWAL_CACHE_DIR"
 
 # Read the config
 verbose "Reading config file"
