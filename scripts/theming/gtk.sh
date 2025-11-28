@@ -35,4 +35,3 @@ for gtkCSSFile in "${GTK_CSS_FILES[@]}"; do
   [[ ! -e $temp_file_path ]] && ln -s "$base_file" "$temp_file_path"
   [[ ! -e $theme_style_file ]] && ln -sf "$PYWAL_CACHE_DIR/$gtk_tmp_file" "$theme_style_file"
 done
-echo "$PYWAL_TEMPLATES"
