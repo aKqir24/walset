@@ -15,6 +15,9 @@
 </div>
 
 ## FEATURES
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/81796c6e956c4eb7b720255f02da96f4)](https://app.codacy.com/gh/aKqir24/walset?utm_source=github.com&utm_medium=referral&utm_content=aKqir24/walset&utm_campaign=Badge_Grade)
+
 - **Finished**
   - Dialog configuration along with pywal options.
   - Pywal colors to some configurable programs. ( as toml config arrays )
