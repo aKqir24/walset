@@ -16,20 +16,20 @@
 
 ## FEATURES
 - **Finished**
-    - Dialog configuration along with pywal options.
-    - Pywal colors to some configurable programs. ( as toml config arrays )
-    - Uses the pywal16 option to either have a wallpaper in a folder or just an image.
-    - A wallpaper can be set either to `solid_color` or `image`
-    - Support for animated gif wallpapersc ( Does not support some gifs | it is a `pywal16` limitation )
-    - Wallpaper setup options include [ fill, scale, max, fit, etc ]
-    - Gtk theming based [Flat-Remix-GTK](https://github.com/daniruiz/Flat-Remix-GTK) as base theme.
-    - Icon colors based [Flat-Remix](https://github.com/daniruiz/Flat-Remix) icon pack.
-    - Reload gtk and icon themes using `xsettingd` & `gsettings`.
+  - Dialog configuration along with pywal options.
+  - Pywal colors to some configurable programs. ( as toml config arrays )
+  - Uses the pywal16 option to either have a wallpaper in a folder or just an image.
+  - A wallpaper can be set either to `solid_color` or `image`
+  - Support for animated gif wallpapersc ( Does not support some gifs | it is a `pywal16` limitation )
+  - Wallpaper setup options include [ fill, scale, max, fit, etc ]
+  - Gtk theming based [Flat-Remix-GTK](https://github.com/daniruiz/Flat-Remix-GTK) as base theme.
+  - Icon colors based [Flat-Remix](https://github.com/daniruiz/Flat-Remix) icon pack.
+  - Reload gtk and icon themes using `xsettingd` & `gsettings`.
 
 - **Unfinished**
-    - Gui config support using `python-gi`
-    - Programs theming configs in `--setup` & `--gui` option.
-    - Gif wallpaper support limitation fix.
+  - Gui config support using `python-gi`
+  - Programs theming configs in `--setup` & `--gui` option.
+  - Gif wallpaper support limitation fix.
 
 ## SETUP
 _**DEPENDENCIES**_
@@ -47,17 +47,17 @@ _**DEPENDENCIES**_
   - `xgifwallpaper` (for gif wallpaper animations)
 
 _**DISTRO**_
-  - Debian ( or Other Debian based distro )
-  ```bash
-  sudo apt install kdialog pipx yq imagemagick xwallpaper
-  pipx install pywal16
-  ```
+- Debian ( or Other Debian based distro )
+```bash
+sudo apt install kdialog pipx yq imagemagick xwallpaper
+pipx install pywal16
+```
 
-  - Arch / AUR
-  ```bash
-  # You can use something else that works for you like paru
-  yay -S kdialog pywal16 yq imagemagick xwallpaper
-  ```
+- Arch / AUR
+```bash
+# You can use something else that works for you like paru
+yay -S kdialog pywal16 yq imagemagick xwallpaper
+```
 
 ## USAGE
 Run the following commands in your terminal:
