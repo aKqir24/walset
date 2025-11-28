@@ -19,7 +19,8 @@ THEMED_PROGRAMS=( 'i3status_rust' 'alacritty' 'rofi' 'dunst' )
 verifyingCONF() {
 	verbose info "Verifying the config file"
 	if [[ ! -e "$WALLPAPER_CONF_PATH" ]]; then
-		touch "$WALLPAPER_CONF_PATH"
+		touch "$WALLPAPER_CONF_PATH" || \
+			verbose error "Config file does not exist!!"
 	fi
 }
 
