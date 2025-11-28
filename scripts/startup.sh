@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Check for required dependencies
 command -v wal > /dev/null || verbose error "pywal16 is not installed, Please install it!"

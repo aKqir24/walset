@@ -1,3 +1,4 @@
+
 <div align="center" >
     <img height=220 src="https://github.com/user-attachments/assets/a270165b-8fd3-421b-916d-516dca8b364f"></img>
     <br><img src="https://img.shields.io/badge/LATEST-1.1.0-brightgreen?style=for-the-badge"></img>
@@ -8,11 +9,10 @@
 >
 
 <div align="center" >
-<video src="https://private-user-images.githubusercontent.com/142222025/516279138-b4b66d0b-c6f2-418f-aafa-efdc0ce85fc0.mp4?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjM2Mjc0MjgsIm5iZiI6MTc2MzYyNzEyOCwicGF0aCI6Ii8xNDIyMjIwMjUvNTE2Mjc5MTM4LWI0YjY2ZDBiLWM2ZjItNDE4Zi1hYWZhLWVmZGMwY2U4NWZjMC5tcDQ_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMTIwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTEyMFQwODI1MjhaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0wYTQ4OGE2MmU4ZTliODIwOTBhMjJjOTNlZGY2OTczNGM4ZjlmMTIzMjliYTQzY2VjYjE2NWVjODM1ZTQ5MGVkJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.vGN5bXChZ-3M7422kIk2tXnQl5b3nstfvKar5Fvxt4M" data-canonical-src="https://private-user-images.githubusercontent.com/142222025/516279138-b4b66d0b-c6f2-418f-aafa-efdc0ce85fc0.mp4?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjM2Mjc0MjgsIm5iZiI6MTc2MzYyNzEyOCwicGF0aCI6Ii8xNDIyMjIwMjUvNTE2Mjc5MTM4LWI0YjY2ZDBiLWM2ZjItNDE4Zi1hYWZhLWVmZGMwY2U4NWZjMC5tcDQ_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMTIwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTEyMFQwODI1MjhaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0wYTQ4OGE2MmU4ZTliODIwOTBhMjJjOTNlZGY2OTczNGM4ZjlmMTIzMjliYTQzY2VjYjE2NWVjODM1ZTQ5MGVkJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.vGN5bXChZ-3M7422kIk2tXnQl5b3nstfvKar5Fvxt4M" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px">
+<video src="https://private-user-images.githubusercontent.com/142222025/516279138-b4b66d0b-c6f2-418f-aafa-efdc0ce85fc0.mp4">
     </video>
     <p>The <a href="https://www.youtube.com/watch?v=swEchSYP3_o">youtube video</a> showcases realtime theme changing.</p>
 </div>
-<br>
 
 ## FEATURES
 - **Finished**

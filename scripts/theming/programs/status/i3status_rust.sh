@@ -1,3 +1,5 @@
+#!/bin/sh
+
 write_toml "
 .theme.overrides.idle_bg = \"$color0\" |
 .theme.overrides.idle_fg = \"$color15\" |

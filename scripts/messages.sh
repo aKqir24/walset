@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Manage Options
 HELP_MESSAGE="
