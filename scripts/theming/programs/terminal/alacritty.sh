@@ -1,3 +1,5 @@
+#!/bin/sh
+
 write_toml "
 .colors.primary.background = \"$color0\" |
 .colors.primary.foreground = \"$color15\" |
