@@ -1,0 +1,25 @@
+name: .NET
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Dependencies
+      run: |
+        apt-get install python3 pipx yq xwallpaper imagemagick wget git stow
+        pipx install pywal16==3.8.10
+    - name: Setup Environment
+      run: |
+        git clone https://github.com/aKqir24/.files.git
+        cd ".files"
+        stow . --adopt
+    - name: Test the program
+      run: |
+        bash walset.sh --load --verbose
