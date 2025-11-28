@@ -22,6 +22,7 @@ jobs:
         sudo ln -fs /usr/share/zoneinfo/Africa/Libreville /etc/localtime
     - name: Setup Environment
       run: |
+        export DEFAULT_PYWAL16_OUT_DIR="$HOME/.cache/wal"
         pipx install pywal16==3.8.10
         git clone https://github.com/aKqir24/.files.git
         cd ".files" && stow . --adopt
