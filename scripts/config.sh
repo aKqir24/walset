@@ -16,14 +16,16 @@ ANIMATED_WALLPAPER=false
 THEMED_PROGRAMS=( 'i3status_rust' 'alacritty' 'rofi' 'dunst' )
 
 # Write config file
-verbose info "Verifying or making the config file"
-[[ -e "$WALLPAPER_CONF_PATH" ]] || touch "$WALLPAPER_CONF_PATH"
-[[ -d "$PYWAL_CACHE_DIR" ]] || mkdir -p "$PYWAL_CACHE_DIR"
-echo "$PYWAL_CACHE_DIR"
+verifyingCONF() {
+	verbose info "Verifying the config file"
+	if [[ ! -e "$WALLPAPER_CONF_PATH" ]]; then
+		touch "$WALLPAPER_CONF_PATH"
+	fi
+}
 
 # Read the config
-verbose "Reading config file"
 assignTEMPCONF() {
+	verbose info "Reading config file"
 	tables=('wallpaper' 'theming' 'pywal16')
 	JSON_TOML_OUTPUT=$( tomlq '.' "$WALLPAPER_CONF_PATH" )
 	reader() { jq -r ".$1" <<< "$JSON_TOML_OUTPUT" ; }
@@ -43,7 +45,7 @@ assignTEMPCONF() {
 
 # Save config then read it
 saveCONFIG() {
-	verbose info "Saving configurations"
+	verbose info "Saving the configurations"
 	tomlq -i -t "
 		.wallpaper.cycle = \"$WALLPAPER_CYCLE\" |
 		.wallpaper.type = \"$WALLPAPER_TYPE\" |

@@ -6,7 +6,6 @@ if [[ ! -e "$(pwd)/scripts" ]]; then
 else
 	WORK_PATH="$(pwd)"
 fi
-echo "$WORK_PATH"
 SCRIPT_PATH="$WORK_PATH/scripts"
 SCRIPT_FILES=(paths messages config startup apply)
 for script in "${SCRIPT_FILES[@]}"; do . "$SCRIPT_PATH/$script.sh"; done
@@ -34,7 +33,8 @@ elif $GUI; then
 	VERBOSE=true ; verbose sorry "The '--gui' option is still in development..." ; exit 1
 else
 	if $LOAD; then
-		verbose info "Using the previously configured settings" ; assignTEMPCONF
+		verbose info "Using the previously configured settings" 
+		verifyingCONF ; assignTEMPCONF
 	else
 		if ! $RESET; then
 			echo "$HELP_MESSAGE"
@@ -48,7 +48,9 @@ $RESET && . "$SCRIPT_PATH/reset.sh"
 . "$SCRIPT_PATH/wallpaper.sh" && select_wallpaper
 
 # Only save the config when configured!
-$SETUP || $GUI && saveCONFIG ; assignTEMPCONF
+if $SETUP || $GUI; then
+	verifyingCONF ; saveCONFIG ; assignTEMPCONF
+fi
 
 # Check if --color16 option is enabled
 $pywal16_light && verbose info "Enabling 16 colors in pywal..."; \
