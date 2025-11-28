@@ -26,5 +26,5 @@ fi
 
 # Check if some features are already present
 INSTALLED_TAG='(installed)'
-[[ -f $USER_ICONS_FOLDER"/index.theme" ]] && ICON_INS_TAG="$INSTALLED_TAG" || unset ICON_INS_TAG
-[[ -f $USER_THEME_FOLDER"/index.theme" ]] && GTK_INS_TAG="$INSTALLED_TAG" || unset GTK_INS_TAG
+if [[ -f $USER_ICONS_FOLDER"/index.theme" ]]; then ICON_INS_TAG="$INSTALLED_TAG"; else unset ICON_INS_TAG; fi
+if [[ -f $USER_THEME_FOLDER"/index.theme" ]]; then GTK_INS_TAG="$INSTALLED_TAG"; else unset GTK_INS_TAG; fi
