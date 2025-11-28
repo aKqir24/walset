@@ -61,11 +61,11 @@ set_wallpaper_with_mode() {
 	for wallSETTER in "${WALL_SETTERS[@]}"; do
 		if command -v "$wallSETTER" >/dev/null; then
 			if $wallpaper_animated && [[ $wallpaper == *.gif ]]; then
-				local CH_WALLSETTER="${WALL_SETTERS[8]}"
+				local CH_WALLSETTER="${WALL_SETTERS[0]}"
 				image_path="$image_path.gif" ; [[ $(wal -v 2>&1 | grep -oE '3.*') = '3.8.11' ]] && \
 					verbose sorry "Animated GIF wallpapers may not work in the latest pywal16. Please downgrade to 3.8.11!!"
 				break
-			else
+			elif [[ "$wallSETTER" != "${WALL_SETTERS[0]}" ]]; then
 				ANIMATED_WALLPAPER=false ; $wallpaper_animated && verbose sorry "Wallpaper doesn’t support animation, using static instead."
 				local CH_WALLSETTER="$wallSETTER"
 				break
