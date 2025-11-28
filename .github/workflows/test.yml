@@ -33,7 +33,7 @@ jobs:
         pipx install pywal16==3.8.10
         mkdir -p "$HOME/Pictures/Wallpapers"
         wget https://raw.githubusercontent.com/aKqir24/.files/refs/heads/main/.config/walset.toml -O "$HOME/.config/walset.toml"
-        sed -i -e 's/akqir24/runner/g' -e 's/colorz/wal/g' -e 's/image/none/g' "$HOME/.config/walset.toml"
+        sed -i -e 's/akqir24/runner/g' -e 's/colorz/wal/g' -e 's/image/none/g' "$HOME/.config/walset.toml" && mkdir -p "$HOME/.config/xsettingsd"
         wget https://raw.githubusercontent.com/aKqir24/.files/refs/heads/main/.config/xsettingsd/xsettingsd.conf -O "$HOME/.config/xsettingsd/xsettingsd.conf" 
         wget https://raw.githubusercontent.com/aKqir24/.files/main/Pictures/Wallpapers/wallpaper.jpg -O "$HOME/Pictures/Wallpapers/wallpaper.jpg"
     - name: Test the program
