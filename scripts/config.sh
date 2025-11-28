@@ -21,7 +21,7 @@ verifyingCONF() {
 	if [[ ! -e "$WALLPAPER_CONF_PATH" ]]; then
 		touch "$WALLPAPER_CONF_PATH" || \
 			verbose error "Config file does not exist!!"
-		[[ ! "$(cat test.toml)" == "" ]] && \
+		[[ ! "$(cat $WALLPAPER_CONF_PATH)" == "" ]] && \
 			verbose error "Config file is empty, try modifing it!!"
 	fi
 }
