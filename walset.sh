@@ -7,7 +7,7 @@ else
 	WORK_PATH="$(pwd)"
 fi
 SCRIPT_PATH="$WORK_PATH/scripts"
-SCRIPT_FILES=(paths messages config startup apply)
+SCRIPT_FILES=(messages paths config startup apply)
 for script in "${SCRIPT_FILES[@]}"; do . "$SCRIPT_PATH/$script.sh"; done
 
 # Options To be used
