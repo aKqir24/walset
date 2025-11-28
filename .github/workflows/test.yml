@@ -5,21 +5,27 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+defaults:
+  run:
+    shell: bash
 
 jobs:
-  build:
+  run-tests:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Setup Dependencies
+    - name: Setup architecture and packages
       run: |
-        apt-get install python3 pipx yq xwallpaper imagemagick wget git stow
-        pipx install pywal16==3.8.10
+        sudo dpkg --add-architecture i386
+        sudo apt-get update
+        sudo apt-get -y install python3 pipx yq xwallpaper imagemagick wget git stow sudo
+        sudo ln -fs /usr/share/zoneinfo/Africa/Libreville /etc/localtime
     - name: Setup Environment
       run: |
+        pipx install pywal16==3.8.10
         git clone https://github.com/aKqir24/.files.git
-        cd ".files"
-        stow . --adopt
+        cd ".files" && stow . --adopt
+        cd "$HOME" && cat .bashrc
     - name: Test the program
       run: |
         bash walset.sh --load --verbose
