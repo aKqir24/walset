@@ -22,17 +22,20 @@ generateGTKTHEME() {
 			. "$SCRIPT_PATH/theming/gtk4.sh" "{$theming_accent}"
 		fi
 	else
-		$theming_gtk && [[ $1 != 4 ]] && verbose info "Gtk theme is already installed!!"
-		$theming_gtk || $RESET || clean_path "$USER_THEME_FOLDER"
+		if $theming_gtk && [[ $1 != 4 ]]; then verbose info "Gtk theme is already installed!!"; fi
+		if ! $theming_gtk || $RESET; then clean_path "$USER_THEME_FOLDER"; fi
 	fi
 }
 
 # Apply icon theme / reload icon theme
 generateICONSTHEME() {
 	if $theming_icons && [[ -z $ICON_INS_TAG ]] || $RESET; then
-		verbose info "Preparing Icon theme templates" ;  . "$SCRIPT_PATH/theming/icons.sh" "$theming_mode"
-	else
-		$theming_icons && verbose info "Icon theme is already installed!!" || clean_path "$USER_ICONS_FOLDER"
+		verbose info "Preparing Icon theme templates" 
+		. "$SCRIPT_PATH/theming/icons.sh" "$theming_mode"
+	elif $theming_icons; then
+		verbose info "Icon theme is already installed!!"
+	else 
+		clean_path "$USER_ICONS_FOLDER"
 	fi
 }
 
