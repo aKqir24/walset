@@ -23,6 +23,9 @@ jobs:
       run: |
         export DEFAULT_PYWAL16_OUT_DIR="$HOME/.cache/wal"
         pipx install pywal16==3.8.10
+        mkdir -p "$HOME/Pictures/Wallpapers"
+        wget https://raw.githubusercontent.com/aKqir24/.files/refs/heads/main/.config/walset.toml -O "$HOME/.config/walset.toml"
+        wget https://github.com/aKqir24/.files/blob/64cd0086e3fcf93d6275ad47d82adb1932968966/Pictures/Wallpapers/aesthetic-anime-scenery-desktop-wallpaper-4.jpg -O "$HOME/Pictures/Wallpapers/"
     - name: Test the program
       run: |
         bash walset.sh --load --verbose
