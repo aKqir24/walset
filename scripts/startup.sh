@@ -21,8 +21,8 @@ if [[ ! -d $PYWAL_CACHE_DIR ]]; then
 fi
 
 # Check for PYWAL_OUT_DIR temp folder
-if [[ ! -d $PYWAL_CACHE_DIR"/templates" ]]; then
-	mkdir -p "$PYWAL_CACHE_DIR/templates"
+if [[ ! -d $PYWAL_TEMPLATES ]]; then
+	mkdir -p "$PYWAL_TEMPLATES"
 fi
 
 # Check if some features are already present
