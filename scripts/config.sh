@@ -25,6 +25,7 @@ verifyingCONF() {
 	if [[ ! "$(cat "$WALLPAPER_CONF_PATH")" == "" ]]; then
 		verbose error "Config file is empty, try modifing it!!"
 	fi
+	cat "$WALLPAPER_CONF_PATH"
 }
 
 # Read the config
