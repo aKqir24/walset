@@ -14,7 +14,7 @@ fi
 if [[ -z $PYWAL_CACHE_DIR ]]; then
 	verbose warning "'PYWAL_CACHE_OUT' is not set! Add it to your .bashrc or the default will be used!!"
 	verbose info "Setting up output directory"
-	$PYWAL_OUT_DIR=$DEFAULT_PYWAL16_OUT_DIR
+	$PYWAL_OUT_DIR="$DEFAULT_PYWAL16_OUT_DIR"
 elif [[ ! -d $PYWAL_CACHE_DIR ]]; then
 	mkdir -p "$PYWAL_CACHE_DIR"
 fi
