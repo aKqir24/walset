@@ -5,7 +5,7 @@ applyWAL() {
 	[[ $4 == "static" ]] && wallCYCLE="" || wallCYCLE="--$4"
 	[[ $theming_mode = "light" ]] && colorscheme="-l" || colorscheme=
 	generateGTKTHEME ; generateICONSTHEME ; verbose info "Running 'pywal' to generate the colorscheme"
-	wal -q "$wallCYCLE" $colorscheme --backend "$2" $3 -i "$1" -n --out-dir "$PYWAL_CACHE_DIR" || pywalerror
+	sh -c "wal -q $wallCYCLE $colorscheme --backend $2 $3 -i $1 -n --out-dir $PYWAL_CACHE_DIR" || pywalerror
 	[[ -f $PYWAL_CACHE_DIR/colors.sh ]] && . "${PYWAL_CACHE_DIR}/colors.sh" # Load Colors & other values to be used
 	generateGTKTHEME 4 ; applyToPrograms ; reloadTHEMES &
 }
