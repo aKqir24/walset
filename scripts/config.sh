@@ -21,6 +21,8 @@ verifyingCONF() {
 	if [[ ! -e "$WALLPAPER_CONF_PATH" ]]; then
 		touch "$WALLPAPER_CONF_PATH" || \
 			verbose error "Config file does not exist!!"
+		[[ ! "$(cat test.toml)" == "" ]] && \
+			verbose error "Config file is empty, try modifing it!!"
 	fi
 }
 
@@ -39,7 +41,6 @@ assignTEMPCONF() {
 		for key in "${keys[@]}"; do
 			value="$(reader "$section"."$key")"
 			declare -g "${section}_$key=$value"
-
 		done
 	done
 }

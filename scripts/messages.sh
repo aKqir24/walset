@@ -25,7 +25,7 @@ verbose() {
 		"sorry")
 			echo -e "walsetup \033[1;33m[WARNING]: $message";;
 		"error")
-			echo -e "walsetup \033[1;31m[ERROR]: $message" ; exit 1;;
+			echo -e "walsetup \033[1;31m[ERROR]: $message" ;;
 		"info")
 			echo -e "walsetup \033[1;34m[INFO]: $message";;
 		esac
@@ -33,6 +33,7 @@ verbose() {
 			kdialog "--$1" "There was a '$1' message found in the program.\n
 			Please consider running this script in your terminal using the '--verbose' option, to the identify the problem!!"
 		fi
+		[[ $1 == "error" ]] && exit 1
 	fi
 }
 wallsetERROR() { verbose error "Failed to set wallpaper..."; exit 1; }
