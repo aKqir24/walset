@@ -5,7 +5,8 @@ applyWAL() {
 	[[ $4 == "static" ]] && wallCYCLE="" || wallCYCLE="--$4"
 	[[ $theming_mode = "light" ]] && colorscheme="-l" || colorscheme=
 	generateGTKTHEME ; generateICONSTHEME ; verbose info "Running 'pywal' to generate the colorscheme"
-	sh -c "wal -q $wallCYCLE $colorscheme --backend $2 $3 -i $1 -n --out-dir $PYWAL_CACHE_DIR" || pywalerror
+	echo "wal $wallCYCLE $colorscheme --backend $2 $3 -i $1 -n --out-dir $PYWAL_CACHE"
+	sh -c "wal $wallCYCLE $colorscheme --backend $2 $3 -i $1 -n --out-dir $PYWAL_CACHE_DIR" || pywalerror
 	[[ -f $PYWAL_CACHE_DIR/colors.sh ]] && . "${PYWAL_CACHE_DIR}/colors.sh" # Load Colors & other values to be used
 	generateGTKTHEME 4 ; applyToPrograms ; reloadTHEMES &
 }
@@ -82,5 +83,5 @@ applyToPrograms() {
 	for themed_program in "${THEMED_PROGRAMS[@]}"; do
 		. "$SCRIPT_PATH/theming/programs/generate.sh" "$themed_program"
 	done
-	verbose info "Colorsceme is applied to: \n${applied[*]}"	
+	verbose info "Program Colorscheme Status: \n${applied[*]}"	
 }

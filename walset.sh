@@ -53,7 +53,8 @@ if $SETUP || $GUI; then
 fi
 
 # Check if --color16 option is enabled
-if $pywal16_light && verbose info "Enabling 16 colors in pywal..."; then
+if $pywal16_light; then
+	verbose info "Enabling 16 colors in pywal..."
 	PYWAL_GENERATE_LIGHT="--cols16 $pywal16_colorscheme"
 fi
 
