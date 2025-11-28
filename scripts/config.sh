@@ -26,6 +26,7 @@ verifyingCONF() {
 		verbose error "Config file is empty, try modifing it!!"
 	fi
 	cat "$WALLPAPER_CONF_PATH"
+	echo "$WALLPAPER_CONF_PATH"
 }
 
 # Read the config
