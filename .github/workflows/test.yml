@@ -25,8 +25,8 @@ jobs:
         pipx install pywal16==3.8.10
         mkdir -p "$HOME/Pictures/Wallpapers"
         wget https://raw.githubusercontent.com/aKqir24/.files/refs/heads/main/.config/walset.toml -O "$HOME/.config/walset.toml"
-        tomlq -i -t ".wallpaper.path = \"$HOME/Pictures/Wallpapers\"" "$HOME/.config/walset.toml"
         tomlq --version
+        tomlq -i -t ".wallpaper.path = \"$HOME/Pictures/Wallpapers\"" "$HOME/.config/walset.toml"
         wget https://raw.githubusercontent.com/aKqir24/.files/main/Pictures/Wallpapers/wallpaper.jpg -O "$HOME/Pictures/Wallpapers/wallpaper.jpg"
     - name: Test the program
       run: |
