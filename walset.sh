@@ -53,8 +53,9 @@ if $SETUP || $GUI; then
 fi
 
 # Check if --color16 option is enabled
-$pywal16_light && verbose info "Enabling 16 colors in pywal..."; \
+if $pywal16_light && verbose info "Enabling 16 colors in pywal..."; then
 	PYWAL_GENERATE_LIGHT="--cols16 $pywal16_colorscheme"
+fi
 
 # call the pywal to get colorsheme
 applyWAL "$wallpaper_path" "$pywal16_backend" "$PYWAL_GENERATE_LIGHT" "$wallpaper_cycle" || \
