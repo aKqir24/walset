@@ -72,22 +72,23 @@ set_wallpaper_with_mode() {
 			fi
 		fi
 	done
-    case "$CH_WALLSETTER" in	
-		"${WALL_SETTERS[0]}") xwallpaper "--$xWallMode" "$image_path" || wallsetERROR;;
-        "${WALL_SETTERS[1]}") hsetroot "$hsetrootMode" "$image_path" || wallsetERROR;;
-        "${WALL_SETTERS[2]}") feh --bg-"$fehMode" "$image_path" || wallsetERROR;;
-        "${WALL_SETTERS[3]}") nitrogen --set-$nitrogenMode "$image_path" || wallsetERROR;;
-        "${WALL_SETTERS[4]}") swaybg -i "$image_path" --mode "$swayMode" || wallsetERROR;;
-		"${WALL_SETTERS[5]}")
+    case "$CH_WALLSETTER" in
+		"${WALL_SETTERS[0]}") $(nohup xgifwallpaper -s $xgifwallpaperMode "$image_path" >/dev/null 2>&1 & disown) || wallsetERROR ;;
+		"${WALL_SETTERS[1]}") xwallpaper "--$xWallMode" "$image_path" || wallsetERROR;;
+        "${WALL_SETTERS[2]}") hsetroot "$hsetrootMode" "$image_path" || wallsetERROR;;
+        "${WALL_SETTERS[3]}") feh --bg-"$fehMode" "$image_path" || wallsetERROR;;
+        "${WALL_SETTERS[4]}") nitrogen --set-$nitrogenMode "$image_path" || wallsetERROR;;
+        "${WALL_SETTERS[5]}") swaybg -i "$image_path" --mode "$swayMode" || wallsetERROR;;
+		"${WALL_SETTERS[6]}")
 			if xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-style --set $xfceMode; then
 				xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-path --set "$image_path"; else wallsetERROR; fi
 		;;
-		"${WALL_SETTERS[6]}")
+		"${WALL_SETTERS[7]}")
 			if gsettings set org.gnome.desktop.background picture-uri "file://$image_path"; then
 				gsettings set org.gnome.desktop.background picture-options "$gnomeMode"; else wallsetERROR; fi
 		;;
-		"${WALL_SETTERS[7]}") pcmanfm --set-wallpaper "$image_path" --wallpaper-mode "$pcmanfmMode" || wallsetERROR ;;
-		"${WALL_SETTERS[8]}") $(nohup xgifwallpaper -s $xgifwallpaperMode "$image_path" >/dev/null 2>&1 & disown) || wallsetERROR ;;
+		"${WALL_SETTERS[8]}") pcmanfm --set-wallpaper "$image_path" --wallpaper-mode "$pcmanfmMode" || wallsetERROR ;;
+		
 		*) verbose error "No supported wallpaper setter found!" return 1 ;;
 	esac
 }
