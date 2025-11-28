@@ -1,8 +1,14 @@
 
 <div align="center" >
-    <img height=220 src="https://github.com/user-attachments/assets/a270165b-8fd3-421b-916d-516dca8b364f"></img>
-    <br><img src="https://img.shields.io/badge/LATEST-1.1.0-brightgreen?style=for-the-badge"></img>
-    <p>A bash script that expands the usage of pywal colors and to ease the configuration in <a href="https://github.com/eylles/pywal16">pywal16</a>.</p></div>
+<img height=220 src="https://github.com/user-attachments/assets/a270165b-8fd3-421b-916d-516dca8b364f"></img>
+
+![GitHub Release](https://img.shields.io/github/v/release/aKqir24/walset?style=for-the-badge)
+![GitHub repo size](https://img.shields.io/github/repo-size/aKqir24/walset?style=for-the-badge)
+![Codacy grade](https://img.shields.io/codacy/grade/3d58744e1c654c41a5d91562920c6bc0?style=for-the-badge)
+![GitHub License](https://img.shields.io/github/license/aKqir24/walset?style=for-the-badge)
+
+A bash script that expands the usage of `pywal16's` colors and to ease the configuration.
+</div>
 
 > [!important]
 > The script may work in the using the normal `pywal` but it may fail to complete some steps of this script, so please use this fork of pywal called [pywal16](https://github.com/eylles/pywal16) in order to complete some steps in the script, also the wallpapers are not uploaded in the repo, so please configure the wallpaper directory first.
