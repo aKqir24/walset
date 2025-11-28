@@ -4,13 +4,26 @@
 THEMING_ASSETS="$WORK_PATH/assets"
 DEFAULT_PYWAL16_OUT_DIR="$HOME/.cache/wal"
 WALLPAPER_CONF_PATH="$HOME/.config/walset.toml"
+XSETTINGSD_CONF="$HOME/.xsettingsd.conf"
+
+# Setup the output paths during pywal's export
+if [[ -z $PYWAL_CACHE_DIR ]]; then
+	verbose warning "'PYWAL_CACHE_OUT' is not set! Add it to your .bashrc or the default will be used!!"
+	verbose info "Setting up output directory"
+	PYWAL_CACHE_DIR="$DEFAULT_PYWAL16_OUT_DIR"
+fi
 WALLPAPER_CACHE="$PYWAL_CACHE_DIR/wallpaper.png"
-PYWAL_TEMPLATES="$PYWAL_CACHE_DIR/templates/"
+PYWAL_TEMPLATES="$PYWAL_CACHE_DIR/templates"
 
 # ARRAY OF THE PATHS TO PROGRAMS SCRIPTS
 for program in "terminal" "notification" "status" "launcher"; do
 	PROGRAMS_DIR+=("$SCRIPT_PATH/theming/programs/$program")
 done
+
+# Figure xsettingsd config path
+if [[ ! -f $XSETTINGSD_CONF ]]; then
+	XSETTINGSD_CONF="$HOME/.config/xsettingsd/xsettingsd.conf"
+fi
 
 # GTK THEMING PATHS
 USER_THEME_FOLDER="$HOME/.local/share/themes/pywal"

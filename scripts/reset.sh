@@ -15,5 +15,6 @@ remove_files() {
 	done
 }
 
+# TODO: Add a tomq reset function
 remove_files
 . "$SCRIPT_PATH/startup.sh"

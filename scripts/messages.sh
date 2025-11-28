@@ -9,6 +9,7 @@ are writen in the https://github.com/aKqir24/pywal16_scripts.
 
 Usage: $0 [OPTIONS]
   --gui: To launch a configuration GUI and apply the configurations.
+  --reload: enables programs to reload after running pywal, eg.(gtk|icons|wm)
   --setup: Show dialogs that sets up the configurations in order.
   --reset: To remove all set features, and set them all to default.
   --verbose: To show log messages when each step of the script is executed.
@@ -25,7 +26,7 @@ verbose() {
 		"sorry")
 			echo -e "walsetup \033[1;33m[WARNING]: $message";;
 		"error")
-			echo -e "walsetup \033[1;31m[ERROR]: $message" ; exit 1;;
+			echo -e "walsetup \033[1;31m[ERROR]: $message" ;;
 		"info")
 			echo -e "walsetup \033[1;34m[INFO]: $message";;
 		esac
@@ -33,6 +34,7 @@ verbose() {
 			kdialog "--$1" "There was a '$1' message found in the program.\n
 			Please consider running this script in your terminal using the '--verbose' option, to the identify the problem!!"
 		fi
+		[[ $1 == "error" ]] && exit 1
 	fi
 }
 wallsetERROR() { verbose error "Failed to set wallpaper..."; exit 1; }
