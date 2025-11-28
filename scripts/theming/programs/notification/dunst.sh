@@ -1,3 +1,5 @@
+#!/bin/sh
+
 write_toml "
 .global.background = \"$color0\" |
 .global.foreground = \"$color15\" |

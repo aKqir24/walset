@@ -2,7 +2,7 @@
 
 # Function to apply wallpaper using pywal16
 applyWAL() {
-	[[ $4 = "static" ]] && wallCYCLE="" || wallCYCLE="--$4"
+	[[ $4 == "static" ]] && wallCYCLE="" || wallCYCLE="--$4"
 	[[ $theming_mode = "light" ]] && colorscheme="-l" || colorscheme=
 	generateGTKTHEME ; generateICONSTHEME ; verbose info "Running 'pywal' to generate the colorscheme"
 	wal -q "$wallCYCLE" $colorscheme --backend "$2" $3 -i "$1" -n --out-dir "$PYWAL_CACHE_DIR" || pywalerror
@@ -16,7 +16,6 @@ generateGTKTHEME() {
 		if [[ -z $GTK_INS_TAG ]] && [[ $1 != 4 ]]; then
 			verbose info "Preparing Gtk theme templates"
 			. "$SCRIPT_PATH/theming/gtk.sh" "@$theming_accent"
-			echo "gtk3"
 		else
 			# Used as a workaround in the syntax error in template file 'gtk-4.0.base' on line '5069-5075' in `pywal16`.
 			. "$SCRIPT_PATH/theming/gtk4.sh" "{$theming_accent}"
