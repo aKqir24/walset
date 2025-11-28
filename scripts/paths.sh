@@ -4,6 +4,13 @@
 THEMING_ASSETS="$WORK_PATH/assets"
 DEFAULT_PYWAL16_OUT_DIR="$HOME/.cache/wal"
 WALLPAPER_CONF_PATH="$HOME/.config/walset.toml"
+
+# Default paths for output
+if [[ -z $PYWAL_CACHE_DIR ]]; then
+	verbose warning "'PYWAL_CACHE_OUT' is not set! Add it to your .bashrc or the default will be used!!"
+	verbose info "Setting up output directory"
+	PYWAL_CACHE_DIR="$DEFAULT_PYWAL16_OUT_DIR"
+fi
 WALLPAPER_CACHE="$PYWAL_CACHE_DIR/wallpaper.png"
 PYWAL_TEMPLATES="$PYWAL_CACHE_DIR/templates"
 

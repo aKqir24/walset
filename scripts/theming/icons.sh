@@ -17,6 +17,6 @@ done
 # Link the pywal generated folder icons
 for user_icon in "$BASE_FOLDER_ICONS"/*; do
 	ICON_NAME="$(basename "$user_icon")" ; ICON_PATH="$USER_MAIN_ICONS/$ICON_NAME"
-	[ -e "$PYWAL_TEMPLATES/$ICON_NAME" ] || ln -s "$user_icon" "$PYWAL_TEMPLATES"
+	[ -e "$PYWAL_TEMPLATES/$ICON_NAME" ] || ln -s "$user_icon" "$PYWAL_TEMPLATES/"
 	[ -h "$ICON_PATH" ] || ln -s "$PYWAL_CACHE_DIR/$ICON_NAME" "$ICON_PATH"
 done

@@ -10,12 +10,7 @@ if $LOAD; then
 	fi
 fi
 
-# Check for PYWAL16_OUT_DIR
-if [[ -z $PYWAL_CACHE_DIR ]]; then
-	verbose warning "'PYWAL_CACHE_OUT' is not set! Add it to your .bashrc or the default will be used!!"
-	verbose info "Setting up output directory"
-	PYWAL_CACHE_DIR="$DEFAULT_PYWAL16_OUT_DIR"
-fi
+# Check for the following paths
 if [[ ! -d $PYWAL_CACHE_DIR ]]; then
 	mkdir -p "$PYWAL_CACHE_DIR"
 fi
