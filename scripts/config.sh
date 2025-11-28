@@ -22,7 +22,7 @@ verifyingCONF() {
 		touch "$WALLPAPER_CONF_PATH" || \
 			verbose error "Config file does not exist!!"
 	fi	
-	if [[ -z "$(cat "$WALLPAPER_CONF_PATH")" ]]; then
+	if [[ ! -s "$WALLPAPER_CONF_PATH" ]]; then
 		verbose error "Config file is empty, try modifying it!!"
 	fi
 }
