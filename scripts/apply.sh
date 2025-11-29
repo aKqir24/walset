@@ -55,13 +55,13 @@ set_THEME() {
 # Reload Gtk themes using xsettingsd
 reloadTHEMES() {
 	local default_xsettings_config="$HOME/.xsettingsd.conf"
-	xsettingsd_config="$HOME/.config/xsettingsd/xsettingsd.conf"
+	local xsettingsd_config="$HOME/.config/xsettingsd/xsettingsd.conf"
 	[[ -f $xsettingsd_config ]] || xsettingsd_config="$default_xsettings_config"
 	set_THEME "Icon" "Net/IconThemeName" && set_THEME "Gtk" "Net/ThemeName"
 	verbose info "Reloading Gtk & Icon themes"
-	(pgrep -x xsettingsd && pkill -HUP xsettingsd)>/dev/null 2>&1
-	xsettingsd --config "$xsettingsd_config" >/dev/null 2>&1
-	gtk-update-icon-cache "$USER_ICONS_FOLDER/" >/dev/null 2>&1 &
+	(pgrep -x xsettingsd && pkill -HUP xsettingsd)#>/dev/null 2>&1
+	xsettingsd --config "$xsettingsd_config" #>/dev/null 2>&1
+	gtk-update-icon-cache "$USER_ICONS_FOLDER/" #>/dev/null 2>&1 &
 }
 
 # Still pywalfox uses 'The Default OutDir in pywal so just link them to the default'
