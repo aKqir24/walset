@@ -9,6 +9,7 @@ are writen in the https://github.com/aKqir24/pywal16_scripts.
 
 Usage: $0 [OPTIONS]
   --gui: To launch a configuration GUI and apply the configurations.
+  --reload: enables programs to reload after running pywal, eg.(gtk|icons|wm)
   --setup: Show dialogs that sets up the configurations in order.
   --reset: To remove all set features, and set them all to default.
   --verbose: To show log messages when each step of the script is executed.

@@ -1,14 +1,15 @@
 #!/bin/sh
 
 # Function to apply wallpaper using pywal16
-applyWAL() {
-	[[ $4 == "static" ]] && wallCYCLE="" || wallCYCLE="--$4"
-	[[ $theming_mode = "light" ]] && colorscheme="-l" || colorscheme=
+applyWAL() {	
 	generateGTKTHEME ; generateICONSTHEME ; verbose info "Running 'pywal' to generate the colorscheme"
-	echo "wal $wallCYCLE $colorscheme --backend $2 $3 -i $1 -n --out-dir $PYWAL_CACHE"
-	sh -c "wal $wallCYCLE $colorscheme --backend $2 $3 -i $1 -n --out-dir $PYWAL_CACHE_DIR" || pywalerror
+	echo "wal $4 $colorscheme --backend $2 $3 -i $1 -n --out-dir $PYWAL_CACHE_DIR $5"
+	sh -c "wal $4 $colorscheme --backend $2 $3 -i $1 -n --out-dir $PYWAL_CACHE_DIR $5" || pywalerror
 	[[ -f $PYWAL_CACHE_DIR/colors.sh ]] && . "${PYWAL_CACHE_DIR}/colors.sh" # Load Colors & other values to be used
-	generateGTKTHEME 4 ; applyToPrograms ; reloadTHEMES &
+	generateGTKTHEME 4 ; set_THEME "Icon" "Net/IconThemeName" && set_THEME "Gtk" "Net/ThemeName" ; applyToPrograms 
+	if $RELOAD; then 
+		reloadTHEMES
+	fi
 }
 
 # Apply gtk theme / reload gtk theme
@@ -41,27 +42,23 @@ generateICONSTHEME() {
 
 # Set Each Theme's Name
 set_THEME() {
-	if ! grep -q "^${2} \"pywal\"" "$xsettingsd_config"; then
+	if ! grep -q "^${2} \"pywal\"" "$XSETTINGSD_CONF"; then
 		verbose info "Setting $1 Theme..."
-		if grep -q "^${2} " "$xsettingsd_config"; then
-			sed -i "s|\(${2} \)\"[^\"]*\"|\1\"pywal\"|" "$xsettingsd_config"
+		if grep -q "^${2} " "$XSETTINGSD_CONF"; then
+			sed -i "s|\(${2} \)\"[^\"]*\"|\1\"pywal\"|" "$XSETTINGSD_CONF"
 		else
-			echo "${2} \"pywal\"" >> "$xsettingsd_config"
+			echo "${2} \"pywal\"" >> "$XSETTINGSD_CONF"
 		fi
 
 	fi
 }
 
 # Reload Gtk themes using xsettingsd
-reloadTHEMES() {
-	local default_xsettings_config="$HOME/.xsettingsd.conf"
-	local xsettingsd_config="$HOME/.config/xsettingsd/xsettingsd.conf"
-	[[ -f $xsettingsd_config ]] || xsettingsd_config="$default_xsettings_config"
-	set_THEME "Icon" "Net/IconThemeName" && set_THEME "Gtk" "Net/ThemeName"
+reloadTHEMES() {	
 	verbose info "Reloading Gtk & Icon themes"
-	(pgrep -x xsettingsd && pkill -HUP xsettingsd)#>/dev/null 2>&1
-	xsettingsd --config "$xsettingsd_config" #>/dev/null 2>&1
-	gtk-update-icon-cache "$USER_ICONS_FOLDER/" #>/dev/null 2>&1 &
+	(pgrep -x xsettingsd && pkill -HUP xsettingsd)>/dev/null 2>&1
+	xsettingsd --config "$XSETTINGSD_CONF">/dev/null 2>&1
+	gtk-update-icon-cache "$USER_ICONS_FOLDER/">/dev/null 2>&1 &
 }
 
 # Still pywalfox uses 'The Default OutDir in pywal so just link them to the default'

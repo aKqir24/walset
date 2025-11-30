@@ -5,6 +5,7 @@ GUI=false
 LOAD=false
 RESET=false
 SETUP=false
+RELOAD=false
 VERBOSE=false
 THEMING_GTK=true
 THEME_MODE="dark"
@@ -63,4 +64,14 @@ saveCONFIG() {
 		.pywal16.light = $PYWAL_LIGHT |
 		.pywal16.colorscheme = \"$PYWAL_COLORSCHEME\"" \
 			"$WALLPAPER_CONF_PATH"
+}
+
+check_pywal_option() {
+	# 1=pywal_option_condition | 2=option_variable | 3=option_value | 4=message
+	if [[ $1 == $5 ]] || [[ $1 == $6 ]]; then
+		verbose info "$4"
+		declare -g "$2=${3}"
+	else
+		unset $2
+	fi
 }

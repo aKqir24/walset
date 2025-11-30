@@ -11,7 +11,7 @@ SCRIPT_FILES=(messages paths config startup apply)
 for script in "${SCRIPT_FILES[@]}"; do . "$SCRIPT_PATH/$script.sh"; done
 
 # Options To be used
-OPTS=$(getopt -o -v --long verbose,reset,load,setup,gui,help -- "$@") ; eval set -- "$OPTS"
+OPTS=$(getopt -o -v --long verbose,reset,load,reload,setup,gui,help -- "$@") ; eval set -- "$OPTS"
 while true; do
 	case "$1" in
 		--gui) GUI=true; shift;;
@@ -19,6 +19,7 @@ while true; do
 		--reset) RESET=true; shift ;;
 		--verbose) VERBOSE=true; shift ;;
 		--load) LOAD=true; shift;;
+		--reload) RELOAD=true; shift;;
 		--help) echo "$HELP_MESSAGE"; exit 0;;
 		--) shift; break ;;
 	esac
@@ -52,16 +53,19 @@ if $SETUP || $GUI; then
 	verifyingCONF ; saveCONFIG ; assignTEMPCONF
 fi
 
-# Check if --color16 option is enabled
-if $pywal16_light; then
-	verbose info "Enabling 16 colors in pywal..."
-	PYWAL_GENERATE_LIGHT="--cols16 $pywal16_colorscheme"
-fi
+# Check pywal options if either enabled or disabled
+check_pywal_option $pywal16_light "PYWAL_GENERATE_LIGHT" \
+	"--cols16 $pywal16_colorscheme" "Enabling 16 colors in pywal..." true
+check_pywal_option "$wallpaper_cycle" "WALLPAPER_CYCLE_MODE" \
+	"--$wallpaper_cycle" "Identifying wallpaper change cycle" "iterative" "recursive"
+check_pywal_option $theming_mode "LIGHT_COLORS" \
+	"-l" "Enabling Generate light colors..." "light"
+check_pywal_option $RELOAD "PYWAL_RELOAD" \
+	"-e" "Skip Reloading gtk|icons|wm|programs" false
 
 # call the pywal to get colorsheme
-applyWAL "$wallpaper_path" "$pywal16_backend" "$PYWAL_GENERATE_LIGHT" "$wallpaper_cycle" || \
-	$( kdialog --msgbox "Backend is not found, using default instead!!" ;
-		 applyWAL "$wallpaper_path" "wal" "$PYWAL_GENERATE_LIGHT" "$wallpaper_cycle" )
+applyWAL "$wallpaper_path" "$pywal16_backend" \
+	"$PYWAL_GENERATE_LIGHT" "$WALLPAPER_CYCLE_MODE" "$LIGHT_COLORS" "$PYWAL_RELOAD"
 
 # Make a wallpaper cache to expand the features in setting the wallpaper
 [[ -f "$WALLPAPER_CACHE" ]] && rm "$WALLPAPER_CACHE"
