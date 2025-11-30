@@ -30,4 +30,4 @@ jobs:
         wget https://raw.githubusercontent.com/aKqir24/.files/main/Pictures/Wallpapers/wallpaper.jpg -O "$HOME/Pictures/Wallpapers/wallpaper.jpg"
     - name: Test the program
       run: |
-        bash walset.sh --load --verbose
+        bash walset.sh --load --verbose && exit 0
