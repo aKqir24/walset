@@ -38,7 +38,7 @@ assignTEMPCONF() {
 		case $section in
 			"${tables[0]}") keys=( "cycle" "type" "path" "mode" "animated" ) ;;
 			"${tables[1]}") keys=( "gtk" "icons" "mode" "accent" "programs" ) ;;
-			"${tables[2]}") keys=( "backend" "light" "colorscheme" ) ;;
+			"${tables[2]}") keys=( "backend" "light" "colorscheme" "reload" ) ;;
 		esac
 		for key in "${keys[@]}"; do
 			value="$(reader "$section"."$key")"
@@ -60,6 +60,7 @@ saveCONFIG() {
 		.theming.icons = $THEMING_ICONS |
 		.theming.mode = \"$THEME_MODE\" |
 		.theming.accent = \"$THEME_ACCENT_COLOR\" |
+		.pywal16.reload = \"$RELOAD\" |
 		.pywal16.backend = \"$PYWAL_BACKEND\" |
 		.pywal16.light = $PYWAL_LIGHT |
 		.pywal16.colorscheme = \"$PYWAL_COLORSCHEME\"" \
