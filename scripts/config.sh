@@ -5,6 +5,7 @@ GUI=false
 LOAD=false
 RESET=false
 SETUP=false
+RELOAD=false
 VERBOSE=false
 THEMING_GTK=true
 THEME_MODE="dark"
@@ -16,13 +17,20 @@ ANIMATED_WALLPAPER=false
 THEMED_PROGRAMS=( 'i3status_rust' 'alacritty' 'rofi' 'dunst' )
 
 # Write config file
-verbose info "Writting & verifying config file"
-[[ -e "$WALLPAPER_CONF_PATH" ]] || touch "$WALLPAPER_CONF_PATH"
-[[ -d "$PYWAL_CACHE_DIR" ]] || mkdir -p "$PYWAL_DIR_CACHE"
+verifyingCONF() {
+	verbose info "Verifying the config file"
+	if [[ ! -e "$WALLPAPER_CONF_PATH" ]]; then
+		touch "$WALLPAPER_CONF_PATH" || \
+			verbose error "Config file does not exist!!"
+	fi	
+	if [[ ! -s "$WALLPAPER_CONF_PATH" ]]; then
+		verbose error "Config file is empty, try modifying it!!"
+	fi
+}
 
 # Read the config
-verbose "Reading config file"
 assignTEMPCONF() {
+	verbose info "Reading config file"
 	tables=('wallpaper' 'theming' 'pywal16')
 	JSON_TOML_OUTPUT=$( tomlq '.' "$WALLPAPER_CONF_PATH" )
 	reader() { jq -r ".$1" <<< "$JSON_TOML_OUTPUT" ; }
@@ -35,14 +43,13 @@ assignTEMPCONF() {
 		for key in "${keys[@]}"; do
 			value="$(reader "$section"."$key")"
 			declare -g "${section}_$key=$value"
-
 		done
 	done
 }
 
 # Save config then read it
 saveCONFIG() {
-	verbose info "Saving configurations"
+	verbose info "Saving the configurations"
 	tomlq -i -t "
 		.wallpaper.cycle = \"$WALLPAPER_CYCLE\" |
 		.wallpaper.type = \"$WALLPAPER_TYPE\" |
@@ -57,4 +64,20 @@ saveCONFIG() {
 		.pywal16.light = $PYWAL_LIGHT |
 		.pywal16.colorscheme = \"$PYWAL_COLORSCHEME\"" \
 			"$WALLPAPER_CONF_PATH"
+}
+
+check_pywal_option() {
+	# 1=pywal_option_condition | 2=option_variable | 3=option_value | 4=message
+	if [[ $1 == $5 ]] || [[ $1 == $6 ]]; then
+		verbose info "$4"
+		declare -g "$2=${3}"
+	else
+		unset $2
+	fi
+}
+
+check_walset_option() {
+	if [[ $1 == $2 ]]; then
+		sh -c "$3"
+	fi
 }

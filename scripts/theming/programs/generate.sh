@@ -8,20 +8,21 @@ write_toml() {
     tomlq -i -t "$filter" "$file" >/dev/null || die "$file"
 }
 
-
 # Compare the options and run the scripts
 PROGRAM="$1" ; CONFIG_DIR="$(echo "$theming_programs" | jq -r ".\"$PROGRAM\"")"
-PROGRAM_VERBOSE=" 		  - $PROGRAM\n"
 case "$PROGRAM" in
-	"alacritty") PROGRAMS_CAT=0 ; applied+="$PROGRAM_VERBOSE" ;;
-	"dunst") PROGRAMS_CAT=1 ; applied+="$PROGRAM_VERBOSE" ;;
-	"i3status_rust") PROGRAMS_CAT=2 ; applied+="$PROGRAM_VERBOSE" ;;
-	"rofi") PROGRAMS_CAT=3 ; applied+="$PROGRAM_VERBOSE" ;;
+	"alacritty") PROGRAMS_CAT=0;;
+	"dunst") PROGRAMS_CAT=1;;
+	"i3status_rust") PROGRAMS_CAT=2;;
+	"rofi") PROGRAMS_CAT=3;;
 esac
 
 # Write the colorsceme in the toml file by calling a another script
 if [[ -f $CONFIG_DIR ]]; then
+	PROGRAM_VERBOSE=" 		  - $PROGRAM\n"
 	. "${PROGRAMS_DIR["$PROGRAMS_CAT"]}/$PROGRAM.sh" "$CONFIG_DIR"
 else
-	verbose sorry "Missing config folder for $1; color scheme skipped!!"
+	PROGRAM_VERBOSE=" 		  x $PROGRAM\n"
 fi
+
+applied+="$PROGRAM_VERBOSE"

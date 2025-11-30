@@ -10,18 +10,14 @@ if $LOAD; then
 	fi
 fi
 
-# Check for PYWAL16_OUT_DIR
-if [[ -z $PYWAL_CACHE_DIR ]]; then
-	verbose warning "'PYWAL_CACHE_OUT' is not set! Add it to your .bashrc or the default will be used!!"
-	verbose info "Setting up output directory"
-	$PYWAL_OUT_DIR="$DEFAULT_PYWAL16_OUT_DIR"
-elif [[ ! -d $PYWAL_CACHE_DIR ]]; then
+# Check for the following paths
+if [[ ! -d $PYWAL_CACHE_DIR ]]; then
 	mkdir -p "$PYWAL_CACHE_DIR"
 fi
 
 # Check for PYWAL_OUT_DIR temp folder
-if [[ ! -d $PYWAL_CACHE_DIR"/templates" ]]; then
-	mkdir -p "$PYWAL_CACHE_DIR/templates"
+if [[ ! -d $PYWAL_TEMPLATES ]]; then
+	mkdir -p "$PYWAL_TEMPLATES"
 fi
 
 # Check if some features are already present
