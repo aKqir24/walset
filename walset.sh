@@ -11,6 +11,7 @@ SCRIPT_FILES=(messages paths config startup apply)
 for script in "${SCRIPT_FILES[@]}"; do . "$SCRIPT_PATH/$script.sh"; done
 
 # Options To be used
+# TODO: Debug option
 OPTS=$(getopt -o -v --long verbose,reset,load,reload,setup,gui,help -- "$@") ; eval set -- "$OPTS"
 while true; do
 	case "$1" in
@@ -44,13 +45,15 @@ else
 	fi
 fi
 
-# Import some features
-$RESET && . "$SCRIPT_PATH/reset.sh"
-. "$SCRIPT_PATH/wallpaper.sh" && select_wallpaper
-
 # Only save the config when configured!
 if $SETUP || $GUI; then
 	verifyingCONF ; saveCONFIG ; assignTEMPCONF
+fi
+
+# Import some features
+$RESET && . "$SCRIPT_PATH/reset.sh"
+if [[ $wallpaper_type != "none" ]]; then
+	. "$SCRIPT_PATH/wallpaper.sh" && select_wallpaper
 fi
 
 # Check pywal options if either enabled or disabled
@@ -71,4 +74,5 @@ applyWAL "$wallpaper_path" "$pywal16_backend" \
 [[ -f "$WALLPAPER_CACHE" ]] && rm "$WALLPAPER_CACHE"
 
 # Finalize Process and making them faster by Functions
-linkCONF_DIR ; setup_wallpaper && verbose info "Process finished!!"
+linkCONF_DIR ; [[ $wallpaper_type != "none" ]] && setup_wallpaper 
+verbose info "Process finished!!"

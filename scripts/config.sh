@@ -75,3 +75,9 @@ check_pywal_option() {
 		unset $2
 	fi
 }
+
+check_walset_option() {
+	if [[ $1 == $2 ]]; then
+		sh -c "$3"
+	fi
+}

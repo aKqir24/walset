@@ -2,14 +2,13 @@
 
 # Function to apply wallpaper using pywal16
 applyWAL() {	
-	generateGTKTHEME ; generateICONSTHEME ; verbose info "Running 'pywal' to generate the colorscheme"
-	echo "wal $4 $colorscheme --backend $2 $3 -i $1 -n --out-dir $PYWAL_CACHE_DIR $5"
-	sh -c "wal $4 $colorscheme --backend $2 $3 -i $1 -n --out-dir $PYWAL_CACHE_DIR $5" || pywalerror
+	generateGTKTHEME ; generateICONSTHEME 
+	verbose info "Running 'pywal' to generate the colorscheme"
+	#echo "wal $4 --backend $2 $3 -i $1 -n --out-dir $PYWAL_CACHE_DIR $5"
+	sh -c "wal -q $4 --backend $2 $3 -i $1 -n --out-dir $PYWAL_CACHE_DIR $5" || pywalerror
 	[[ -f $PYWAL_CACHE_DIR/colors.sh ]] && . "${PYWAL_CACHE_DIR}/colors.sh" # Load Colors & other values to be used
 	generateGTKTHEME 4 ; set_THEME "Icon" "Net/IconThemeName" && set_THEME "Gtk" "Net/ThemeName" ; applyToPrograms 
-	if $RELOAD; then 
-		reloadTHEMES
-	fi
+	if $RELOAD; then reloadTHEMES; fi
 }
 
 # Apply gtk theme / reload gtk theme
