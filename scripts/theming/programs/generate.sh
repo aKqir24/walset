@@ -19,10 +19,10 @@ esac
 
 # Write the colorsceme in the toml file by calling a another script
 if [[ -f $CONFIG_DIR ]]; then
-	PROGRAM_VERBOSE=" 		  - $PROGRAM\n"
+	PROGRAM_VERBOSE=" 		  / - $PROGRAM\n"
 	. "${PROGRAMS_DIR["$PROGRAMS_CAT"]}/$PROGRAM.sh" "$CONFIG_DIR"
 else
-	PROGRAM_VERBOSE=" 		  x $PROGRAM\n"
+	PROGRAM_VERBOSE=" 		  x - $PROGRAM\n"
 fi
 
 applied+="$PROGRAM_VERBOSE"
