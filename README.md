@@ -1,6 +1,6 @@
 
 <div align="center" >
-<img height=220 src="https://github.com/user-attachments/assets/a270165b-8fd3-421b-916d-516dca8b364f"></img>
+<img height=220 alt="A cute kitten" src="https://github.com/user-attachments/assets/a270165b-8fd3-421b-916d-516dca8b364f"></img>
 
 ![GitHub Release](https://img.shields.io/github/v/release/aKqir24/walset?style=for-the-badge)
 ![Codacy grade](https://img.shields.io/codacy/grade/3d58744e1c654c41a5d91562920c6bc0?style=for-the-badge)
@@ -14,12 +14,13 @@ A bash script that expands the usage of `pywal16's` colors and to ease the confi
 >
 
 <div align="center" >
-<video src="https://private-user-images.githubusercontent.com/142222025/516279138-b4b66d0b-c6f2-418f-aafa-efdc0ce85fc0.mp4">
-    </video>
-    <p>The <a href="https://www.youtube.com/watch?v=swEchSYP3_o">youtube video</a> showcases realtime theme changing.</p>
+<video src="https://private-user-images.githubusercontent.com/142222025/516279138-b4b66d0b-c6f2-418f-aafa-efdc0ce85fc0.mp4"></video>
+
+The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realtime theme changing.
 </div>
 
 ## FEATURES
+
 - **Finished**
   - Dialog configuration along with pywal options.
   - Pywal colors to some configurable programs. ( as toml config arrays )
@@ -37,13 +38,14 @@ A bash script that expands the usage of `pywal16's` colors and to ease the confi
   - Gif wallpaper support limitation fix.
 
 ## SETUP
+
 _**DEPENDENCIES**_
-- `pywal16`
-- `kdialog`
-- `imagemagick`
+
 - `yq`
+- `pywal16`
+- `kdialog` so to be `python-gi`
 - `xsettingsd` (optional)
-- `python` & `python-gi`(for gui configuration) - In development
+- `imagemagick`
 - A wallpaper setter (optional):
   - `feh`
   - `hsetroot`
@@ -52,19 +54,23 @@ _**DEPENDENCIES**_
   - `xgifwallpaper` (for gif wallpaper animations)
 
 _**DISTRO**_
+
 - Debian ( or Other Debian based distro )
+
 ```bash
 sudo apt install kdialog pipx yq imagemagick xwallpaper
 pipx install pywal16
 ```
 
 - Arch / AUR
+
 ```bash
 # You can use something else that works for you like paru
 yay -S kdialog pywal16 yq imagemagick xwallpaper
 ```
 
 ## USAGE
+
 Run the following commands in your terminal:
 
 ```bash
@@ -86,7 +92,8 @@ bash walsetup.sh [OPTION]
 > [!note]
 > Not all are covered like changing the values of a wm config file, in this script yet, so feel free to commit some improvements to it...
 
-## CONFIG 
+## CONFIG
+
 The config file is located in `$HOME/.config/walset.toml`.
 Here is a sample config, I recommend to use it cause it is much easier to setup:
 ````TOML
@@ -115,6 +122,7 @@ colorscheme = "darken"
 ````
 
 ## SPEACIAL THANKS
+
 - `deviantfero`: [wpgtk's templates](https://github.com/deviantfero/wpgtk-templates) for the _gtk2/3_ base theme.
 - `daniruiz`: [Flat-Remix-GTK](https://github.com/daniruiz/Flat-Remix-GTK) for the _gtk4_ base theme.
 - `daniruiz`: [Flat-Remix-Icon_Pack](https://github.com/daniruiz/Flat-Remix) for the base icon pack.
