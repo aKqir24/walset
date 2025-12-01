@@ -1,6 +1,6 @@
 
 <div align="center" >
-<img height=220 src="https://github.com/user-attachments/assets/a270165b-8fd3-421b-916d-516dca8b364f"></img>
+<img height=220 alt="A cute kitten" src="https://github.com/user-attachments/assets/a270165b-8fd3-421b-916d-516dca8b364f"></img>
 
 ![GitHub Release](https://img.shields.io/github/v/release/aKqir24/walset?style=for-the-badge)
 ![Codacy grade](https://img.shields.io/codacy/grade/3d58744e1c654c41a5d91562920c6bc0?style=for-the-badge)
