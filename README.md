@@ -20,6 +20,7 @@ A bash script that expands the usage of `pywal16's` colors and to ease the confi
 </div>
 
 ## FEATURES
+
 - **Finished**
   - Dialog configuration along with pywal options.
   - Pywal colors to some configurable programs. ( as toml config arrays )
@@ -37,6 +38,7 @@ A bash script that expands the usage of `pywal16's` colors and to ease the confi
   - Gif wallpaper support limitation fix.
 
 ## SETUP
+
 _**DEPENDENCIES**_
 - `pywal16`
 - `kdialog`
@@ -65,6 +67,7 @@ yay -S kdialog pywal16 yq imagemagick xwallpaper
 ```
 
 ## USAGE
+
 Run the following commands in your terminal:
 
 ```bash
@@ -86,7 +89,8 @@ bash walsetup.sh [OPTION]
 > [!note]
 > Not all are covered like changing the values of a wm config file, in this script yet, so feel free to commit some improvements to it...
 
-## CONFIG 
+## CONFIG
+
 The config file is located in `$HOME/.config/walset.toml`.
 Here is a sample config, I recommend to use it cause it is much easier to setup:
 ````TOML
@@ -115,6 +119,7 @@ colorscheme = "darken"
 ````
 
 ## SPEACIAL THANKS
+
 - `deviantfero`: [wpgtk's templates](https://github.com/deviantfero/wpgtk-templates) for the _gtk2/3_ base theme.
 - `daniruiz`: [Flat-Remix-GTK](https://github.com/daniruiz/Flat-Remix-GTK) for the _gtk4_ base theme.
 - `daniruiz`: [Flat-Remix-Icon_Pack](https://github.com/daniruiz/Flat-Remix) for the base icon pack.

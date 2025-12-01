@@ -73,7 +73,7 @@ check_pywal_option() {
 		verbose info "$4"
 		declare -g "$2=${3}"
 	else
-		unset $2
+		unset "$2"
 	fi
 }
 

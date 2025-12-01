@@ -57,13 +57,13 @@ if [[ $wallpaper_type != "none" ]]; then
 fi
 
 # Check pywal options if either enabled or disabled
-check_pywal_option $pywal16_light "PYWAL_GENERATE_LIGHT" \
+check_pywal_option "$pywal16_light" "PYWAL_GENERATE_LIGHT" \
 	"--cols16 $pywal16_colorscheme" "Enabling 16 colors in pywal..." true
 check_pywal_option "$wallpaper_cycle" "WALLPAPER_CYCLE_MODE" \
 	"--$wallpaper_cycle" "Identifying wallpaper change cycle" "iterative" "recursive"
-check_pywal_option $theming_mode "LIGHT_COLORS" \
+check_pywal_option "$theming_mode" "LIGHT_COLORS" \
 	"-l" "Enabling Generate light colors..." "light"
-check_pywal_option $RELOAD "PYWAL_RELOAD" \
+check_pywal_option "$RELOAD" "PYWAL_RELOAD" \
 	"-e" "Skip Reloading gtk|icons|wm|programs" false
 
 # call the pywal to get colorsheme
