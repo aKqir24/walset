@@ -40,12 +40,12 @@ A bash script that expands the usage of `pywal16's` colors and to ease the confi
 ## SETUP
 
 _**DEPENDENCIES**_
-- `pywal16`
-- `kdialog`
-- `imagemagick`
+
 - `yq`
+- `pywal16`
+- `kdialog` so to be `python-gi`
 - `xsettingsd` (optional)
-- `python` & `python-gi`(for gui configuration) - In development
+- `imagemagick`
 - A wallpaper setter (optional):
   - `feh`
   - `hsetroot`
@@ -54,13 +54,16 @@ _**DEPENDENCIES**_
   - `xgifwallpaper` (for gif wallpaper animations)
 
 _**DISTRO**_
+
 - Debian ( or Other Debian based distro )
+
 ```bash
 sudo apt install kdialog pipx yq imagemagick xwallpaper
 pipx install pywal16
 ```
 
 - Arch / AUR
+
 ```bash
 # You can use something else that works for you like paru
 yay -S kdialog pywal16 yq imagemagick xwallpaper
