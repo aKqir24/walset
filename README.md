@@ -14,8 +14,9 @@ A bash script that expands the usage of `pywal16's` colors and to ease the confi
 >
 
 <div align="center" >
-    <video src="https://private-user-images.githubusercontent.com/142222025/516279138-b4b66d0b-c6f2-418f-aafa-efdc0ce85fc0.mp4"></video>
-    The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realtime theme changing.
+<video src="https://private-user-images.githubusercontent.com/142222025/516279138-b4b66d0b-c6f2-418f-aafa-efdc0ce85fc0.mp4"></video>
+
+The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realtime theme changing.
 </div>
 
 ## FEATURES
