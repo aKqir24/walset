@@ -4,8 +4,6 @@
 select_wallpaper() {
 	verbose info "Identifying wallpaper mode!"
 	if [[ -z $WALL_SELECT ]] && $SETUP; then
-		WALL_SELECT=$( kdialog --yes-label "From Image" --no-label "From Folder" \
-			       --yesno "Changing your pywal Wallpaper Selection Method?" && echo "image" || echo "folder")
 		wall_select_options
 	else
 		[[ -d $wallpaper_path ]] && WALLPAPER_FOLDER="$wallpaper_path"
@@ -50,30 +48,40 @@ set_wallpaper_with_mode() {
             ;;
         "cover")
             xWallMode="stretch"; fehMode="scale"; nitrogenMode="zoom"; swayMode="stretch"
-            hsetrootMode="-full"; local xfceMode=5; gnomeMode="zoom"; pcmanfmMode="stretch"
+            hsetrootMode="-full"; xfceMode=5; gnomeMode="zoom"; pcmanfmMode="stretch"
 			xgifwallpaperMode="NONE"
             ;;
     esac
 
 	# Set wallpaper with mode according to the available wallpaper setter
-	local WALL_SETTERS=( xgifwallpaper xwallpaper hsetroot feh nitrogen swaybg xfconf-query gnome-shell pcmanfm )
-	pgrep -x "${WALL_SETTERS[8]}">/dev/null && pkill "${WALL_SETTERS[8]}">/dev/null 2>&1 &
-	for wallSETTER in "${WALL_SETTERS[@]}"; do
-		if command -v "$wallSETTER" >/dev/null; then
-			if $wallpaper_animated && [[ $wallpaper == *.gif ]]; then
-				local CH_WALLSETTER="${WALL_SETTERS[0]}"
-				image_path="$image_path.gif" ; [[ $(wal -v 2>&1 | grep -oE '3.*') = '3.8.11' ]] && \
-					verbose sorry "Animated GIF wallpapers may not work in the latest pywal16. Please downgrade to 3.8.11!!"
-				break
-			elif [[ "$wallSETTER" != "${WALL_SETTERS[0]}" ]]; then
-				ANIMATED_WALLPAPER=false ; $wallpaper_animated && verbose sorry "Wallpaper doesn’t support animation, using static instead."
-				local CH_WALLSETTER="$wallSETTER"
-				break
-			fi
+	local WALL_SETTERS=(xgifwallpaper xwallpaper hsetroot feh nitrogen swaybg xfconf-query gnome-shell pcmanfm)
+	local CH_WALLSETTER=""
+	
+	# Kill xgifwallpaper if running
+	pidof "${WALL_SETTERS[0]}" &>/dev/null && killall "${WALL_SETTERS[0]}" &>/dev/null
+	
+	# Detect installed setters once
+	local AVAILABLE_SETTERS=()
+	for installed_wallsetter in "${WALL_SETTERS[@]}"; do
+		if command -v "$installed_wallsetter" >/dev/null 2>&1; then
+			AVAILABLE_SETTERS+=("$installed_wallsetter")
 		fi
 	done
+
+	# Choose setter
+	for wallSETTER in "${AVAILABLE_SETTERS[@]}"; do
+	    if [[ "$wallpaper_animated" == true && "$wallpaper" == *.gif && "$wallSETTER" == "xgifwallpaper" ]]; then
+	        CH_WALLSETTER="xgifwallpaper"
+	        image_path="$image_path.gif"
+	        break
+	    elif [[ "$wallSETTER" != "xgifwallpaper" ]]; then
+	        [[ "$wallpaper_animated" == true ]] && { ANIMATED_WALLPAPER=false; verbose sorry "Wallpaper doesn’t support animation, using static instead."; }
+	        CH_WALLSETTER="$wallSETTER"
+	        break
+	    fi
+	done	
     case "$CH_WALLSETTER" in
-		"${WALL_SETTERS[0]}") $(nohup xgifwallpaper -s $xgifwallpaperMode "$image_path" >/dev/null 2>&1 & disown) || wallsetERROR ;;
+		"${WALL_SETTERS[0]}") nohup xgifwallpaper -s $xgifwallpaperMode "$image_path" >/dev/null 2>&1 & disown || wallsetERROR ;;
 		"${WALL_SETTERS[1]}") xwallpaper "--$xWallMode" "$image_path" || wallsetERROR;;
         "${WALL_SETTERS[2]}") hsetroot "$hsetrootMode" "$image_path" || wallsetERROR;;
         "${WALL_SETTERS[3]}") feh --bg-"$fehMode" "$image_path" || wallsetERROR;;
@@ -98,12 +106,12 @@ setup_wallpaper() {
 	verbose info "Changing the wallpaper"
 	case "$wallpaper" in
 		*.png) cp "$wallpaper" "$WALLPAPER_CACHE" ;;
-		*.gif) convert "$wallpaper" -coalesce -flatten "$WALLPAPER_CACHE">/dev/null
+		*.gif) magick "$wallpaper" -coalesce -flatten "$WALLPAPER_CACHE">/dev/null
 			   $wallpaper_animated && cp "$wallpaper" "$WALLPAPER_CACHE.gif";;
-		*)  convert "$wallpaper" "$WALLPAPER_CACHE">/dev/null
+		*)  magick "$wallpaper" "$WALLPAPER_CACHE">/dev/null
 	esac
 	case "$wallpaper_type" in
-		"solid") convert -size 10x10 xc:"$color8" "$WALLPAPER_CACHE"
+		"solid") magick -size 10x10 xc:"$color8" "$WALLPAPER_CACHE"
 				 set_wallpaper_with_mode "$WALLPAPER_CACHE" || wallSETTERError ;;
 		"image") set_wallpaper_with_mode "$WALLPAPER_CACHE" || wallSETTERError ;;
 		*) verbose warning "Wallpaper type is not configured, so wallpaper is not set...";;
