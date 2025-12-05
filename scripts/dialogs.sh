@@ -49,10 +49,12 @@ done
 
 # Wallpaper select config
 wall_select_options() {
+	WALL_SELECT=$(kdialog --yes-label "From Image" --no-label "From Folder" \
+			       --yesno "Changing your pywal Wallpaper Selection Method?" && echo "image" || echo "folder")
 	case "$WALL_SELECT" in
 		"folder")
 			if $SETUP; then
-				WALLPAPER_CYCLE=$( kdialog --yes-label "Orderly" --no-label "Randomly" --yesno \
+				WALLPAPER_CYCLE=$(kdialog --yes-label "Orderly" --no-label "Randomly" --yesno \
 							"How to choose you wallpaper in a folder?" && echo "iterative" || echo "recursive" )
 				WALL_CHANGE_FOLDER=$(kdialog --yesno "Do you want to change the wallpaper folder?" && echo "YES")
 			fi
