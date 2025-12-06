@@ -74,7 +74,7 @@ yay -S kdialog pywal16 yq imagemagick xwallpaper
 Run the following commands in your terminal:
 
 ```bash
-  git clone https://github.com/aKqir24/walset.git
+  git clone --recursive https://github.com/aKqir24/walset.git
   cd ~/walset
 ```
 

@@ -22,7 +22,7 @@ while true; do
 		--load) LOAD=true; shift;;
 		--reload) RELOAD=true; shift;;
 		--help) echo "$HELP_MESSAGE"; exit 0;;
-		--) shift; break ;;
+		*) shift; break ;;
 	esac
 done
 
