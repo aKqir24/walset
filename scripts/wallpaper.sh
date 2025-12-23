@@ -54,7 +54,12 @@ set_wallpaper_with_mode() {
     esac
 
 	# Set wallpaper with mode according to the available wallpaper setter
-	local WALL_SETTERS=(xgifwallpaper xwallpaper hsetroot feh nitrogen swaybg xfconf-query gnome-shell pcmanfm)
+	local WALL_SETTERS;
+	if [[ $XDG_SESSION_TYPE == "wayland" ]]; then
+		WALL_SETTERS=(swaybg gnome-shell)
+	else
+		WALL_SETTERS=(xgifwallpaper xwallpaper hsetroot feh nitrogen xfconf-query pcmanfm gnome-shell)
+	fi
 	local CH_WALLSETTER=""
 	
 	# Kill xgifwallpaper if running
@@ -67,35 +72,43 @@ set_wallpaper_with_mode() {
 			AVAILABLE_SETTERS+=("$installed_wallsetter")
 		fi
 	done
+	
+	use_default_setter() {
+		[[ "$wallpaper_animated" == true ]] && { ANIMATED_WALLPAPER=false; verbose sorry "Wallpaper doesn’t support animation, using static instead."; }
+	    CH_WALLSETTER="$1"
+	}
 
 	# Choose setter
 	for wallSETTER in "${AVAILABLE_SETTERS[@]}"; do
-	    if [[ "$wallpaper_animated" == true && "$wallpaper" == *.gif && "$wallSETTER" == "xgifwallpaper" ]]; then
-	        CH_WALLSETTER="xgifwallpaper"
-	        image_path="$image_path.gif"
-	        break
-	    elif [[ "$wallSETTER" != "xgifwallpaper" ]]; then
-	        [[ "$wallpaper_animated" == true ]] && { ANIMATED_WALLPAPER=false; verbose sorry "Wallpaper doesn’t support animation, using static instead."; }
-	        CH_WALLSETTER="$wallSETTER"
+	    if [[ "$wallpaper_animated" == true && "$wallpaper" == *.gif ]]; then
+			case "$wallSETTER" in
+				"xgifwallpaper")
+					CH_WALLSETTER="xgifwallpaper"
+					image_path="$image_path.gif" ;;
+				*) use_default_setter "$wallSETTER" 
+			esac
+			break
+		else
+	        use_default_setter "$wallSETTER"
 	        break
 	    fi
-	done	
+	done
     case "$CH_WALLSETTER" in
-		"${WALL_SETTERS[0]}") nohup xgifwallpaper -s $xgifwallpaperMode "$image_path" >/dev/null 2>&1 & disown || wallsetERROR ;;
-		"${WALL_SETTERS[1]}") xwallpaper "--$xWallMode" "$image_path" || wallsetERROR;;
-        "${WALL_SETTERS[2]}") hsetroot "$hsetrootMode" "$image_path" || wallsetERROR;;
-        "${WALL_SETTERS[3]}") feh --bg-"$fehMode" "$image_path" || wallsetERROR;;
-        "${WALL_SETTERS[4]}") nitrogen --set-$nitrogenMode "$image_path" || wallsetERROR;;
-        "${WALL_SETTERS[5]}") swaybg -i "$image_path" --mode "$swayMode" || wallsetERROR;;
-		"${WALL_SETTERS[6]}")
+		"xgifwallpaper") nohup xgifwallpaper -s $xgifwallpaperMode "$image_path" >/dev/null 2>&1 & disown || wallsetERROR ;;
+		"xwallpaper") xwallpaper "--$xWallMode" "$image_path" || wallsetERROR;;
+        "hsetroot") hsetroot "$hsetrootMode" "$image_path" || wallsetERROR;;
+        "feh") feh --bg-"$fehMode" "$image_path" || wallsetERROR;;
+        "nitrogen") nitrogen --set-$nitrogenMode "$image_path" || wallsetERROR;;
+		"swaybg") swaybg -i "$image_path" --mode "$swayMode" >/dev/null 2>&1 & disown || wallsetERROR;;
+		"xfconf-query")
 			if xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-style --set $xfceMode; then
 				xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-path --set "$image_path"; else wallsetERROR; fi
 		;;
-		"${WALL_SETTERS[7]}")
+		"gnome-shell")
 			if gsettings set org.gnome.desktop.background picture-uri "file://$image_path"; then
 				gsettings set org.gnome.desktop.background picture-options "$gnomeMode"; else wallsetERROR; fi
 		;;
-		"${WALL_SETTERS[8]}") pcmanfm --set-wallpaper "$image_path" --wallpaper-mode "$pcmanfmMode" || wallsetERROR ;;
+		"pcmanfm") pcmanfm --set-wallpaper "$image_path" --wallpaper-mode "$pcmanfmMode" || wallsetERROR ;;
 		
 		*) verbose error "No supported wallpaper setter found!" return 1 ;;
 	esac
