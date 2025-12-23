@@ -11,4 +11,4 @@ write_toml "
 .urgency_critical.foreground = \"$color15\" |
 .urgency_critical.frame_color = \"$color1\"" "$1"
 
-dunstctl reload>/dev/null 
+$RELOAD && dunstctl reload>/dev/null 

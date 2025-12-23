@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Import all the scripts
 if [[ ! -e "$(pwd)/scripts" ]]; then
@@ -32,6 +32,7 @@ if $GUI && $SETUP; then
 elif $SETUP; then
 	. "$SCRIPT_PATH/dialogs.sh"
 elif $GUI; then
+	# TODO: send the shell config values to python args for less IO reading
 	VERBOSE=true ; verbose sorry "The '--gui' option is still in development..." ; exit 1
 else
 	if $LOAD; then

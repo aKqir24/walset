@@ -21,7 +21,9 @@ generateGTKTHEME() {
 			# Used as a workaround in the syntax error in template file 'gtk-4.0.base' on line '5069-5075' in `pywal16`.
 			. "$SCRIPT_PATH/theming/gtk4.sh" "{$theming_accent}"
 		fi
-		if [[ $1 != 4 ]]; then verbose info "Gtk theme is already installed!!"; fi
+		if [[ $1 != 4 ]] && [[ ! -z $GTK_INS_TAG ]]; then
+			verbose info "Gtk theme is already installed!!"
+		fi
 	else
 		if ! $theming_gtk || $RESET; then clean_path "$USER_THEME_FOLDER"; fi
 	fi
@@ -32,7 +34,7 @@ generateICONSTHEME() {
 	if $theming_icons && [[ -z $ICON_INS_TAG ]] || $RESET; then
 		verbose info "Preparing Icon theme templates" 
 		. "$SCRIPT_PATH/theming/icons.sh" "$theming_mode"
-	elif $theming_icons; then
+	elif $theming_icons && [[ ! -z $ICON_INS_TAG ]]; then
 		verbose info "Icon theme is already installed!!"
 	else 
 		clean_path "$USER_ICONS_FOLDER"
