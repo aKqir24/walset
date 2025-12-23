@@ -12,7 +12,7 @@ if [[ -z $PYWAL_CACHE_DIR ]]; then
 	verbose info "Setting up output directory"
 	PYWAL_CACHE_DIR="$DEFAULT_PYWAL16_OUT_DIR"
 fi
-WALLPAPER_CACHE="$PYWAL_CACHE_DIR/wallpaper.png"
+WALLPAPER_CACHE="/tmp/wallpaper.png"
 PYWAL_TEMPLATES="$PYWAL_CACHE_DIR/templates"
 
 # ARRAY OF THE PATHS TO PROGRAMS SCRIPTS
