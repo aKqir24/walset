@@ -57,32 +57,38 @@ set_wallpaper_with_mode() {
 	local WALL_SETTERS_STATIC;
 	local WALL_SETTERS_ANIMATED;
 	if [[ $XDG_SESSION_TYPE == "wayland" ]]; then
-		WALL_SETTERS_STATIC=(swaybg gnome-shell)
+		WALL_SETTERS_STATIC=(awww swaybg gnome-shell)
 		WALL_SETTERS_ANIMATED=(awww)
 	else
 		WALL_SETTERS_STATIC=(xwallpaper hsetroot feh nitrogen xfconf-query pcmanfm gnome-shell)
 		WALL_SETTERS_ANIMATED=(xgifwallpaper)
 	fi
 	local CH_WALLSETTER=""
-	local WALL_SETTERS;
+	local WALL_SETTERS=()
 	
 	# Choose setter type
 	if [[ "$wallpaper_animated" == true && "$wallpaper" == *.gif ]]; then
-		WALL_SETTERS="$WALL_SETTERS_ANIMATED"
+		WALL_SETTERS=(${WALL_SETTERS_ANIMATED[@]})
 		image_path="$image_path.gif"
 	else
-		WALL_SETTERS="$WALL_SETTERS_STATIC"
+		WALL_SETTERS=(${WALL_SETTERS_STATIC[@]})
 	fi
 
 	# Detect installed setters once
-	local AVAILABLE_SETTERS=()
-	for installed_wallsetter in "${WALL_SETTERS[@]}"; do
-		if command -v "$installed_wallsetter" >/dev/null 2>&1; then
-			AVAILABLE_SETTERS+=("$installed_wallsetter")
-		fi
-	done
-	if [[ "$wallpaper_animated" == true && "$WALL_SETTERS" == "$WALL_SETTERS_STATIC" ]]; then
-		ANIMATED_WALLPAPER=false 
+	AVAILABLE_SETTERS=()
+	choose_available_setter() {
+		for installed_wallsetter in "${WALL_SETTERS[@]}"; do
+			echo $installed_wallsetter
+			if command -v "$installed_wallsetter" >/dev/null 2>&1; then
+				AVAILABLE_SETTERS+=("$installed_wallsetter")
+			fi
+		done
+	}
+	choose_available_setter
+	if [[ "$wallpaper_animated" == true && -z "$AVAILABLE_SETTERS" ]]; then
+		ANIMATED_WALLPAPER=false
+		WALL_SETTERS=(${WALL_SETTERS_STATIC[@]})
+		choose_available_setter
 		verbose sorry "Wallpaper doesn’t support animation, using static instead."
 	fi	
 	
