@@ -14,6 +14,7 @@ PYWAL_BACKEND="wal"
 THEME_ACCENT_COLOR=2
 WALLPAPER_CYCLE="static"
 ANIMATED_WALLPAPER=false
+WALLPAPER_BACKEND="none"
 THEMED_PROGRAMS=( 'i3status_rust' 'alacritty' 'rofi' 'dunst' )
 
 # Write config file
@@ -36,7 +37,7 @@ assignTEMPCONF() {
 	reader() { jq -r ".$1" <<< "$JSON_TOML_OUTPUT" ; }
 	for section in "${tables[@]}"; do
 		case $section in
-			"${tables[0]}") keys=( "cycle" "type" "path" "mode" "animated" ) ;;
+			"${tables[0]}") keys=( "cycle" "type" "path" "mode" "animated" "backend" ) ;;
 			"${tables[1]}") keys=( "gtk" "icons" "mode" "accent" "programs" ) ;;
 			"${tables[2]}") keys=( "backend" "light" "colorscheme" "reload" ) ;;
 		esac
@@ -56,6 +57,7 @@ saveCONFIG() {
 		.wallpaper.path = \"$WALLPAPER_PATH\" |
 		.wallpaper.mode = \"$WALLPAPER_MODE\" |
 		.wallpaper.animated = $ANIMATED_WALLPAPER |
+		.wallpaper.backend = $ACTIVE
 		.theming.gtk = $THEMING_GTK |
 		.theming.icons = $THEMING_ICONS |
 		.theming.mode = \"$THEME_MODE\" |

@@ -54,17 +54,26 @@ set_wallpaper_with_mode() {
     esac
 
 	# Set wallpaper with mode according to the available wallpaper setter
-	local WALL_SETTERS;
+	local WALL_SETTERS_STATIC;
+	local WALL_SETTERS_ANIMATED;
 	if [[ $XDG_SESSION_TYPE == "wayland" ]]; then
-		WALL_SETTERS=(swaybg gnome-shell)
+		WALL_SETTERS_STATIC=(swaybg gnome-shell)
+		WALL_SETTERS_ANIMATED=(awww)
 	else
-		WALL_SETTERS=(xgifwallpaper xwallpaper hsetroot feh nitrogen xfconf-query pcmanfm gnome-shell)
+		WALL_SETTERS_STATIC=(xwallpaper hsetroot feh nitrogen xfconf-query pcmanfm gnome-shell)
+		WALL_SETTERS_ANIMATED=(xgifwallpaper)
 	fi
 	local CH_WALLSETTER=""
+	local WALL_SETTERS;
 	
-	# Kill xgifwallpaper if running
-	pidof "${WALL_SETTERS[0]}" &>/dev/null && killall "${WALL_SETTERS[0]}" &>/dev/null
-	
+	# Choose setter type
+	if [[ "$wallpaper_animated" == true && "$wallpaper" == *.gif ]]; then
+		WALL_SETTERS="$WALL_SETTERS_ANIMATED"
+		image_path="$image_path.gif"
+	else
+		WALL_SETTERS="$WALL_SETTERS_STATIC"
+	fi
+
 	# Detect installed setters once
 	local AVAILABLE_SETTERS=()
 	for installed_wallsetter in "${WALL_SETTERS[@]}"; do
@@ -72,27 +81,28 @@ set_wallpaper_with_mode() {
 			AVAILABLE_SETTERS+=("$installed_wallsetter")
 		fi
 	done
+	if [[ "$wallpaper_animated" == true && "$WALL_SETTERS" == "$WALL_SETTERS_STATIC" ]]; then
+		ANIMATED_WALLPAPER=false 
+		verbose sorry "Wallpaper doesn’t support animation, using static instead."
+	fi	
 	
-	use_default_setter() {
-		[[ "$wallpaper_animated" == true ]] && { ANIMATED_WALLPAPER=false; verbose sorry "Wallpaper doesn’t support animation, using static instead."; }
-	    CH_WALLSETTER="$1"
-	}
-
-	# Choose setter
 	for wallSETTER in "${AVAILABLE_SETTERS[@]}"; do
-	    if [[ "$wallpaper_animated" == true && "$wallpaper" == *.gif ]]; then
-			case "$wallSETTER" in
-				"xgifwallpaper")
-					CH_WALLSETTER="xgifwallpaper"
-					image_path="$image_path.gif" ;;
-				*) use_default_setter "$wallSETTER" 
-			esac
+		if [[ $wallSETTER == $wallpaper_backend ]]; then
+			CH_WALLSETTER="$wallpaper_backend"
 			break
 		else
-	        use_default_setter "$wallSETTER"
-	        break
-	    fi
+			CH_WALLSETTER=$wallSETTER
+			break
+		fi
 	done
+
+	verbose info \
+		"Available wallpaper backends are: ( $(echo -e "${AVAILABLE_SETTERS[@]}" | sed "s/$CH_WALLSETTER/\\\033[1;36m${AVAILABLE_SETTERS[@]}/g") \033[1;97m)"
+	
+	# Kill running wallpaper deamon if running
+	pidof "${CH_WALLSETTER}" &>/dev/null && killall "${CH_WALLSETTER}" &>/dev/null
+	
+	# Use the wallpaper backend first available
     case "$CH_WALLSETTER" in
 		"xgifwallpaper") nohup xgifwallpaper -s $xgifwallpaperMode "$image_path" >/dev/null 2>&1 & disown || wallsetERROR ;;
 		"xwallpaper") xwallpaper "--$xWallMode" "$image_path" || wallsetERROR;;
