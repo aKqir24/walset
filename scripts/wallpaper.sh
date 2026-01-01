@@ -53,9 +53,13 @@ set_wallpaper_with_mode() {
             ;;
     esac
 
-	# Set wallpaper with mode according to the available wallpaper setter
+	# Set wallpaper with mode according to the available wallpaper setters
+	local WALL_SETTERS=()
+	local CH_WALLSETTER=""
+	local AVAILABLE_SETTERS=()
 	local WALL_SETTERS_STATIC;
 	local WALL_SETTERS_ANIMATED;
+
 	if [[ $XDG_SESSION_TYPE == "wayland" ]]; then
 		WALL_SETTERS_STATIC=(awww swaybg gnome-shell)
 		WALL_SETTERS_ANIMATED=(awww)
@@ -63,8 +67,6 @@ set_wallpaper_with_mode() {
 		WALL_SETTERS_STATIC=(xwallpaper hsetroot feh nitrogen xfconf-query pcmanfm gnome-shell)
 		WALL_SETTERS_ANIMATED=(xgifwallpaper)
 	fi
-	local CH_WALLSETTER=""
-	local WALL_SETTERS=()
 	
 	# Choose setter type
 	if [[ "$wallpaper_animated" == true && "$wallpaper" == *.gif ]]; then
@@ -74,14 +76,11 @@ set_wallpaper_with_mode() {
 		WALL_SETTERS=(${WALL_SETTERS_STATIC[@]})
 	fi
 
-	# Detect installed setters once
-	AVAILABLE_SETTERS=()
+	# Detect installed setters once	
 	choose_available_setter() {
 		for installed_wallsetter in "${WALL_SETTERS[@]}"; do
-			echo $installed_wallsetter
-			if command -v "$installed_wallsetter" >/dev/null 2>&1; then
+			command -v "$installed_wallsetter" >/dev/null 2>&1 && \
 				AVAILABLE_SETTERS+=("$installed_wallsetter")
-			fi
 		done
 	}
 	choose_available_setter
