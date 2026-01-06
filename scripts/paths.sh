@@ -26,7 +26,7 @@ if [[ ! -f $XSETTINGSD_CONF ]]; then
 fi
 
 # GTK THEMING PATHS
-USER_THEME_FOLDER="$HOME/.local/share/themes/pywal"
+USER_THEME_FOLDER="$HOME/.themes/pywal" # revert to old path for gtk2 support
 GTK_WORK_DIR="$THEMING_ASSETS/gtk"
 BASE_THEME_FOLDER="$GTK_WORK_DIR/base"
 for gtk_file in \
