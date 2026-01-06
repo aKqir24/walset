@@ -77,7 +77,7 @@ set_wallpaper_with_mode() {
 	fi
 
 	# Detect installed setters once	
-	choose_available_setter() {
+	choose_available_setter() {	
 		for installed_wallsetter in "${WALL_SETTERS[@]}"; do
 			command -v "$installed_wallsetter" >/dev/null 2>&1 && \
 				AVAILABLE_SETTERS+=("$installed_wallsetter")
@@ -91,7 +91,7 @@ set_wallpaper_with_mode() {
 		verbose sorry "Wallpaper doesn’t support animation, using static instead."
 	fi	
 	
-	for wallSETTER in "${AVAILABLE_SETTERS[@]}"; do
+	for wallSETTER in "${AVAILABLE_SETTERS[@]}"; do 
 		if [[ $wallSETTER == $wallpaper_backend ]]; then
 			CH_WALLSETTER="$wallpaper_backend"
 			break
