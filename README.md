@@ -45,6 +45,7 @@ _**DEPENDENCIES**_
 - `pywal16`
 - `kdialog` so to be `python-gi`
 - `xsettingsd` (optional)
+- `gtk2-engines-murrine` (for gtk2 support)
 - `imagemagick`
 - A wallpaper setter (optional):
   - `feh`
@@ -52,6 +53,8 @@ _**DEPENDENCIES**_
   - `xwallpaper`
   - `nitrogen`
   - `xgifwallpaper` (for gif wallpaper animations)
+  - `swaybg`
+  ...
 
 _**DISTRO**_
 
@@ -74,7 +77,7 @@ yay -S kdialog pywal16 yq imagemagick xwallpaper
 Run the following commands in your terminal:
 
 ```bash
-  git clone https://github.com/aKqir24/walset.git
+  git clone --recursive https://github.com/aKqir24/walset.git
   cd ~/walset
 ```
 

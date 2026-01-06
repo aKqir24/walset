@@ -12,7 +12,7 @@ if [[ -z $PYWAL_CACHE_DIR ]]; then
 	verbose info "Setting up output directory"
 	PYWAL_CACHE_DIR="$DEFAULT_PYWAL16_OUT_DIR"
 fi
-WALLPAPER_CACHE="$PYWAL_CACHE_DIR/wallpaper.png"
+WALLPAPER_CACHE="/tmp/wallpaper.png"
 PYWAL_TEMPLATES="$PYWAL_CACHE_DIR/templates"
 
 # ARRAY OF THE PATHS TO PROGRAMS SCRIPTS
@@ -26,7 +26,7 @@ if [[ ! -f $XSETTINGSD_CONF ]]; then
 fi
 
 # GTK THEMING PATHS
-USER_THEME_FOLDER="$HOME/.local/share/themes/pywal"
+USER_THEME_FOLDER="$HOME/.themes/pywal" # revert to old path for gtk2 support
 GTK_WORK_DIR="$THEMING_ASSETS/gtk"
 BASE_THEME_FOLDER="$GTK_WORK_DIR/base"
 for gtk_file in \

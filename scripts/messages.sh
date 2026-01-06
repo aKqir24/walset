@@ -5,7 +5,7 @@ HELP_MESSAGE="
 Information:
 'walsetup.sh' is a wrapper for pywal16 purely in shell script and made by aKqir24,
 to ease the configuration in pywal, also it adds more functionality in pywal16 which
-are writen in the https://github.com/aKqir24/pywal16_scripts.
+are writen in the https://github.com/aKqir24/walset.
 
 Usage: $0 [OPTIONS]
   --gui: To launch a configuration GUI and apply the configurations.
