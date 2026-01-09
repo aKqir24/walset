@@ -2,7 +2,7 @@
 
 # Wallpaper selection
 select_wallpaper() {
-	verbose info "Identifying wallpaper mode!"
+	verbose info "Detecting wallpaper mode"
 	if [[ -z $WALL_SELECT ]] && $SETUP; then
 		wall_select_options
 	else
@@ -102,7 +102,8 @@ set_wallpaper_with_mode() {
 	done
 
 	verbose info \
-		"Available wallpaper backends are: ( $(echo -e "${AVAILABLE_SETTERS[@]}" | sed "s/$CH_WALLSETTER/\\\033[1;36m${AVAILABLE_SETTERS[@]}/g") \033[1;97m)"
+		"Available wallpaper backends for $XDG_SESSION_TYPE are: 
+	           $(echo -e "${AVAILABLE_SETTERS[@]}" | sed "s/$CH_WALLSETTER/-> \\\033[1;36m${AVAILABLE_SETTERS[@]}/g") \033[1;97m\n"
 	
 	# Kill running wallpaper deamon if running
 	pidof "${CH_WALLSETTER}" &>/dev/null && killall "${CH_WALLSETTER}" &>/dev/null
@@ -123,8 +124,7 @@ set_wallpaper_with_mode() {
 			if gsettings set org.gnome.desktop.background picture-uri "file://$image_path"; then
 				gsettings set org.gnome.desktop.background picture-options "$gnomeMode"; else wallsetERROR; fi
 		;;
-		"pcmanfm") pcmanfm --set-wallpaper "$image_path" --wallpaper-mode "$pcmanfmMode" || wallsetERROR ;;
-		
+		"pcmanfm") pcmanfm --set-wallpaper "$image_path" --wallpaper-mode "$pcmanfmMode" || wallsetERROR ;;	
 		*) verbose error "No supported wallpaper setter found!" return 1 ;;
 	esac
 }

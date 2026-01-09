@@ -1,7 +1,8 @@
 
 <div align="center" >
-<img height=220 alt="A cute kitten" src="https://github.com/user-attachments/assets/a270165b-8fd3-421b-916d-516dca8b364f"></img>
+<img height=220 alt="wide_stylish_text" src="https://github.com/user-attachments/assets/a270165b-8fd3-421b-916d-516dca8b364f"></img>
 
+![Code size](https://img.shields.io/github/languages/code-size/aKqir24/walset?style=for-the-badge)
 ![GitHub Release](https://img.shields.io/github/v/release/aKqir24/walset?style=for-the-badge)
 ![Codacy grade](https://img.shields.io/codacy/grade/3d58744e1c654c41a5d91562920c6bc0?style=for-the-badge)
 ![GitHub License](https://img.shields.io/github/license/aKqir24/walset?style=for-the-badge)
@@ -23,19 +24,19 @@ The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realt
 
 - **Finished**
   - Dialog configuration along with pywal options.
-  - Pywal colors to some configurable programs. ( as toml config arrays )
-  - Uses the pywal16 option to either have a wallpaper in a folder or just an image.
   - A wallpaper can be set either to `solid_color` or `image`
-  - Support for animated gif wallpapersc ( Does not support some gifs | it is a `pywal16` limitation )
   - Wallpaper setup options include [ fill, scale, max, fit, etc ]
+  - Pywal colors to some configurable programs.( as toml config arrays )
+  - Uses the pywal16 option to either have a wallpaper in a folder or just an image.
+  - Support for animated gif wallpapers ( Does not support some gifs | it is a `pywal16` limitation )
   - Gtk theming based [Flat-Remix-GTK](https://github.com/daniruiz/Flat-Remix-GTK) as base theme.
-  - Icon colors based [Flat-Remix](https://github.com/daniruiz/Flat-Remix) icon pack.
-  - Reload gtk and icon themes using `xsettingd` & `gsettings`.
+  - Icon theme colors based [Flat-Remix](https://github.com/daniruiz/Flat-Remix) icon pack.
+  - Reload gtk and icon themes using `xsettingd` & `gsettings`.(only icon theme reloading in wayland)
+  - Full Gif wallpaper support(please update to the latest pywal16 version).
 
 - **Unfinished**
-  - Gui config support using `python-gi`
-  - Programs theming configs in `--setup` & `--gui` option.
-  - Gif wallpaper support limitation fix.
+  - Gui config support using `python-gi`(this is a bit challenging) 
+
 
 ## SETUP
 
@@ -111,7 +112,7 @@ animated = true
 gtk = true
 icons = true
 mode = "dark"
-accent = "color2"
+accent =2
 [theming.programs]
 i3status_rust="/home/akqir24/.files/.config/i3/status/config.toml" 
 alacritty="/home/akqir24/.config/alacritty.toml"
@@ -120,7 +121,8 @@ dunst="/home/akqir24/.config/dunst/dunstrc"
 
 [pywal16]
 backend = "wal"
-light = "true"
+reload= true
+light = true
 colorscheme = "darken"
 ````
 
