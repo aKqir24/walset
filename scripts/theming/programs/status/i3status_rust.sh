@@ -14,5 +14,5 @@ write_toml "
 .theme.overrides.alternating_tint_bg = \"$color0\" |
 .theme.overrides.alternating_tint_fg = \"$color0\"" "$1"
 
-pidof "i3status-rs" &>/dev/null && pkill i3status-rs 
-[[ $XDG_CURRENT_DESKTOP == "i3" ]] && i3-msg reload >/dev/null
+pidof "i3status-rs" &>"$LOG_FILEPATH" && pkill i3status-rs 
+(i3-msg reload || swaymsg reload)>"$LOG_FILEPATH" 2>&1 

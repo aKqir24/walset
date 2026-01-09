@@ -3,6 +3,7 @@
 # Default options config values
 GUI=false
 LOAD=false
+DEBUG=false
 RESET=false
 SETUP=false
 RELOAD=false
