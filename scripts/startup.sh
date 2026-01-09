@@ -1,11 +1,11 @@
 #!/bin/sh
 
 # Check for required dependencies
-command -v wal > /dev/null || verbose error "pywal16 is not installed, Please install it!"
+command -v wal > "$LOG_FILEPATH" || verbose error "pywal16 is not installed, Please install it!"
 if $LOAD; then
-	if $SETUP && ! command -v kdialog >/dev/null; then
+	if $SETUP && ! command -v kdialog >"$LOG_FILEPATH"; then
 		verbose error "kdialog is not installed, Please install it!"
-	elif $SETUP && ! command -v python3 >/dev/null; then
+	elif $SETUP && ! command -v python3 >"$LOG_FILEPATH"; then
 		verbose error "python is not installed, Please install it!"
 	fi
 fi

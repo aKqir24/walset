@@ -6,25 +6,32 @@ if [[ ! -e "$(pwd)/scripts" ]]; then
 else
 	WORK_PATH="$(pwd)"
 fi
+
+LOG_FILEPATH="/tmp/wlaset.log"
 SCRIPT_PATH="$WORK_PATH/scripts"
 SCRIPT_FILES=(messages paths config startup apply)
 for script in "${SCRIPT_FILES[@]}"; do . "$SCRIPT_PATH/$script.sh"; done
 
 # Options To be used
 # TODO: Debug option
-OPTS=$(getopt -o -v --long verbose,reset,load,reload,setup,gui,help -- "$@") ; eval set -- "$OPTS"
+OPTS=$(getopt -o VRDLrh --long gui,setup,reset,debug,verbose,load,reload,help -- "$@")
+[ $? -ne 0 ] && exit 1 && eval set -- "$OPTS"
 while true; do
 	case "$1" in
 		--gui) GUI=true; shift;;
 		--setup) SETUP=true; shift;;
-		--reset) RESET=true; shift ;;
-		--verbose) VERBOSE=true; shift ;;
-		--load) LOAD=true; shift;;
-		--reload) RELOAD=true; shift;;
-		--help) echo "$HELP_MESSAGE"; exit 0;;
+		-R | --reset) RESET=true; shift ;;
+		-D | --debug) DEBUG=true; shift ;;
+		-V | --verbose) VERBOSE=true; shift ;;
+		-L | --load) LOAD=true; shift;;
+		-r | --reload) RELOAD=true; shift;;
+		-h | --help) echo "$HELP_MESSAGE"; exit 0;;
 		*) shift; break ;;
 	esac
 done
+
+# Debug option logic
+$DEBUG && cat "$LOG_FILEPATH" || LOG_FILEPATH=/dev/null
 
 # GUI dialog Configuration
 if $GUI && $SETUP; then
