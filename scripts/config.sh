@@ -20,7 +20,7 @@ THEMED_PROGRAMS=( 'i3status_rust' 'alacritty' 'rofi' 'dunst' )
 
 # Write config file
 verifyingCONF() {
-	verbose info "Verifying the config file"
+	verbose info "Verifying configuration file"
 	if [[ ! -e "$WALLPAPER_CONF_PATH" ]]; then
 		touch "$WALLPAPER_CONF_PATH" || \
 			verbose error "Config file does not exist!!"
@@ -32,7 +32,7 @@ verifyingCONF() {
 
 # Read the config
 assignTEMPCONF() {
-	verbose info "Reading config file"
+	verbose info "Loading configuration file"
 	tables=('wallpaper' 'theming' 'pywal16')
 	JSON_TOML_OUTPUT=$( tomlq '.' "$WALLPAPER_CONF_PATH" )
 	reader() { jq -r ".$1" <<< "$JSON_TOML_OUTPUT" ; }
