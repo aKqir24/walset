@@ -1,19 +1,14 @@
 #!/bin/bash
 
 # Import all the scripts
-if [[ ! -e "$(pwd)/scripts" ]]; then
-	WORK_PATH="$(dirname "$0")"
-else
-	WORK_PATH="$(pwd)"
-fi
+[[ ! -e "$(pwd)/scripts" ]] && WORK_PATH="$(dirname "$0")" || WORK_PATH="$(pwd)"
 
-LOG_FILEPATH="/tmp/wlaset.log"
+LOG_FILEPATH="/tmp/walset.log"
 SCRIPT_PATH="$WORK_PATH/scripts"
 SCRIPT_FILES=(messages paths config startup apply)
 for script in "${SCRIPT_FILES[@]}"; do . "$SCRIPT_PATH/$script.sh"; done
 
 # Options To be used
-# TODO: Debug option
 OPTS=$(getopt -o VRDLrh --long gui,setup,reset,debug,verbose,load,reload,help -- "$@")
 [ $? -ne 0 ] && exit 1 && eval set -- "$OPTS"
 while true; do
@@ -31,7 +26,16 @@ while true; do
 done
 
 # Debug option logic
-$DEBUG && cat "$LOG_FILEPATH" || LOG_FILEPATH=/dev/null
+debug() {
+	if $DEBUG; then
+		while true; do
+			sleep 1 ; cat "$LOG_FILEPATH" 
+		done
+	else
+		LOG_FILEPATH=/dev/null
+	fi
+}
+debug &
 
 # GUI dialog Configuration
 if $GUI && $SETUP; then

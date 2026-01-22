@@ -2,13 +2,25 @@
 
 # Function to apply wallpaper using pywal16
 applyWAL() {	
-	generateGTKTHEME ; generateICONSTHEME 
+	downloadTemplates ; generateGTKTHEME ; generateICONSTHEME 
 	verbose info "Running pywal to generate color scheme"
-	#echo "wal $4 --backend $2 $3 -i $1 -n --out-dir $PYWAL_CACHE_DIR $5"
 	sh -c "wal -q $4 --backend $2 $3 -i $1 -n --out-dir $PYWAL_CACHE_DIR $5" || pywalerror
 	[[ -f $PYWAL_CACHE_DIR/colors.sh ]] && . "${PYWAL_CACHE_DIR}/colors.sh" # Load Colors & other values to be used
 	generateGTKTHEME 4 ; set_THEME "Icon" "Net/IconThemeName" && set_THEME "Gtk" "Net/ThemeName" ; applyToPrograms 
 	if $RELOAD; then reloadTHEMES; fi
+}
+
+downloadTemplates() {
+	if [[ ! -d $THEMING_ASSETS ]]; then
+		if [[ ! -z $CUSTOM_THEME_ASSETS ]]; then 
+			curl -O "$CUSTOM_THEME_ASSETS" "$THEMING_ASSETS" | unzip - || \
+				git clone "$CUSTOM_THEME_ASSETS" "$THEMING_ASSETS" || true
+			verbose info "Downloading the custom theme template assets files"
+		else
+			git clone https://github.com/aKqir24/walset-pywal16-templates.git "$THEMING_ASSETS" || true
+			verbose info "Cloning the default theme template assets repository"
+		fi
+	fi
 }
 
 # Apply gtk theme / reload gtk theme

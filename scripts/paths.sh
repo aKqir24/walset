@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # DEFAULT PATHS FOR CONFIG:
-THEMING_ASSETS="$WORK_PATH/assets"
+THEMING_ASSETS="$HOME/.local/share/walset/assets"
 DEFAULT_PYWAL16_OUT_DIR="$HOME/.cache/wal"
 WALLPAPER_CONF_PATH="$HOME/.config/walset.toml"
 XSETTINGSD_CONF="$HOME/.xsettingsd.conf"

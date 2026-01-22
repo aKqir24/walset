@@ -26,7 +26,7 @@ select_wallpaper() {
 set_wallpaper_with_mode() {
     local image_path="$1"
 
-	# Default xgifwallpaperMode values	
+	# Default wallpaperMode values	
 	local xWallMode="zoom" ; local fehMode="fill"; local nitrogenMode="auto"; local swayMode="fill"
 	local hsetrootMode="-fill"; local xfceMode=5; local gnomeMode="zoom"; local pcmanfmMode="fit"
 	local xgifwallpaperMode="FILL" awwwMode="crop"
@@ -71,9 +71,8 @@ set_wallpaper_with_mode() {
 	fi
 	
 	# Choose setter type
-	if [[ "$wallpaper_animated" == true && "$wallpaper" == *.gif ]]; then
+	if [[ "$wallpaper_animated" == true ]]; then
 		WALL_SETTERS=(${WALL_SETTERS_ANIMATED[@]})
-		image_path="$image_path.gif"
 	else
 		WALL_SETTERS=(${WALL_SETTERS_STATIC[@]})
 	fi
@@ -91,6 +90,8 @@ set_wallpaper_with_mode() {
 		WALL_SETTERS=(${WALL_SETTERS_STATIC[@]})
 		choose_available_setter
 		verbose sorry "Wallpaper doesn’t support animation, using static instead."
+	elif [[ "$wallpaper" == *.gif ]]; then
+		image_path="$image_path.gif"
 	fi	
 	
 	for wallSETTER in "${AVAILABLE_SETTERS[@]}"; do
