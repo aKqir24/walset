@@ -29,27 +29,29 @@ set_wallpaper_with_mode() {
 	# Default xgifwallpaperMode values	
 	local xWallMode="zoom" ; local fehMode="fill"; local nitrogenMode="auto"; local swayMode="fill"
 	local hsetrootMode="-fill"; local xfceMode=5; local gnomeMode="zoom"; local pcmanfmMode="fit"
-	local xgifwallpaperMode="FILL"
+	local xgifwallpaperMode="FILL" awwwMode="crop"
 
     # Mode mappings
     case "$wallpaper_mode" in
         "full")
             xWallMode="maximize" fehMode="max" nitrogenMode="scaled" swayMode="fit"
             hsetrootMode="-full" xfceMode=4 gnomeMode="scaled" pcmanfmMode="stretch"
-			xgifwallpaperMode="MAX"
+			xgifwallpaperMode="MAX" awwwMode="fit"
             ;;
         "tile")
             xWallMode="tile" fehMode="tile"; nitrogenMode="tiled"; swayMode="tile"
             hsetrootMode="-tile" xfceMode=1; gnomeMode="wallpaper"; pcmanfmMode="tile"
+			awwwMode="tile"
             ;;
         "center")
             xWallMode="center"; fehMode="centered"; nitrogenMode="centered"; swayMode="center"
              hsetrootMode="-center"; xfceMode=2; gnomeMode="centered"; pcmanfmMode="center"
+			 awwwMode="crop"
             ;;
         "cover")
             xWallMode="stretch"; fehMode="scale"; nitrogenMode="zoom"; swayMode="stretch"
             hsetrootMode="-full"; xfceMode=5; gnomeMode="zoom"; pcmanfmMode="stretch"
-			xgifwallpaperMode="NONE"
+			xgifwallpaperMode="NONE" awwwMode="stretch"
             ;;
     esac
 
@@ -60,7 +62,7 @@ set_wallpaper_with_mode() {
 	local WALL_SETTERS_STATIC;
 	local WALL_SETTERS_ANIMATED;
 
-	if [[ $XDG_SESSION_TYPE == "wayland" ]]; then
+	if [[ ! -z $WAYLAND_DISPLAY ]]; then
 		WALL_SETTERS_STATIC=(awww swaybg gnome-shell)
 		WALL_SETTERS_ANIMATED=(awww)
 	else
@@ -79,7 +81,7 @@ set_wallpaper_with_mode() {
 	# Detect installed setters once	
 	choose_available_setter() {
 		for installed_wallsetter in "${WALL_SETTERS[@]}"; do
-			command -v "$installed_wallsetter" >/dev/null 2>&1 && \
+			command -v "$installed_wallsetter" >"$LOG_FILEPATH" 2>&1 && \
 				AVAILABLE_SETTERS+=("$installed_wallsetter")
 		done
 	}
@@ -100,22 +102,22 @@ set_wallpaper_with_mode() {
 			break
 		fi
 	done
-
-	verbose info \
-		"Available wallpaper backends for $XDG_SESSION_TYPE are: 
-	           $(echo -e "${AVAILABLE_SETTERS[@]}" | sed "s/$CH_WALLSETTER/-> \\\033[1;36m${AVAILABLE_SETTERS[@]}/g") \033[1;97m\n"
 	
 	# Kill running wallpaper deamon if running
-	pidof "${CH_WALLSETTER}" &>/dev/null && killall "${CH_WALLSETTER}" &>/dev/null
+	pidof "${CH_WALLSETTER}" &>"$LOG_FILEPATH" && killall "${CH_WALLSETTER}" &>/dev/null
 	
 	# Use the wallpaper backend first available
     case "$CH_WALLSETTER" in
-		"xgifwallpaper") nohup xgifwallpaper -s $xgifwallpaperMode "$image_path" >/dev/null 2>&1 & disown || wallsetERROR ;;
+		"xgifwallpaper") nohup xgifwallpaper -s $xgifwallpaperMode "$image_path" >"$LOG_FILEPATH" 2>&1 & disown || wallsetERROR ;;
 		"xwallpaper") xwallpaper "--$xWallMode" "$image_path" || wallsetERROR;;
         "hsetroot") hsetroot "$hsetrootMode" "$image_path" || wallsetERROR;;
         "feh") feh --bg-"$fehMode" "$image_path" || wallsetERROR;;
         "nitrogen") nitrogen --set-$nitrogenMode "$image_path" || wallsetERROR;;
-		"swaybg") swaybg -i "$image_path" --mode "$swayMode" >/dev/null 2>&1 & disown || wallsetERROR;;
+		"swaybg") swaybg -i "$image_path" --mode "$swayMode" >"$LOG_FILEPATH" 2>&1 & disown || wallsetERROR;;
+		"awww")
+			pidof "${CH_WALLSETTER}-deamon" &>"$LOG_FILEPATH" || "${CH_WALLSETTER}-deamon" &>"$LOG_FILEPATH"
+			awww img "$image_path" --resize "$awwwMode" >"$LOG_FILEPATH" 2>&1 & disown || wallsetERROR
+			;;
 		"xfconf-query")
 			if xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-style --set $xfceMode; then
 				xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-path --set "$image_path"; else wallsetERROR; fi
@@ -134,9 +136,9 @@ setup_wallpaper() {
 	verbose info "Changing the wallpaper"
 	case "$wallpaper" in
 		*.png) cp "$wallpaper" "$WALLPAPER_CACHE" ;;
-		*.gif) magick "$wallpaper" -coalesce -flatten "$WALLPAPER_CACHE">/dev/null
+		*.gif) magick "$wallpaper" -coalesce -flatten "$WALLPAPER_CACHE">"$LOG_FILEPATH"
 			   $wallpaper_animated && cp "$wallpaper" "$WALLPAPER_CACHE.gif";;
-		*)  magick "$wallpaper" "$WALLPAPER_CACHE">/dev/null
+		*)  magick "$wallpaper" "$WALLPAPER_CACHE">"$LOG_FILEPATH"
 	esac
 	case "$wallpaper_type" in
 		"solid") magick -size 10x10 xc:"$color8" "$WALLPAPER_CACHE"
