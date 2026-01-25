@@ -3,7 +3,6 @@
 # Import all the scripts
 [[ ! -e "$(pwd)/scripts" ]] && WORK_PATH="$(dirname "$0")" || WORK_PATH="$(pwd)"
 
-LOG_FILEPATH="/tmp/walset.log"
 SCRIPT_PATH="$WORK_PATH/scripts"
 SCRIPT_FILES=(messages paths config startup apply)
 for script in "${SCRIPT_FILES[@]}"; do . "$SCRIPT_PATH/$script.sh"; done

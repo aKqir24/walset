@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# DEFAULT PATHS FOR CONFIG:
+# DEFAULT PATHS FROM CONFIG:
+LOG_FILEPATH="/tmp/walset.log"
 THEMING_ASSETS="$HOME/.local/share/walset/assets"
 DEFAULT_PYWAL16_OUT_DIR="$HOME/.cache/wal"
 WALLPAPER_CONF_PATH="$HOME/.config/walset.toml"
@@ -21,9 +22,7 @@ for program in "terminal" "notification" "status" "launcher"; do
 done
 
 # Figure xsettingsd config path
-if [[ ! -f $XSETTINGSD_CONF ]]; then
-	XSETTINGSD_CONF="$HOME/.config/xsettingsd/xsettingsd.conf"
-fi
+[[ ! -f $XSETTINGSD_CONF ]] && XSETTINGSD_CONF="$HOME/.config/xsettingsd/xsettingsd.conf"
 
 # GTK THEMING PATHS
 WAYLAND_GTK4="$HOME/.config/gtk-4.0"

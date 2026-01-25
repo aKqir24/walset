@@ -10,7 +10,7 @@ defaults:
     shell: bash
 
 jobs:
-  run-tests:
+  run-ubuntu-latest:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -21,17 +21,22 @@ jobs:
         sudo ln -fs /usr/share/zoneinfo/Africa/Libreville /etc/localtime
     - name: Setup Environment
       run: |
-        export DEFAULT_PYWAL16_OUT_DIR="$HOME/.cache/wal"
-        pipx install pywal16==3.8.10
+        export PYWAL_CACHE_DIR="$HOME/.cache/wal"
+        export config_repo="https://raw.githubusercontent.com/aKqir24/.files/refs/heads/i3/.config"
+
+        pipx install pywal16
         mkdir -p "$HOME/Pictures/Wallpapers"
-        wget https://raw.githubusercontent.com/aKqir24/.files/refs/heads/main/.config/walset.toml -O "$HOME/.config/walset.toml"
-        sed -i -e 's/akqir24/runner/g' -e 's/colorz/wal/g' -e 's/image/none/g' "$HOME/.config/walset.toml" && mkdir -p "$HOME/.config/xsettingsd"
-        wget https://raw.githubusercontent.com/aKqir24/.files/refs/heads/main/.config/xsettingsd/xsettingsd.conf -O "$HOME/.config/xsettingsd/xsettingsd.conf" 
-        wget https://raw.githubusercontent.com/aKqir24/.files/main/Pictures/Wallpapers/wallpaper.jpg -O "$HOME/Pictures/Wallpapers/wallpaper.jpg"
+        mkdir -p "$HOME/.config/xsettingsd"
+        
+        wget "$config_repo/walset.toml" -O "$HOME/.config/walset.toml"
+        wget "$config_repo/xsettingsd/xsettingsd.conf" -O "$HOME/.config/xsettingsd/xsettingsd.conf" 
+        wget https://raw.githubusercontent.com/aKqir24/.files/i3/Pictures/Wallpapers/wallpaper.jpg -O "$HOME/Pictures/Wallpapers/wallpaper.jpg"
+
+        sed -i -e 's/akqir24/runner/g' -e 's/colorz/wal/g' -e 's/image/none/g' "$HOME/.config/walset.toml"
     - name: Test the program
       run: |
         if [ $? -eq 0 ]; then 
-          time bash walset.sh --load --verbose
+          time bash walset.sh --load --debug --verbose
         else  
           echo "Program failed!"
         fi
