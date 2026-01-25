@@ -19,7 +19,7 @@ SETUPS=( wallBACK "Backend In Use" off \
 # Start Configuration dialogs
 verbose info "Running kdialog for configuration..." &
 ToCONFIG=$( kdialog --checklist "Available Configs" "${SETUPS[@]}" --separate-output )
-assignTEMPCONF >"$LOG_FILEPATH" && [[ -z $ToCONFIG ]] && cancelCONFIG
+assignTEMPCONF >> "$LOG_FILEPATH" && [[ -z $ToCONFIG ]] && cancelCONFIG
 theming_values() {
 	THEME_MODE=$( kdialog --yes-label "Light" --no-label "Dark" \
 				  --yesno "Select an theme mode, it can be either:" && echo "light" || echo "dark")
@@ -31,7 +31,7 @@ theming_values() {
 # Configuration Dialogs
 for config in $ToCONFIG; do
 	if [[ $config == 'wallGTK' ]] || [[ $config == 'wallICONS' ]]; then
-		theming_values >"$LOG_FILEPATH" ; unset -f theming_values
+		theming_values >> "$LOG_FILEPATH" ; unset -f theming_values
 		theming_values() { echo "" ; }
 	fi
 	case "$config" in

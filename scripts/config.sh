@@ -1,20 +1,16 @@
 #!/bin/bash
 
 # Default options config values
-GUI=false
-LOAD=false
-DEBUG=false
-RESET=false
-SETUP=false
-RELOAD=false
-VERBOSE=false
+DEFAULT_FALSE_CONFIG=('GUI' 'LOAD' 'DEBUG' 'RESET' 'SETUP' 'RELOAD' 'VERBOSE' 'ANIMATED_WALLPAPER')
+for config_var in "${DEFAULT_FALSE_CONFIG[@]}"; do
+	[[ -z ${!config_var} ]] && declare -g "$config_var=false"
+done
 THEMING_GTK=true
 THEME_MODE="dark"
 THEMING_ICONS=true
 PYWAL_BACKEND="wal"
 THEME_ACCENT_COLOR=2
 WALLPAPER_CYCLE="static"
-ANIMATED_WALLPAPER=false
 WALLPAPER_BACKEND="none"
 THEMED_PROGRAMS=( 'i3status_rust' 'alacritty' 'rofi' 'dunst' )
 

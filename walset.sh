@@ -1,12 +1,5 @@
 #!/bin/bash
 
-# Import all the scripts
-[[ ! -e "$(pwd)/scripts" ]] && WORK_PATH="$(dirname "$0")" || WORK_PATH="$(pwd)"
-
-SCRIPT_PATH="$WORK_PATH/scripts"
-SCRIPT_FILES=(messages paths config startup apply)
-for script in "${SCRIPT_FILES[@]}"; do . "$SCRIPT_PATH/$script.sh"; done
-
 # Options To be used
 OPTS=$(getopt -o VRDLrh --long gui,setup,reset,debug,verbose,load,reload,help -- "$@")
 [ $? -ne 0 ] && exit 1 && eval set -- "$OPTS"
@@ -24,21 +17,22 @@ while true; do
 	esac
 done
 
+# Import all the scripts
+[[ ! -e "$(pwd)/scripts" ]] && WORK_PATH="$(dirname "$0")" || WORK_PATH="$(pwd)"
+
+SCRIPT_PATH="$WORK_PATH/scripts"
+SCRIPT_FILES=(messages paths config startup apply)
+for script in "${SCRIPT_FILES[@]}"; do . "$SCRIPT_PATH/$script.sh"; done
+
 # Debug option logic
-debug() {
-	if $DEBUG; then
-		while true; do
-			sleep 1 ; cat "$LOG_FILEPATH" 
-		done
-	else
-		LOG_FILEPATH=/dev/null
-	fi
-}
-debug &
+if $DEBUG; then
+    tail -F "$LOG_FILEPATH" &
+    TAIL_PID=$!
+fi
 
 # GUI dialog Configuration
 if $GUI && $SETUP; then
-	VERBOSE=true ; verbose sorry "You can only select one of the config optios." ; exit 1
+	VERBOSE=true ; verbose sorry "You can only select one of the config options." ; exit 1
 elif $SETUP; then
 	. "$SCRIPT_PATH/dialogs.sh"
 elif $GUI; then
@@ -86,5 +80,6 @@ applyWAL "$wallpaper_path" "$pywal16_backend" \
 
 # Finalize Process and making them faster by Functions
 linkCONF_DIR ; if [[ $wallpaper_type != "none" ]]; then setup_wallpaper ;fi
-verbose info "Process finished!!" 
+[ -n "$TAIL_PID" ] && kill "$TAIL_PID" # Kills the debugger when enabled
+verbose info "Process finished!!"
 exit 0

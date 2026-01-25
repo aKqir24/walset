@@ -80,7 +80,7 @@ set_wallpaper_with_mode() {
 	# Detect installed setters once	
 	choose_available_setter() {
 		for installed_wallsetter in "${WALL_SETTERS[@]}"; do
-			command -v "$installed_wallsetter" >"$LOG_FILEPATH" 2>&1 && \
+			command -v "$installed_wallsetter" >> "$LOG_FILEPATH" 2>&1 && \
 				AVAILABLE_SETTERS+=("$installed_wallsetter")
 		done
 	}
@@ -105,19 +105,19 @@ set_wallpaper_with_mode() {
 	done
 	
 	# Kill running wallpaper deamon if running
-	pidof "${CH_WALLSETTER}" &>"$LOG_FILEPATH" && killall "${CH_WALLSETTER}" &>/dev/null
+	pidof "${CH_WALLSETTER}" &>> "$LOG_FILEPATH" && killall "${CH_WALLSETTER}" &>/dev/null
 	
 	# Use the wallpaper backend first available
     case "$CH_WALLSETTER" in
-		"xgifwallpaper") nohup xgifwallpaper -s $xgifwallpaperMode "$image_path" >"$LOG_FILEPATH" 2>&1 & disown || wallsetERROR ;;
+		"xgifwallpaper") nohup xgifwallpaper -s $xgifwallpaperMode "$image_path" >> "$LOG_FILEPATH" 2>&1 & disown || wallsetERROR ;;
 		"xwallpaper") xwallpaper "--$xWallMode" "$image_path" || wallsetERROR;;
         "hsetroot") hsetroot "$hsetrootMode" "$image_path" || wallsetERROR;;
         "feh") feh --bg-"$fehMode" "$image_path" || wallsetERROR;;
         "nitrogen") nitrogen --set-$nitrogenMode "$image_path" || wallsetERROR;;
-		"swaybg") swaybg -i "$image_path" --mode "$swayMode" >"$LOG_FILEPATH" 2>&1 & disown || wallsetERROR;;
+		"swaybg") swaybg -i "$image_path" --mode "$swayMode" >> "$LOG_FILEPATH" 2>&1 & disown || wallsetERROR;;
 		"awww")
-			pidof "${CH_WALLSETTER}-deamon" &>"$LOG_FILEPATH" || "${CH_WALLSETTER}-deamon" &>"$LOG_FILEPATH"
-			awww img "$image_path" --resize "$awwwMode" >"$LOG_FILEPATH" 2>&1 & disown || wallsetERROR
+			pidof "${CH_WALLSETTER}-deamon" &>> "$LOG_FILEPATH" || "${CH_WALLSETTER}-deamon" &>"$LOG_FILEPATH"
+			awww img "$image_path" --resize "$awwwMode" >> "$LOG_FILEPATH" 2>&1 & disown || wallsetERROR
 			;;
 		"xfconf-query")
 			if xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-style --set $xfceMode; then
@@ -137,9 +137,9 @@ setup_wallpaper() {
 	verbose info "Changing the wallpaper"
 	case "$wallpaper" in
 		*.png) cp "$wallpaper" "$WALLPAPER_CACHE" ;;
-		*.gif) magick "$wallpaper" -coalesce -flatten "$WALLPAPER_CACHE">"$LOG_FILEPATH"
+		*.gif) magick "$wallpaper" -coalesce -flatten "$WALLPAPER_CACHE">> "$LOG_FILEPATH"
 			   $wallpaper_animated && cp "$wallpaper" "$WALLPAPER_CACHE.gif";;
-		*)  magick "$wallpaper" "$WALLPAPER_CACHE">"$LOG_FILEPATH"
+		*)  magick "$wallpaper" "$WALLPAPER_CACHE">> "$LOG_FILEPATH"
 	esac
 	case "$wallpaper_type" in
 		"solid") magick -size 10x10 xc:"$color8" "$WALLPAPER_CACHE"
