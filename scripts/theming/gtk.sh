@@ -21,11 +21,11 @@ for gtkCSSFile in "${GTK_CSS_FILES[@]}"; do
   [[ $base_filename == "general.base" ]] && gtk_tmp_file="$(basename "$base_file")" || \
 	  gtk_tmp_file="$base_filename"
 
-  # Remove/Copy base to working file
-  [[ -z $1 ]] && activeColor="color2" || activeColor="$1"
+  # TODO: New active color option
+  # [[ -z $1 ]] && activeColor="color2" || activeColor="$1"
+  # sed -i "s/{active}/$activeColor/g" "$base_file"
 
   # Apply colors
-  sed -i "s/{active}/$activeColor/g" "$base_file"
   temp_file_path="$PYWAL_TEMPLATES/$gtk_tmp_file"
   theme_style_file="$USER_THEME_FOLDER/$base_name/$(basename "$gtkCSSFile")"
   [[ ! -e $temp_file_path ]] && ln -s "$base_file" "$temp_file_path"

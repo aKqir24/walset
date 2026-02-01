@@ -1,25 +1,23 @@
-#!/bin/bash
-
 # DEFAULT PATHS FROM CONFIG:
 LOG_FILEPATH="/tmp/walset.log"
 THEMING_ASSETS="$HOME/.local/share/walset/assets"
 DEFAULT_PYWAL16_OUT_DIR="$HOME/.cache/wal"
-WALLPAPER_CONF_PATH="$HOME/.config/walset.toml"
+WALLPAPER_CONF_PATH="$HOME/.config/walset/config.toml"
 XSETTINGSD_CONF="$HOME/.xsettingsd.conf"
+PROGRAMS_SCRIPT_FOLDER="$SCRIPT_PATH/theming/programs"
 
 # Setup the output paths during pywal's export
-if [[ -z $PYWAL_CACHE_DIR ]]; then
+if not PYWAL_CACHE_DIR:
 	verbose warning "'PYWAL_CACHE_OUT' is not set! Add it to your .bashrc or the default will be used!!"
-	verbose info "Setting up output directory"
 	PYWAL_CACHE_DIR="$DEFAULT_PYWAL16_OUT_DIR"
-fi
 WALLPAPER_CACHE="/tmp/wallpaper.png"
 PYWAL_TEMPLATES="$PYWAL_CACHE_DIR/templates"
 
 # ARRAY OF THE PATHS TO PROGRAMS SCRIPTS
-for program in "terminal" "notification" "status" "launcher"; do
-	PROGRAMS_DIR+=("$SCRIPT_PATH/theming/programs/$program")
-done
+PROGRAMS_SCRIPTS=(f"{PROGRAMS_SCRIPT_FOLDER}/terminal",
+                  f"{PROGRAMS_SCRIPT_FOLDER}/notification",
+                  f"{PROGRAMS_SCRIPT_FOLDER}/status",
+                  f"{PROGRAMS_SCRIPT_FOLDER}/launcher")
 
 # Figure xsettingsd config path
 [[ ! -f $XSETTINGSD_CONF ]] && XSETTINGSD_CONF="$HOME/.config/xsettingsd/xsettingsd.conf"
@@ -28,11 +26,11 @@ done
 WAYLAND_GTK4="$HOME/.config/gtk-4.0"
 USER_THEME_FOLDER="$HOME/.themes/pywal" # revert to old path for gtk2 support
 BASE_THEME_FOLDER="$THEMING_ASSETS/gtk"
-for gtk_file in \
-	"gtk-2.0/gtkrc" "gtk-3.0/gtk.css" "gtk-3.20/gtk.css" \
-	"gtk-4.0/gtk.css" "general/dark.css"; do
-	GTK_CSS_FILES+=("$BASE_THEME_FOLDER/$gtk_file")
-done
+GTK_CSS_FILES=(f"{BASE_THEME_FOLDER}/gtk-2.0/gtkrc",
+               f"{BASE_THEME_FOLDER}/gtk-3.0/gtk.css",
+               f"{BASE_THEME_FOLDER}/gtk-3.20/gtk.css",
+	           f"{BASE_THEME_FOLDER}/gtk-4.0/gtk.css",
+               f"{BASE_THEME_FOLDER}/general/dark.css")
 
 # GTK ICONS PATHS
 ICONS_WORK_DIR="$THEMING_ASSETS/icons"
