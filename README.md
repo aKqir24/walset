@@ -41,21 +41,26 @@ The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realt
 ## SETUP
 
 _**DEPENDENCIES**_
+- **Required**
+    - `yq`
+    - `pywal16`
+    - `imagemagick`
 
-- `yq`
-- `pywal16`
-- `kdialog` so to be `python-gi`
-- `xsettingsd` (optional)
-- `gtk2-engines-murrine` (for gtk2 support)
-- `imagemagick`
-- A wallpaper setter (optional):
-  - `feh`
-  - `hsetroot`
-  - `xwallpaper`
-  - `nitrogen`
-  - `xgifwallpaper` (for gif wallpaper animations)
-  - `swaybg`
-  ...
+- **Optional**
+    - `python-gi` [GUI configuration]
+    - `kdialog` [Dialog Configuration](deprecated) 
+    - `xsettingsd` [reload_gtk and icons]
+    - `libxapp-gtk3-module` [gtk3 decorations]
+    - `gtk2-engines-murrine` [for gtk2 support]
+    - A wallpaper setter (optional):
+      - `feh`
+      - `hsetroot`
+      - `xwallpaper`
+      - `nitrogen`
+      - `xgifwallpaper` (for gif wallpaper animations on x11)
+      - `swaybg`
+      - `awww` (for gif wallpaper on wayland)
+      ...
 
 _**DISTRO**_
 
