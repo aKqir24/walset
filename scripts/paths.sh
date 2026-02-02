@@ -27,8 +27,7 @@ done
 # GTK THEMING PATHS
 WAYLAND_GTK4="$HOME/.config/gtk-4.0"
 USER_THEME_FOLDER="$HOME/.themes/pywal" # revert to old path for gtk2 support
-GTK_WORK_DIR="$THEMING_ASSETS/gtk"
-BASE_THEME_FOLDER="$GTK_WORK_DIR/base"
+BASE_THEME_FOLDER="$THEMING_ASSETS/gtk"
 for gtk_file in \
 	"gtk-2.0/gtkrc" "gtk-3.0/gtk.css" "gtk-3.20/gtk.css" \
 	"gtk-4.0/gtk.css" "general/dark.css"; do
@@ -39,5 +38,5 @@ done
 ICONS_WORK_DIR="$THEMING_ASSETS/icons"
 USER_ICONS_FOLDER="$HOME/.local/share/icons/pywal"
 USER_MAIN_ICONS="$USER_ICONS_FOLDER/places/scalable"
-BASE_PLACES_ICONS="$ICONS_WORK_DIR/base/main/places/scalable"
-BASE_FOLDER_ICONS="$ICONS_WORK_DIR/base/templates/places/scalable/folders"
+BASE_PLACES_ICONS="$ICONS_WORK_DIR/main/places/scalable"
+BASE_FOLDER_ICONS="$ICONS_WORK_DIR/templates/places/scalable/folders"

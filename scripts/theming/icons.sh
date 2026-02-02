@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables that contain settings & paths
-BASE_ICON_PATHS=("$ICONS_WORK_DIR/base/$1" "$ICONS_WORK_DIR/base/main")
+BASE_ICON_PATHS=("$ICONS_WORK_DIR/$1" "$ICONS_WORK_DIR/main")
 
 # Copy the base icons
 [[ -d $USER_ICONS_FOLDER ]] || mkdir -p "$USER_ICONS_FOLDER"
