@@ -1,35 +1,42 @@
 #!/usr/bin/env python3
 
 import gi
-gi.require_version("Gtk", "3.0")
+gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk
 
-# Create main self window
-class MainWindow(Gtk.Window):
+class MainApp(Gtk.Application):
+    APP_ID = "com.aKqir24.walsetgui"
+
     def __init__(self):
-        super().__init__(title="walset GUI")
-        self.set_default_size(400, 200)
-        self.connect("destroy", Gtk.main_quit)
-        
-        # Create a Notebook (tab container)
+        super().__init__(application_id=self.APP_ID)
+        self.run()
+
+    def do_activate(self):
+        # Create main window
+        self.MAIN_INTERFACE = Gtk.ApplicationWindow(
+            application=self,
+            title="walset GUI"
+        )
+        self.MAIN_INTERFACE.set_default_size(400, 300)
+
+        # Create Notebook
         notebook = Gtk.Notebook()
-        self.add(notebook)
-        
-        # Tabs [ Setup, Paths, Pywal, Settings ]
+        self.MAIN_INTERFACE.set_child(notebook)
+
+        # Tabs
         setup = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
         paths = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
         pywal = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
         settings = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        
-        # Add Tabs to Notebook, Labels & Config
-        tabs: list = [ (setup, 'Setup'), (paths, 'Paths'), (pywal, 'Pywal'), (settings, 'Settings') ]
-        for tab, tab_label in tabs:
-            notebook.append_page(tab, Gtk.Label(label=tab_label))
-            tab.set_border_width(10)
 
-        # Show all widgets
-        self.show_all()
+        for tab, label in (
+            (setup, "Setup"),
+            (paths, "Paths"),
+            (pywal, "Pywal"),
+            (settings, "Settings")):
+            notebook.append_page(tab, Gtk.Label(label=label))
 
-# Start GTK main loop
-MainWindow().show_all()
-Gtk.main()
+        self.MAIN_INTERFACE.present()
+
+# Start app
+MainApp()
