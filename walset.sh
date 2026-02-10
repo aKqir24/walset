@@ -14,13 +14,12 @@ for script in "${SCRIPT_FILES[@]}"; do . "$SCRIPT_PATH/$script.sh"; done
 
 # Options To be used
 # TODO: Debug option
-OPTS=$(getopt -o VRDLrh --long gui,setup,install,reset,debug,verbose,load,reload,help -- "$@")
+OPTS=$(getopt -o VRDLrh --long gui,setup,reset,debug,verbose,load,reload,help -- "$@")
 [ $? -ne 0 ] && exit 1 && eval set -- "$OPTS"
 while true; do
 	case "$1" in
 		--gui) GUI=true; shift;;
 		--setup) SETUP=true; shift;;
-		--theme) MODE=$2 GTK=$3 ICONS=$4 ; shift ;;
 		-R | --reset) RESET=true; shift ;;
 		-D | --debug) DEBUG=true; shift ;;
 		-V | --verbose) VERBOSE=true; shift ;;
@@ -30,18 +29,6 @@ while true; do
 		*) shift; break ;;
 	esac
 done
-
-if GTK="gtk" || ICONS="icons"; then 
-	if $GTK || GTK_INS_TAG; then 
-		theming_gtk = true
-	fi
-	if $GTK || $ICON_INS_TAG; then 
-		theming_icons = true
-	fi
-else
-	verbose error "Wrong --theme option usage please follow the instruction."
-	echo "$HELP_MESSAGE" ; exit 1
-fi
 
 # Debug option logic
 $DEBUG && cat "$LOG_FILEPATH" || LOG_FILEPATH=/dev/null

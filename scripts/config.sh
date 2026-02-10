@@ -59,6 +59,8 @@ saveCONFIG() {
 		.wallpaper.mode = \"$WALLPAPER_MODE\" |
 		.wallpaper.animated = $ANIMATED_WALLPAPER |
 		.wallpaper.backend = $ACTIVE
+		.theming.gtk = $THEMING_GTK |
+		.theming.icons = $THEMING_ICONS |
 		.theming.mode = \"$THEME_MODE\" |
 		.theming.accent = \"$THEME_ACCENT_COLOR\" |
 		.pywal16.reload = \"$RELOAD\" |

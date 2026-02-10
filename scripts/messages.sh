@@ -10,7 +10,6 @@ are writen in the https://github.com/aKqir24/walset.
 Usage: $0 [OPTIONS]
   --gui: To launch a configuration GUI and apply the configurations.
   --setup: Show dialogs that sets up the configurations in order.
-  --theme [add, remove]: a gtk or/and icon theme template for pywal16.
   -D | --debug: shows all the messages of this script.
   -R | --reload: enables programs to reload after running pywal, eg.(gtk|icons|wm)
   -r | --reset: To remove all set features, and set them all to default.
