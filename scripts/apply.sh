@@ -49,7 +49,7 @@ generateICONSTHEME() {
 	elif $theming_icons && [[ ! -z $ICON_INS_TAG ]]; then
 		verbose info "Icon theme already installed"
 	else 
-		clean_path "$USER_ICONS_FOLDER"
+		if ! $theming_icons || $RESET; then clean_path "$USER_ICONS_FOLDER"; fi
 	fi
 }
 

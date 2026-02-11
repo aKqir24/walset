@@ -1,98 +1,92 @@
 #!/bin/bash
 
 # Options To be used
-OPTS=$(getopt -o VRDLrh --long gui,setup,theme,reset,debug,verbose,load,reload,help -- "$@")
-[ $? -ne 0 ] && exit 1 && eval set -- "$OPTS"
+OPTS=$(getopt -o VRDLrh --long gui,setup,theme:,reset,debug,verbose,load,reload,help -- "$@")
+if [ $? -ne 0 ]; then exit 1; fi
+eval set -- "$OPTS"
+
 while true; do
-	case "$1" in
-		--gui) GUI=true; shift;;
-		--setup) SETUP=true; shift;;
-		--theme) MODE=$2 GTK=$3 ICONS=$4 ; shift ;;
-		-R | --reset) RESET=true; shift ;;
-		-D | --debug) DEBUG=true; shift ;;
-		-V | --verbose) VERBOSE=true; shift ;;
-		-L | --load) LOAD=true; shift;;
-		-r | --reload) RELOAD=true; shift;;
-		-h | --help) echo "$HELP_MESSAGE"; exit 0;;
-		*) shift; break ;;
-	esac
+    case "$1" in
+        --gui) GUI=true; shift;;
+        --setup) SETUP=true; shift;;
+        --theme) 
+            MODE=$2 ; GTK_THEME=$3 ; ICONS_THEME=$4
+            shift 4 ;; # Shift the flag + 3 arguments
+        -R | --reset) RESET=true; shift ;;
+        -D | --debug) DEBUG=true; shift ;;
+        -V | --verbose) VERBOSE=true; shift ;;
+        -L | --load) LOAD=true; shift;;
+        -r | --reload) RELOAD=true; shift;;
+        -h | --help) HELP_MESSAGE=true; shift;;
+        --) shift; break ;;
+        *) break ;;
+    esac
 done
 
 # Import all the scripts
-[[ ! -e "$(pwd)/scripts" ]] && WORK_PATH="$(dirname "$0")" || WORK_PATH="$(pwd)"
-
+# Logical fix: simpler pathing
+WORK_PATH="$(cd "$(dirname "$0")" && pwd)"
 SCRIPT_PATH="$WORK_PATH/scripts"
+
 SCRIPT_FILES=(messages paths config startup apply)
-for script in "${SCRIPT_FILES[@]}"; do . "$SCRIPT_PATH/$script.sh"; done
-
-if GTK="gtk" || ICONS="icons"; then 
-	if $GTK || GTK_INS_TAG; then 
-		theming_gtk = true
-	fi
-	if $GTK || $ICON_INS_TAG; then 
-		theming_icons = true
-	fi # TODO: Allow custom links to show
-else
-	verbose error "Wrong --theme option usage please follow the instruction."
-	echo "$HELP_MESSAGE" ; exit 1
-fi
-
-# Debug option logic
-if $DEBUG; then
-    tail -F "$LOG_FILEPATH" &
-    TAIL_PID=$!
-fi
+for script in "${SCRIPT_FILES[@]}"; do 
+    if [[ -f "$SCRIPT_PATH/$script.sh" ]]; then
+        . "$SCRIPT_PATH/$script.sh"
+    fi
+done
 
 # GUI dialog Configuration
-if $GUI && $SETUP; then
-	VERBOSE=true ; verbose sorry "You can only select one of the config options." ; exit 1
-elif $SETUP; then
-	. "$SCRIPT_PATH/dialogs.sh"
-elif $GUI; then
-	# TODO: send the shell config values to python args for less IO reading
-	VERBOSE=true ; verbose sorry "The '--gui' option is still in development..." ; exit 1
+if [[ "$GUI" == true ]] || [[ "$SETUP" == true ]]; then
+    VERBOSE=true ; verbose sorry "You can only select one of the config options." ; exit 1
+elif [[ "$SETUP" == true ]]; then
+    [[ -f "$SCRIPT_PATH/dialogs.sh" ]] && . "$SCRIPT_PATH/dialogs.sh"
+elif [[ "$GUI" == true ]]; then
+    VERBOSE=true ; verbose sorry "The '--gui' option is still in development..." ; exit 1
 else
-	if $LOAD; then
-		verbose info "Using the previously configured settings" 
-		verifyingCONF ; assignTEMPCONF
-	else
-		if ! $RESET; then
-			echo "$HELP_MESSAGE"
-			exit 0
-		fi
-	fi
+    if [[ "$LOAD" == true ]]; then
+        verbose info "Using the previously configured settings" 
+        verifyingCONF ; assignTEMPCONF
+	elif [[ "$RESET" != true ]] || [[ "HELP_MESSAGE" == true ]]; then
+		show_help
+    fi
 fi
 
 # Only save the config when configured!
-if $SETUP || $GUI; then
-	verifyingCONF ; saveCONFIG ; assignTEMPCONF
+if [[ "$SETUP" == true ]] || [[ "$GUI" == true ]]; then
+    verifyingCONF ; saveCONFIG ; assignTEMPCONF
 fi
 
-# Import some features
-$RESET && . "$SCRIPT_PATH/reset.sh"
-if [[ $wallpaper_type != "none" ]]; then
-	. "$SCRIPT_PATH/wallpaper.sh" && select_wallpaper
+# Import reset feature if true
+[[ "$RESET" == true ]] && [[ -f "$SCRIPT_PATH/reset.sh" ]] && . "$SCRIPT_PATH/reset.sh"
+
+if [[ "$wallpaper_type" != "none" ]]; then
+    if [[ -f "$SCRIPT_PATH/wallpaper.sh" ]]; then
+        . "$SCRIPT_PATH/wallpaper.sh" && select_wallpaper
+    fi
 fi
 
-# Check pywal options if either enabled or disabled
+# Check pywal options
 check_pywal_option "$pywal16_light" "PYWAL_GENERATE_LIGHT" \
-	"--cols16 $pywal16_colorscheme" "Enabling 16-color support in pywal" true
+    "--cols16 $pywal16_colorscheme" "Enabling 16-color support in pywal" true
 check_pywal_option "$wallpaper_cycle" "WALLPAPER_CYCLE_MODE" \
-	"--$wallpaper_cycle" "Determining wallpaper change cycle" "iterative" "recursive"
+    "--$wallpaper_cycle" "Determining wallpaper change cycle" "iterative" "recursive"
 check_pywal_option "$theming_mode" "LIGHT_COLORS" \
-	"-l" "Enabling Generate light colors..." "light"
+    "-l" "Enabling Generate light colors..." "light"
 check_pywal_option "$RELOAD" "PYWAL_RELOAD" \
-	"-e" "Skip Reloading gtk|icons|wm|programs" false
+    "-e" "Skip Reloading gtk|icons|wm|programs" false
 
-# call the pywal to get colorsheme
+# Call pywal
 applyWAL "$wallpaper_path" "$pywal16_backend" \
-	"$PYWAL_GENERATE_LIGHT" "$WALLPAPER_CYCLE_MODE" "$LIGHT_COLORS" "$PYWAL_RELOAD"
+    "$PYWAL_GENERATE_LIGHT" "$WALLPAPER_CYCLE_MODE" "$LIGHT_COLORS" "$PYWAL_RELOAD"
 
-# Make a wallpaper cache to expand the features in setting the wallpaper
+# Cache cleanup
 [[ -f "$WALLPAPER_CACHE" ]] && rm "$WALLPAPER_CACHE"
 
-# Finalize Process and making them faster by Functions
-linkCONF_DIR ; if [[ $wallpaper_type != "none" ]]; then setup_wallpaper ;fi
-[ -n "$TAIL_PID" ] && kill "$TAIL_PID" # Kills the debugger when enabled
+# Finalize
+linkCONF_DIR ; [[ "$wallpaper_type" != "none" ]] && setup_wallpaper
+
+# Cleanup debugger
+[[ -n "$TAIL_PID" ]] && kill "$TAIL_PID" 2>/dev/null
+
 verbose info "Process finished!!"
 exit 0

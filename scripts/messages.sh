@@ -11,11 +11,12 @@ Usage: $0 [OPTIONS]
   --gui: To launch a configuration GUI and apply the configurations.
   --setup: Show dialogs that sets up the configurations in order.
   --theme [add, remove]: a gtk or/and icon theme template for pywal16.
+		You can add your custom theme repo by addind the 'CUSTOM_THEME_REPO' env.
   -D | --debug: shows all the messages of this script.
   -R | --reload: enables programs to reload after running pywal, eg.(gtk|icons|wm)
   -r | --reset: To remove all set features, and set them all to default.
   -V | --verbose: To show log messages when each step of the script is executed.
-  -h | --help: to show how to use this script.
+  -h | --help: to show how to use this script, (this is ignored sometimes ignored).
   -L | --load: loads/applies the configurations.
 "
 applied=()
@@ -39,7 +40,8 @@ verbose() {
 		[[ $1 == "error" ]] && exit 1
 	fi
 }
-	
+
+show_help() { echo "$HELP_MESSAGE" ; exit 0; }
 wallsetERROR() { verbose error "Failed to set wallpaper..."; exit 1; }
 pywalerror() { verbose error "Pywal16 ran into an error!\nplease run 'bash $0 --reset --load --verbose'" ; exit 1 ; }
 wallSETTERError() { verbose warning "No Wallpaper setter found!\nSo wallpaper is not set..."; }

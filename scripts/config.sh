@@ -35,7 +35,7 @@ assignTEMPCONF() {
 	for section in "${tables[@]}"; do
 		case $section in
 			"${tables[0]}") keys=( "cycle" "type" "path" "mode" "animated" "backend" ) ;;
-			"${tables[1]}") keys=( "gtk" "icons" "mode" "accent" "programs" ) ;;
+			"${tables[1]}") keys=( "mode" "accent" "programs" ) ;;
 			"${tables[2]}") keys=( "backend" "light" "colorscheme" "reload" ) ;;
 		esac
 		for key in "${keys[@]}"; do
