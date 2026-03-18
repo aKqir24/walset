@@ -1,0 +1,89 @@
+/* Buttons */
+.moreoptions-button {
+	box-shadow: 0px 0px 0px 0px transparent;
+	border-color: transparent;
+    background-image: none;
+	border: 0px;
+}
+
+.moreoptions-button:hover {
+	opacity: 0.7;
+	border-color: transparent;
+	background-color: transparent;
+	box-shadow: 0px 0px 0px 0px transparent;
+}
+
+.moreoptions-button:active {
+	border-color: transparent;
+	box-shadow: 0px 0px 0px 0px transparent;
+}
+
+.start-buttons-labels {
+	padding-left: 6px;
+	padding-right: 6px;	
+}
+
+.start-buttons-labels:hover, .start-buttons-labels:active, .start-buttons-labels:checked {
+	padding-left: 12px;
+	padding-right: 12px;
+}
+
+/* Some Widgets */
+.color-picker {
+	border-radius: 0px;
+	border: 0px;
+	padding: 0px;
+	margin: 0px
+}
+
+.wallpaper-preview {
+	background-color: alpha(@theme_fg_color, 0.15);
+}
+
+.path_view {
+	margin-right: 6px;
+	margin-left: 1px;
+}
+
+.wall_containers:not(:backdrop) > border,
+.pywal_containers:not(:backdrop) > border {
+	border: 2px solid alpha(@theme_base_color, 0.15);
+}
+
+.frame_labels {
+	font-weight: bold;
+}
+
+.fr_wrapper {
+	margin: 8px;
+}
+
+.labels_text {
+	padding-left: 6px;
+	padding-right: 6px;
+}
+
+.wall_cycle_fr > border,
+.pywal_config_last_fr > border {
+	border-top: 1px solid @theme_bg_color;
+	border-left: 0px;
+	border-right: 0px;
+	border-bottom: 0px;
+
+}
+
+.wall_cycle_fr:not(:backdrop) > border,
+.pywal_config_last_fr:not(:backdrop) > border {
+	border-top: 2px solid alpha(@theme_base_color, 0.15);
+}
+/*
+ 
+==== Gtk 3 Color Legend ====
+ 
+@theme_bg_color:	The base background for windows and dialogs.
+@theme_fg_color:	The main text color (usually dark gray/black).
+@theme_base_color:	The background for text entries and lists (usually pure white).
+@theme_text_color:	The text color for entries and lists.
+@theme_selected_bg_color:	The "Accent" color (blue by default) for active tabs or selections.
+@theme_selected_fg_color:
+*/

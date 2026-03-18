@@ -22,7 +22,6 @@ The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realt
 
 ## FEATURES
 
-
   - Dialog configuration along with pywal options.
   - Choose between `solid_color` or `image` in wallpaper setting.
   - Wallpaper setup options include [ fill, scale, max, fit, etc ]
@@ -32,9 +31,6 @@ The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realt
   - Icon theme colors based [Flat-Remix](https://github.com/daniruiz/Flat-Remix) icon pack.
   - Reload gtk and icon themes using `xsettingd` & `gsettings`.(only icon theme reloading in wayland)
   - Full Gif wallpaper support(please update to the latest pywal16 version).
- 
-
-
   - GUI config support
 
 
@@ -43,33 +39,35 @@ The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realt
 _**DEPENDENCIES**_
 - **Required**
     - `python3-tomli`
-    - `python3-ywal16`
-    - `py
+    - `python3-tomli-w`
+    - `python3-pywal16`
     - `imagemagick`
 
 - **Optional**
-    - `python-gi` [GUI configuration]
+    - `python3-gi` <sup>(GUI configuration)</sup>
+    - `xsettingsd` <sup>(reload_gtk & icons)</sup>
+    - `libxapp-gtk3-module` <sup>(gtk3 decorations)</sup>
+    - `gtk2-engines-murrine` <sup>(gtk2 support)</sup>
 
-    - `xsettingsd` [reload_gtk & icons]
-    - `libxapp-gtk3-module` [gtk3 decorations]
-    - `gtk2-engines-murrine` [gtk2 support]
-    - A wallpaper setter (optional):
-      - `feh`
-      - `hsetroot`
-      - `xwallpaper`
-      - `nitrogen`
-      - `xgifwallpaper` (gif wallpaper animations on x11)
-      - `swaybg`
-      - `awww` (gif wallpaper on wayland)
-
+  	A wallpaper setter (optional):
+  	- `feh`
+	- `hsetroot`
+  	- `xwallpaper`
+	- `nitrogen`
+   	- `xgifwallpaper` <sup>(gif wallpaper animations on x11)</sup>
+  	- `swaybg`
+  	- `swww`
+    - `awww` <sup>(gif wallpaper on wayland)</sup>
 
 _**DISTRO**_
+
+If the main script did not work as it intended you might need to follow these options.
 
 - Debian ( or Other Debian based distro )
 
 ```bash
-sudo apt install kdialog pipx yq imagemagick xwallpaper
-pipx install pywal16
+sudo apt install imagemagick xwallpaper python3-gi python3-tomli
+sudo pacsatall -I python3-pywal16 # You need to install pacstall for this...
 ```
 
 - Arch / AUR
@@ -93,9 +91,6 @@ then use these option to configure it:
 ```bash
 bash walset [OPTION]
   --gui: To launch a configuration GUI and apply the configurations.
-  --setup: Show dialogs that sets up the configurations in order.
-  --theme [add, remove]: a gtk or/and icon theme template for pywal16.
-		You can add your custom theme repo by addind the 'CUSTOM_THEME_REPO' env.
   -D | --debug: shows all the messages of this script.
   -R | --reload: enables programs to reload after running pywal, eg.(gtk|icons|wm)
   -r | --reset: To remove all set features, and set them all to default.
@@ -109,8 +104,10 @@ bash walset [OPTION]
 
 ## CONFIG
 
-The config file is located in `$HOME/.config/walset.toml`.
+The config files are located in `$HOME/.config/walset`.
 Here is a sample config, I recommend to use it cause it is much easier to setup:
+
+**config.toml**
 ````TOML
 
 [wallpaper]
@@ -122,13 +119,7 @@ animated = true
 
 [theming]
 mode = "dark"
-accent = "color2"
-
-[theming.programs]
-i3status_rust = "/home/akqir24/.files/.config/i3/status/config.toml"
-alacritty = "/home/akqir24/.config/alacritty.toml"
-rofi = "/home/akqir24/.config/rofi/config.rasi"
-dunst = "/home/akqir24/.config/dunst/dunstrc"
+accent = 2
 
 [pywal16]
 light = true
@@ -137,6 +128,21 @@ backend = "wal"
 colorscheme = "lighten"
 
 ````
+
+**programs.toml**
+````TOML
+[status]
+i3status_rust = "/home/akqir24/.files/.config/i3/status/config.toml"
+
+[terminal]
+alacritty = "/home/akqir24/.config/alacritty.toml"
+
+[launcher]
+rofi = "/home/akqir24/.config/rofi/config.rasi"
+
+[notification]
+dunst = "/home/akqir24/.config/dunst/dunstrc"
+`````
 
 ## SPEACIAL THANKS
 

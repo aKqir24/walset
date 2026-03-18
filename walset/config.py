@@ -1,59 +1,94 @@
 import tomli
-from sys import agrv
+import tomli_w
+from os import path
+
+from .paths import *
+from .messages import logging, CommonMSG
 
 config: dict = {
 
-    # Settings
-    "Settings": {
-        "reset": ,
-        "reload": ,
-        "verbose": ,
-        "debug":
-    },
-
     # Setup
     "Setup": {
-        "mode": ,
-        "accent_color":
+        "mode": "dark",
+        "accent_color": 2
     },
 
 	# Wallpaper
     "Wallpaper": {
-        "animated": ,
-        "cycle": ,
-	    "backend":
-    }
+        "path": None,
+        "animated": False,
+        "cycle": "iterative",
+        "backend": "default", # NOTE: If it is none it will try to ask pywal, mode setup will not be applied
+        "type": "image",
+        "mode": "fill"
+    },
 
     # Pywal
     "Pywal": {
-        "backend": ,
-        "light_theme": ,
-        "colorscheme":
+        "backend": "wal",
+        "light_theme": True ,
+        "colorscheme": "darken"
     }
 }
-        # TODO: "install_gtk_theme": ,
-        # TODO: "install_icon_theme":,
-def verify_config():
-    verbose(info, "Verifying configuration file")
-	if [[ ! -e "$WALLPAPER_CONF_PATH" ]]; then
-		if touch "$WALLPAPER_CONF_PATH"
-			verbose(error "Config file does not exist!!")
-	fi
-	if [[ ! -s "$WALLPAPER_CONF_PATH" ]]; then
-		verbose error "Config file is empty, try modifying it!!"
-	fi
-def assign_config():
-    tables=('Settings' 'Setup' 'Wallpaper' 'Pywal')
-    with open(WALLPAPER_CONF_PATH, 'rb') as config_file:
-        data = tomli.load(config_file)
-        for section in tables:
-            match section:
-			    case f"{tables[0]}" keys=("reset", "reload", "verbose", "debug")
-			    case f"{tables[1]}" keys=("theme_mode", "theme_accent_color")
-			    case f"{tables[3]}" keys=("wallpaper", "cycle", "backend")
-			    case f"{tables[4]}" keys=("backend", "light_theme", "colorscheme")
-            for key in keys:
-                if (value := data[section][key]) != "":
-                    config[section][key] = value
+
+options: dict = {
+   
+    # Settings
+    "Settings": {
+        "reset": False,
+        "reload": False,
+        "verbose": False,
+        "load": False,
+        "gui": False,
+        "help": False
+    },
+    
+    # Theme
+    "Theme": {
+        "install_gtk": False,
+        "install_icon": False
+    }
+}
+
+def open_config(mode, callback):
+    with open(WALLPAPER_CONF_PATH, mode) as config_file:
+        callback(config_file)
+
 
 def save_config():
+    def handler(config_file):
+        tomli_w.dump(config, config_file)
+
+    open_config('wb', handler)
+
+
+def assign_config():
+    def handler(config_file):
+        try:
+            data = tomli.load(config_file)
+
+            for section, values in config.items():
+                for key in values.keys():
+                    value = data.get(section, {}).get(key)
+                    if value is not None:
+                        config[section][key] = value
+
+        except tomli.TOMLDecodeError:
+            check_config()
+            answer = input('Do you want to generate a default config file? [Y/n]: ')
+            if answer.lower() == "y":
+                save_config()
+            else:
+                CommonMSG.cancel_config()
+
+    open_config('rb', handler)
+
+
+def check_config():
+    logging.info("Verifying configuration file")
+
+    if not path.isfile(WALLPAPER_CONF_PATH):
+        logging.info('Generating a default config file...')
+        save_config()
+    else:
+        logging.info(f'Config file found: {WALLPAPER_CONF_PATH}')
