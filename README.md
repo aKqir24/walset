@@ -22,7 +22,6 @@ The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realt
 
 ## FEATURES
 
-
   - Dialog configuration along with pywal options.
   - Choose between `solid_color` or `image` in wallpaper setting.
   - Wallpaper setup options include [ fill, scale, max, fit, etc ]
@@ -32,9 +31,6 @@ The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realt
   - Icon theme colors based [Flat-Remix](https://github.com/daniruiz/Flat-Remix) icon pack.
   - Reload gtk and icon themes using `xsettingd` & `gsettings`.(only icon theme reloading in wayland)
   - Full Gif wallpaper support(please update to the latest pywal16 version).
- 
-
-
   - GUI config support
 
 
@@ -43,25 +39,23 @@ The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realt
 _**DEPENDENCIES**_
 - **Required**
     - `python3-tomli`
-    - `python3-ywal16`
-    - `py
+    - `python3-pywal16` <sup>I have my own modification so need to install it</sup>
     - `imagemagick`
 
 - **Optional**
-    - `python-gi` [GUI configuration]
-
-    - `xsettingsd` [reload_gtk & icons]
-    - `libxapp-gtk3-module` [gtk3 decorations]
-    - `gtk2-engines-murrine` [gtk2 support]
+    - `python-gi` <sup>GUI configuration</sup>
+    - `xsettingsd` <sup>reload_gtk & icons</sup>
+    - `libxapp-gtk3-module` <sup>gtk3 decorations</sup>
+    - `gtk2-engines-murrine` <sup>gtk2 support</sup>
     - A wallpaper setter (optional):
       - `feh`
       - `hsetroot`
       - `xwallpaper`
       - `nitrogen`
-      - `xgifwallpaper` (gif wallpaper animations on x11)
+      - `xgifwallpaper` <sup>(gif wallpaper animations on x11)</sup>
       - `swaybg`
-      - `awww` (gif wallpaper on wayland)
-
+      - `swww`
+      - `awww` <sup>(gif wallpaper on wayland)</sup>
 
 _**DISTRO**_
 

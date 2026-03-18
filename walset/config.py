@@ -1,59 +1,60 @@
 import tomli
+from os import path
 from sys import agrv
 
 config: dict = {
 
-    # Settings
-    "Settings": {
-        "reset": ,
-        "reload": ,
-        "verbose": ,
-        "debug":
-    },
-
     # Setup
     "Setup": {
-        "mode": ,
-        "accent_color":
+        "mode": "dark",
+        "accent_color": 2
     },
 
 	# Wallpaper
     "Wallpaper": {
-        "animated": ,
-        "cycle": ,
-	    "backend":
+        "animated": false,
+        "cycle": "iterative",
+	    "backend": "xwallpaper"
     }
 
     # Pywal
     "Pywal": {
-        "backend": ,
-        "light_theme": ,
-        "colorscheme":
+        "backend": "wal",
+        "light_theme": True ,
+        "colorscheme": "darken"
     }
 }
-        # TODO: "install_gtk_theme": ,
-        # TODO: "install_icon_theme":,
+
+options: dict = {
+   
+    # Settings
+    "Settings": {
+        "reset": False,
+        "reload": False,
+        "verbose": True,
+        "debug": False
+    },
+    
+    "Theme": {
+        "install_gtk": True,
+        "install_icon": True
+    }
+}
+
 def verify_config():
     verbose(info, "Verifying configuration file")
-	if [[ ! -e "$WALLPAPER_CONF_PATH" ]]; then
+	if path.exist(WALLPAPER_CONF_PATH):
 		if touch "$WALLPAPER_CONF_PATH"
 			verbose(error "Config file does not exist!!")
-	fi
 	if [[ ! -s "$WALLPAPER_CONF_PATH" ]]; then
 		verbose error "Config file is empty, try modifying it!!"
-	fi
 def assign_config():
-    tables=('Settings' 'Setup' 'Wallpaper' 'Pywal')
     with open(WALLPAPER_CONF_PATH, 'rb') as config_file:
         data = tomli.load(config_file)
-        for section in tables:
-            match section:
-			    case f"{tables[0]}" keys=("reset", "reload", "verbose", "debug")
-			    case f"{tables[1]}" keys=("theme_mode", "theme_accent_color")
-			    case f"{tables[3]}" keys=("wallpaper", "cycle", "backend")
-			    case f"{tables[4]}" keys=("backend", "light_theme", "colorscheme")
-            for key in keys:
+        for section in config.keys():
+            for key in section.keys():
                 if (value := data[section][key]) != "":
+                    if 
                     config[section][key] = value
 
 def save_config():

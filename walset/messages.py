@@ -1,4 +1,5 @@
 from sys import exit
+from config import options
 
 # Manage Options
 HELP_MESSAGE="""
@@ -28,8 +29,12 @@ def verbose(type, message):
 		    case "error": print("walsetup \033[1;31m[ERROR]: " + message)
 		    case "info": print("walsetup \033[1;34m[INFO]: " + message)
 
-show_help = lambda: print(HELP_MESSAGE), exit(0)
-wallsetError = lambda: verbose(error, "Failed to set wallpaper..."), exit(1)
-pywalError = lambda: verbose(error, "Pywal16 ran into an error!\nplease run 'walset --reset --load --verbose'"), exit 1
-wallSetterError = lambda: verbose(warning, "No Wallpaper setter found!\nSo wallpaper is not set...")
-cancelCONFIG = lambda: verbose(warning, "Configuration Dialog was canceled!, it might cause some problems when loading the configuration!"), exit 0
+
+class Messages:
+    def pywal():
+        verbose(error, "Pywal16 ran into an error!\nRunning 'walset --reset --load --verbose' might fix this!"), exit 1
+        
+    show_help = lambda: print(HELP_MESSAGE), exit(0)
+    cancelCONFIG = lambda: verbose(sorry, "Configuration Dialog was canceled!, it might cause some problems when loading the configuration!"), exit(0)
+    set_wallpaper = lambda: verbose(error, "Failed to set wallpaper..."), exit(1)
+    wallpaper_setter = lambda: verbose(sorry, "No Wallpaper setter found!\nSo wallpaper is not set...")

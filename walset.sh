@@ -8,7 +8,6 @@ eval set -- "$OPTS"
 while true; do
     case "$1" in
         --gui) GUI=true; shift;;
-        --setup) SETUP=true; shift;;
         --theme) 
             MODE=$2 ; GTK_THEME=$3 ; ICONS_THEME=$4
             shift 4 ;; # Shift the flag + 3 arguments
