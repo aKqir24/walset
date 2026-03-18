@@ -22,7 +22,7 @@ The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realt
 
 ## FEATURES
 
-- **Finished**
+
   - Dialog configuration along with pywal options.
   - Choose between `solid_color` or `image` in wallpaper setting.
   - Wallpaper setup options include [ fill, scale, max, fit, etc ]
@@ -32,22 +32,24 @@ The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realt
   - Icon theme colors based [Flat-Remix](https://github.com/daniruiz/Flat-Remix) icon pack.
   - Reload gtk and icon themes using `xsettingd` & `gsettings`.(only icon theme reloading in wayland)
   - Full Gif wallpaper support(please update to the latest pywal16 version).
+ 
 
-- **Unfinished**
-  - Gui config support using `python-gi`(this is a bit challenging) 
+
+  - GUI config support
 
 
 ## SETUP
 
 _**DEPENDENCIES**_
 - **Required**
-    - `yq`
-    - `pywal16`
+    - `python3-tomli`
+    - `python3-ywal16`
+    - `py
     - `imagemagick`
 
 - **Optional**
     - `python-gi` [GUI configuration]
-    - `kdialog` [Dialog Configuration](deprecated) 
+
     - `xsettingsd` [reload_gtk & icons]
     - `libxapp-gtk3-module` [gtk3 decorations]
     - `gtk2-engines-murrine` [gtk2 support]
@@ -59,7 +61,7 @@ _**DEPENDENCIES**_
       - `xgifwallpaper` (gif wallpaper animations on x11)
       - `swaybg`
       - `awww` (gif wallpaper on wayland)
-      ...
+
 
 _**DISTRO**_
 
@@ -89,7 +91,7 @@ Run the following commands in your terminal:
 then use these option to configure it:
 
 ```bash
-bash walsetup.sh [OPTION]
+bash walset [OPTION]
   --gui: To launch a configuration GUI and apply the configurations.
   --setup: Show dialogs that sets up the configurations in order.
   --theme [add, remove]: a gtk or/and icon theme template for pywal16.
