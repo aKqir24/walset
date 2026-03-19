@@ -14,7 +14,9 @@ config: dict = {
     "Wallpaper": {
         "animated": false,
         "cycle": "iterative",
-	    "backend": "xwallpaper"
+        "backend": None, # NOTE: If it is none it will try to ask pywal, mode setup will not be applied
+        "type": "image",
+        "mode": "fill"
     }
 
     # Pywal
@@ -35,9 +37,10 @@ options: dict = {
         "debug": False
     },
     
+    # Theme
     "Theme": {
-        "install_gtk": True,
-        "install_icon": True
+        "install_gtk": False,
+        "install_icon": False
     }
 }
 

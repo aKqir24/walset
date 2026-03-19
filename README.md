@@ -39,7 +39,7 @@ The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realt
 _**DEPENDENCIES**_
 - **Required**
     - `python3-tomli`
-    - `python3-pywal16` <sup>I have my own modification so need to install it</sup>
+    - `python3-pywal16`
     - `imagemagick`
 
 - **Optional**
