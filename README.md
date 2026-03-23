@@ -43,27 +43,30 @@ _**DEPENDENCIES**_
     - `imagemagick`
 
 - **Optional**
-    - `python-gi` <sup>GUI configuration</sup>
-    - `xsettingsd` <sup>reload_gtk & icons</sup>
-    - `libxapp-gtk3-module` <sup>gtk3 decorations</sup>
-    - `gtk2-engines-murrine` <sup>gtk2 support</sup>
-    - A wallpaper setter (optional):
-      - `feh`
-      - `hsetroot`
-      - `xwallpaper`
-      - `nitrogen`
-      - `xgifwallpaper` <sup>(gif wallpaper animations on x11)</sup>
-      - `swaybg`
-      - `swww`
-      - `awww` <sup>(gif wallpaper on wayland)</sup>
+    - `python3-gi` <sup>(GUI configuration)</sup>
+    - `xsettingsd` <sup>(reload_gtk & icons)</sup>
+    - `libxapp-gtk3-module` <sup>(gtk3 decorations)</sup>
+    - `gtk2-engines-murrine` <sup>(gtk2 support)</sup>
+
+  	A wallpaper setter (optional):
+  	- `feh`
+	- `hsetroot`
+  	- `xwallpaper`
+	- `nitrogen`
+   	- `xgifwallpaper` <sup>(gif wallpaper animations on x11)</sup>
+  	- `swaybg`
+  	- `swww`
+    - `awww` <sup>(gif wallpaper on wayland)</sup>
 
 _**DISTRO**_
+
+If the main script did not work as it intended you might need to follow these options.
 
 - Debian ( or Other Debian based distro )
 
 ```bash
-sudo apt install kdialog pipx yq imagemagick xwallpaper
-pipx install pywal16
+sudo apt install imagemagick xwallpaper python3-gi python3-tomli
+sudo pacsatall -I python3-pywal16 # You need to install pacstall for this...
 ```
 
 - Arch / AUR
@@ -103,8 +106,10 @@ bash walset [OPTION]
 
 ## CONFIG
 
-The config file is located in `$HOME/.config/walset.toml`.
+The config files are located in `$HOME/.config/walset`.
 Here is a sample config, I recommend to use it cause it is much easier to setup:
+
+**config.toml**
 ````TOML
 
 [wallpaper]
@@ -116,13 +121,7 @@ animated = true
 
 [theming]
 mode = "dark"
-accent = "color2"
-
-[theming.programs]
-i3status_rust = "/home/akqir24/.files/.config/i3/status/config.toml"
-alacritty = "/home/akqir24/.config/alacritty.toml"
-rofi = "/home/akqir24/.config/rofi/config.rasi"
-dunst = "/home/akqir24/.config/dunst/dunstrc"
+accent = 2
 
 [pywal16]
 light = true
@@ -131,6 +130,21 @@ backend = "wal"
 colorscheme = "lighten"
 
 ````
+
+**programs.toml**
+````TOML
+[status]
+i3status_rust = "/home/akqir24/.files/.config/i3/status/config.toml"
+
+[terminal]
+alacritty = "/home/akqir24/.config/alacritty.toml"
+
+[launcher]
+rofi = "/home/akqir24/.config/rofi/config.rasi"
+
+[notification]
+dunst = "/home/akqir24/.config/dunst/dunstrc"
+`````
 
 ## SPEACIAL THANKS
 
