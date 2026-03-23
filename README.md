@@ -24,11 +24,10 @@ The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realt
 
 - **Finished**
   - Dialog configuration along with pywal options.
-  - A wallpaper can be set either to `solid_color` or `image`
+  - Choose between `solid_color` or `image` in wallpaper setting.
   - Wallpaper setup options include [ fill, scale, max, fit, etc ]
   - Pywal colors to some configurable programs.( as toml config arrays )
-  - Uses the pywal16 option to either have a wallpaper in a folder or just an image.
-  - Support for animated gif wallpapers ( Does not support some gifs | it is a `pywal16` limitation )
+  - Use a wallpaper folder or image in pywal16.
   - Gtk theming based [Flat-Remix-GTK](https://github.com/daniruiz/Flat-Remix-GTK) as base theme.
   - Icon theme colors based [Flat-Remix](https://github.com/daniruiz/Flat-Remix) icon pack.
   - Reload gtk and icon themes using `xsettingd` & `gsettings`.(only icon theme reloading in wayland)
@@ -49,17 +48,17 @@ _**DEPENDENCIES**_
 - **Optional**
     - `python-gi` [GUI configuration]
     - `kdialog` [Dialog Configuration](deprecated) 
-    - `xsettingsd` [reload_gtk and icons]
+    - `xsettingsd` [reload_gtk & icons]
     - `libxapp-gtk3-module` [gtk3 decorations]
-    - `gtk2-engines-murrine` [for gtk2 support]
+    - `gtk2-engines-murrine` [gtk2 support]
     - A wallpaper setter (optional):
       - `feh`
       - `hsetroot`
       - `xwallpaper`
       - `nitrogen`
-      - `xgifwallpaper` (for gif wallpaper animations on x11)
+      - `xgifwallpaper` (gif wallpaper animations on x11)
       - `swaybg`
-      - `awww` (for gif wallpaper on wayland)
+      - `awww` (gif wallpaper on wayland)
       ...
 
 _**DISTRO**_
@@ -93,10 +92,15 @@ then use these option to configure it:
 bash walsetup.sh [OPTION]
   --gui: To launch a configuration GUI and apply the configurations.
   --setup: Show dialogs that sets up the configurations in order.
-  --reset: To remove all set features, and set them all to default.
-  --verbose: To show log messages when each step of the script is executed.
-  --help: to show how to use this script.
-  --load: loads/applies the configurations
+  --theme [add, remove]: a gtk or/and icon theme template for pywal16.
+		You can add your custom theme repo by addind the 'CUSTOM_THEME_REPO' env.
+  -D | --debug: shows all the messages of this script.
+  -R | --reload: enables programs to reload after running pywal, eg.(gtk|icons|wm)
+  -r | --reset: To remove all set features, and set them all to default.
+  -V | --verbose: To show log messages when each step of the script is executed.
+  -h | --help: to show how to use this script.
+  -h | --help: to show how to use this script, (this is ignored sometimes ignored).
+  -L | --load: loads/applies the configurations.
 ```
 > [!note]
 > Not all are covered like changing the values of a wm config file, in this script yet, so feel free to commit some improvements to it...
@@ -106,6 +110,7 @@ bash walsetup.sh [OPTION]
 The config file is located in `$HOME/.config/walset.toml`.
 Here is a sample config, I recommend to use it cause it is much easier to setup:
 ````TOML
+
 [wallpaper]
 cycle = "iterative"
 type = "image"
@@ -114,27 +119,27 @@ mode = "fill"
 animated = true
 
 [theming]
-gtk = true
-icons = true
 mode = "dark"
-accent =2
+accent = "color2"
+
 [theming.programs]
-i3status_rust="/home/akqir24/.files/.config/i3/status/config.toml" 
-alacritty="/home/akqir24/.config/alacritty.toml"
-rofi="/home/akqir24/.config/rofi/config.rasi"
-dunst="/home/akqir24/.config/dunst/dunstrc"
+i3status_rust = "/home/akqir24/.files/.config/i3/status/config.toml"
+alacritty = "/home/akqir24/.config/alacritty.toml"
+rofi = "/home/akqir24/.config/rofi/config.rasi"
+dunst = "/home/akqir24/.config/dunst/dunstrc"
 
 [pywal16]
-backend = "wal"
-reload= true
 light = true
-colorscheme = "darken"
+reload = true
+backend = "wal"
+colorscheme = "lighten"
+
 ````
 
 ## SPEACIAL THANKS
 
-- `deviantfero`: [wpgtk's templates](https://github.com/deviantfero/wpgtk-templates) for the _gtk2/3_ base theme.
-- `daniruiz`: [Flat-Remix-GTK](https://github.com/daniruiz/Flat-Remix-GTK) for the _gtk4_ base theme.
+- `deviantfero`: [wpgtk's templates](https://github.com/deviantfero/wpgtk-templates) for the _gtk2/3_ reference theme format.
+- `daniruiz`: [Flat-Remix-GTK](https://github.com/daniruiz/Flat-Remix-GTK) for the _gtk2,3,4_ base theme.
 - `daniruiz`: [Flat-Remix-Icon_Pack](https://github.com/daniruiz/Flat-Remix) for the base icon pack.
 - `eylles`: [build-gradience.py](https://github.com/eylles/pywal16-libadwaita/blob/master/scripts/build-gradience.py) it helped me fixed the _gtk4_ issue.
 - `eylles`: [pywal16](https://github.com/eylles/pywal16) which make this program possible.

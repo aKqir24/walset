@@ -2,10 +2,52 @@
 
 # Functions to display error or info and quit
 die() { verbose error "$1 colorsceme cannot be processed!" ;}
+write_toml_alt() {
+    local rules="$1"
+    local file="$2"
+
+    echo "$rules" | tr '|' '\n' | while read -r line; do
+        line="$(echo "$line" | xargs)"
+        [ -z "$line" ] && continue
+
+        local path="${line%%=*}"
+        local value="${line#*=}"
+
+        path="$(echo "$path" | xargs)"
+        value="$(echo "$value" | xargs | sed 's/^"//;s/"$//')"
+
+        local section="${path#*.}"
+        section="${section%%.*}"
+        local key="${path##*.}"
+
+        awk -v sec="$section" -v key="$key" -v val="$value" '
+        BEGIN { in_section=0 }
+
+        /^\[/ {
+            in_section = ($0 == "[" sec "]")
+        }
+
+        in_section && $1 == key {
+            print key " = \"" val "\""
+            next
+        }
+
+        { print }
+        ' "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+    done
+}
+
 write_toml() {
     local filter="$1"
-    local file="${2/#\~/$HOME}"   # replace leading ~ with $HOME
-    tomlq -i -t "$filter" "$file" >/dev/null || die "$file"
+    local file="${2/#\~/$HOME}"
+
+    if ! tomlq -i -t "$filter" "$file" >> "$LOG_FILEPATH" 2>&1; then
+        verbose sorry "skipped invalid TOML in $file"
+		verbose info "Attemping to use alternative loader..."
+		if ! write_toml_alt "$filter" "$file" >> "$LOG_FILEPATH" 2>&1; then 
+			verbose sorry "Alternative toml writer failed!!"
+		fi
+    fi
 }
 
 # Compare the options and run the scripts

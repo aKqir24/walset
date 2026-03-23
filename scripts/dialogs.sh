@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Check depends
+! command -v kdialog >> "$LOG_FILEPATH" 2>&1 \
+	&& verbose error "kdialog is not installed. Please install it!"
+
 # Config option labels
 SETUPS=( wallBACK "Backend In Use" off \
 		 wallTYPE "Set Wallpaper" on \
