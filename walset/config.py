@@ -1,6 +1,5 @@
 import tomli
 from os import path
-from sys import agrv
 
 config: dict = {
 
@@ -12,12 +11,12 @@ config: dict = {
 
 	# Wallpaper
     "Wallpaper": {
-        "animated": false,
-        "cycle": "iterative",
+        "animated": False,
+    "cycle": "iterative",
         "backend": None, # NOTE: If it is none it will try to ask pywal, mode setup will not be applied
         "type": "image",
         "mode": "fill"
-    }
+    },
 
     # Pywal
     "Pywal": {
@@ -34,7 +33,9 @@ options: dict = {
         "reset": False,
         "reload": False,
         "verbose": True,
-        "debug": False
+        "debug": False,
+        "load": False,
+        "gui": False
     },
     
     # Theme
@@ -46,18 +47,17 @@ options: dict = {
 
 def verify_config():
     verbose(info, "Verifying configuration file")
-	if path.exist(WALLPAPER_CONF_PATH):
-		if touch "$WALLPAPER_CONF_PATH"
-			verbose(error "Config file does not exist!!")
-	if [[ ! -s "$WALLPAPER_CONF_PATH" ]]; then
-		verbose error "Config file is empty, try modifying it!!"
+    if path.is_dir(WALLPAPER_CONF_PATH):
+        with open(WALLPAPER_CONF_PATH, "w") as config_file:
+            verbose(info, "Generating a default config file")
+            config_file.write(config)	
+
 def assign_config():
     with open(WALLPAPER_CONF_PATH, 'rb') as config_file:
         data = tomli.load(config_file)
         for section in config.keys():
             for key in section.keys():
-                if (value := data[section][key]) != "":
-                    if 
+                if (value := data[section][key].get()) != None: 
                     config[section][key] = value
 
-def save_config():
+def save_config(): pass

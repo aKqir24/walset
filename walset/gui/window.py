@@ -1,7 +1,5 @@
-#!/usr/bin/env python3
-
 import gi
-import info as app
+from . import info as app
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk
 
@@ -18,13 +16,14 @@ class MainApp(Gtk.Application):
         self.MAIN_INTERFACE.set_default_size(400, 300)
 
         # Create Notebook
+        tabs: list = []
         tabs_notebook = Gtk.Notebook()
         self.MAIN_INTERFACE.set_child(tabs_notebook)
 
         # Assign Tabs To Variables
-        config_tabs: list = []
-        for tab in ('setup', 'paths', 'pywal', 'settings'):
-            config_tabs.append(Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=14))
-            tabs_notebook.append_page(config_tabs[f'{tab}_tab'], Gtk.Label(label=tab.capitalize()))
+        tab_names = ('setup', 'paths', 'pywal', 'settings')
+        for tab in tab_names:
+            tabs.append(Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=14))
+            tabs_notebook.append_page(tabs[tab_names.index(tab)], Gtk.Label(label=tab.capitalize()))
 
         self.MAIN_INTERFACE.present()
