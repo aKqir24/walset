@@ -1,5 +1,5 @@
-import messages
-from paths import *
+from .paths import *
+from . import messages
 from os import makedirs
 
 # Check for the following paths

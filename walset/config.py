@@ -35,7 +35,8 @@ options: dict = {
         "verbose": True,
         "debug": False,
         "load": False,
-        "gui": False
+        "gui": False,
+        "help": False
     },
     
     # Theme
