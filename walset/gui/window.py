@@ -5,7 +5,7 @@ gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk
 
 # Main Application Interface
-class MainApp(Gtk.Application):
+class Main(Gtk.Application):
 
     def __init__(self):
         super().__init__(application_id=app.APPNAME)
@@ -22,7 +22,7 @@ class MainApp(Gtk.Application):
         self.MAIN_INTERFACE.set_child(tabs_notebook)
 
         # Assign Tabs To Variables
-        tab_names = ('setup', 'paths', 'pywal', 'settings')
+        tab_names = ('setup', 'programs', 'pywal', 'settings')
         for tab in tab_names:
             tabs.append(Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=14))
             tabs_notebook.append_page(tabs[tab_names.index(tab)], Gtk.Label(label=tab.capitalize()))

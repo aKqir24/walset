@@ -39,6 +39,7 @@ The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realt
 _**DEPENDENCIES**_
 - **Required**
     - `python3-tomli`
+    - `python3-tomli-w`
     - `python3-pywal16`
     - `imagemagick`
 

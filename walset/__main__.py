@@ -1,7 +1,8 @@
+import logging
 from argparse import ArgumentParser
 
-from .config import options
-from .messages import HELP_MESSAGE 
+from . import startup
+from .config import options, check_config, assign_config 
 
 def read_args():
     parser = ArgumentParser(add_help=False)
@@ -18,33 +19,34 @@ def read_args():
 def assign_args(args): 
     setting_options = options['Settings']
     if not args.modes:
-        write_ln('walset: Option Not found, you run walset -h or --help to check them!!')
+        print('Option Not found, you run walset -h or --help to check them!!')
     else:
         for option in args.modes or []:
             setting_options[option] = True
     return setting_options
 
-def condition_args(args_dict):
+def main():
+    # Setup and process the arguments
+    args_dict = assign_args(read_args())
+
     if args_dict['help'] is True: 
-        print(HELP_MESSAGE)
+        from .messages import HELP_MESSAGE
+        print(HELP_MESSAGE), exit(0)
     
     if args_dict['verbose'] is True:
-        from .messages import verbose
-    else: 
-        def verbose(*_, **__): pass # I'll use a verbose placeholder when it is not enabled!!
+        from .messages import setup_logging
+        setup_logging()
+    else:
+        logging.disable(logging.CRITICAL) 
     
     if args_dict['gui'] is True:
         from .gui import window # Using lazy loading cause you do not need gui to be imported in CLI mode.
-        verbose('Using GUI mode!!')
-        window.MainApp()
+        logging.info('Using GUI mode!!')
+        window.Main()
     else:
-        verbose('Using CLI mode!!')
+         logging.info('Using CLI mode!!')
 
-def main():
-    # Setup and process the arguments
-    condition_args(assign_args(read_args()))
+    # Manage config values
+    check_config(), assign_config()
 
-    from . import startup
-
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": main()

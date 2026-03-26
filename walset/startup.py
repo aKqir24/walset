@@ -1,10 +1,10 @@
 from .paths import *
 from . import messages
-from os import makedirs
+from os import makedirs, path
 
 # Check for the following paths
-for PYWAL_PATHS in [PYWAL_CACHE_DIR, PYWAL_TEMPLATES]
-    if not path.is_dir(PYWAL_PATHS):
+for PYWAL_PATHS in [PYWAL_CACHE_DIR, PYWAL_TEMPLATES, path.dirname(WALLPAPER_CONF_PATH)]:
+    if not path.isdir(PYWAL_PATHS):
 	    makedirs(PYWAL_PATHS, exist_ok=True)
 
 # Check if some features are already present

@@ -1,4 +1,3 @@
-from .config import options
 import logging
 
 # Manage Options
@@ -17,14 +16,19 @@ Usage: walset [OPTIONS]
   -L | --load: loads/applies the configurations."""
 
 # Functions than is defined to handle disagreements, errors, and info's
-def verbose(message, type='info'):
-	match str(type):
-		case "warning": logging.warning(message)
-		case "error": logging.error(message)
-		case "info": logging.info(message)
+def setup_logging():
+    from sys import stdout
+    logging.basicConfig(
+        format=("[%(levelname)s\033[0m] " "\033[1;31m%(module)s\033[0m: " "%(message)s"),
+        level=logging.INFO,
+        stream=stdout,
+    )
+    logging.addLevelName(logging.ERROR, "\033[1;31mE")
+    logging.addLevelName(logging.INFO, "\033[1;32mI")
+    logging.addLevelName(logging.WARNING, "\033[1;33mW")
 
-class Messages:
-    set_wallpaper_failure = lambda: verbose("Failed to set wallpaper...", 'error')
-    no_wallpaper_setter = lambda: verbose("No Wallpaper setter found!\nSo wallpaper is not set...", 'warning')
-    pywal_error= lambda: verbose("Pywal16 ran into an error!\nRunning 'walset --reset --load --verbose' might fix this!", 'error')
-    cancel_config = lambda: verbose("Configuration Dialog was canceled!, it might cause some problems when loading the configuration!", 'warning')
+class CommonMSG:
+    set_wallpaper_failure = lambda: logging.error("Failed to set wallpaper...")
+    no_wallpaper_setter = lambda: logging.warning("No Wallpaper setter found!\nSo wallpaper is not set...")
+    pywal_error= lambda: logging.info("Pywal16 ran into an error!\nRunning 'walset --reset --load --verbose' might fix this!", 'error')
+    cancel_config = lambda: logging.warning("Configuration Dialog was canceled!, it might cause some problems when loading the configuration!", 'warning')

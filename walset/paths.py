@@ -1,3 +1,4 @@
+import logging
 from os import getenv, path
 from tempfile import gettempdir
 
@@ -15,16 +16,10 @@ XSETTINGSD_CONF=f"{HOME}/.xsettingsd.conf"
 
 # Setup the output paths during pywal's export
 if not PYWAL_CACHE_DIR:
-	verbose warning "'PYWAL_CACHE_OUT' is not set! Add it to your .bashrc or the default will be used!!"
+	logging.warning("'PYWAL_CACHE_OUT' is not set! Add it to your .bashrc or the default will be used!!")
 	PYWAL_CACHE_DIR=DEFAULT_PYWAL16_OUT_DIR
 WALLPAPER_CACHE=f"{TEMP}wallpaper.png"
 PYWAL_TEMPLATES=f"{PYWAL_CACHE_DIR}/templates"
-
-# ARRAY OF THE PATHS TO PROGRAMS SCRIPTS
-PROGRAMS_SCRIPTS=(f"{PROGRAMS_SCRIPT_FOLDER}/terminal",
-                  f"{PROGRAMS_SCRIPT_FOLDER}/notification",
-                  f"{PROGRAMS_SCRIPT_FOLDER}/status",
-                  f"{PROGRAMS_SCRIPT_FOLDER}/launcher")
 
 # Figure xsettingsd config path
 if not path.isfile(XSETTINGSD_CONF): 
