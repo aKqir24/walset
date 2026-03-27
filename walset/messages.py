@@ -8,12 +8,12 @@ to ease the configuration in pywal, also it adds more functionality in pywal16 w
 are writen in the https://github.com/aKqir24/walset.
 
 Usage: walset [OPTIONS]
-  --gui: To launch a configuration GUI and apply the configurations.
-  -R | --reload: enables programs to reload after running pywal, eg.(gtk|icons|wm)
-  -r | --reset: To remove all set features, and set them all to default.
-  -V | --verbose: To show log messages when each step of the script is executed.
-  -h | --help: to show how to use this script, (this is ignored sometimes ignored).
-  -L | --load: loads/applies the configurations."""
+  -h, --help |  To show how to use this script, (this is ignored sometimes ignored).
+  --gui      |  To launch a configuration GUI and apply the configurations.
+  --reload   |  Enables programs to reload after running pywal, eg.(gtk|icons|wm)
+  --reset    |  To remove all set features, and set them all to default.
+  --verbose  |  To show log messages when each step of the script is executed.
+  --load     |  loads/applies the configurations."""
 
 # Functions than is defined to handle disagreements, errors, and info's
 def setup_logging():

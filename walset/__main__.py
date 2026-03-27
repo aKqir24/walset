@@ -7,22 +7,23 @@ from .config import options, check_config, assign_config
 def read_args():
     parser = ArgumentParser(add_help=False)
     parser.add_argument("--gui", action="append_const", const="gui", dest="modes")
-    parser.add_argument("-R", "--reset", action="append_const", const="reset", dest="modes")
-    parser.add_argument("-D", "--debug", action="append_const", const="debug", dest="modes")
-    parser.add_argument("-V", "--verbose", action="append_const", const="verbose", dest="modes")
-    parser.add_argument("-L", "--load", action="append_const", const="load", dest="modes")
-    parser.add_argument("-r", "--reload", action="append_const", const="reload", dest="modes")
+    parser.add_argument("--reset", action="append_const", const="reset", dest="modes")
+    parser.add_argument("--debug", action="append_const", const="debug", dest="modes")
+    parser.add_argument("--verbose", action="append_const", const="verbose", dest="modes")
+    parser.add_argument("--load", action="append_const", const="load", dest="modes")
+    parser.add_argument("--reload", action="append_const", const="reload", dest="modes")
     parser.add_argument("-h", "--help", action="append_const", const="help", dest="modes")
 
     return parser.parse_args()
 
 def assign_args(args): 
     setting_options = options['Settings']
-    if not args.modes:
-        print('Option Not found, you run walset -h or --help to check them!!')
+    if args.modes == None:
+        logging.error('Option Not found, you run walset -h or --help to check them!!')
     else:
-        for option in args.modes or []:
+        for option in args.modes:
             setting_options[option] = True
+
     return setting_options
 
 def main():
@@ -37,14 +38,22 @@ def main():
         from .messages import setup_logging
         setup_logging()
     else:
-        logging.disable(logging.CRITICAL) 
+        logging.disable(logging.CRITICAL)
+
+    if args.args_dict['reset'] is True:
+        pass
     
     if args_dict['gui'] is True:
         from .gui import window # Using lazy loading cause you do not need gui to be imported in CLI mode.
         logging.info('Using GUI mode!!')
-        window.Main()
+        from gi.repository import Gtk
+        app = window.Main()
+        Gtk.main()
     else:
          logging.info('Using CLI mode!!')
+
+    if args_dict['load'] is True:
+        pass
 
     # Manage config values
     check_config(), assign_config()

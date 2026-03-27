@@ -1,30 +1,35 @@
-from . import info as app
-
 import gi
-gi.require_version("Gtk", "4.0")
+import logging
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+import importlib.resources as pkg_resources
 
-# Main Application Interface
-class Main(Gtk.Application):
+from .. import info as app
+from . import gtk 
 
+class Main(Gtk.Builder):
     def __init__(self):
-        super().__init__(application_id=app.APPNAME)
-        self.run()
+        Gtk.Builder.__init__(self)
+        
+        # Load the Main Shell (no more placeholders = no more crash!)
+        with pkg_resources.as_file(pkg_resources.files(gtk).joinpath("window.glade")) as p:
+            self.add_from_file(str(p)) ; window = self.get_object("MainWindow")
 
-    def do_activate(self):
-        # Create main window
-        self.MAIN_INTERFACE = Gtk.ApplicationWindow(application=self, title=app.TITLE)
-        self.MAIN_INTERFACE.set_default_size(400, 300)
+        # Map the files to the docks
+        for tab in ('wallpaper', 'pywal', 'templates'):
+            self.plug_in_tab(f'{tab}.glade', f'{tab}_tab', f'{tab}_dock')
+        
+        # Show GUI and handle the loop when closing
+        window.show_all()
+        window.connect("destroy", Gtk.main_quit)
 
-        # Create Notebook
-        tabs: list = []
-        tabs_notebook = Gtk.Notebook()
-        self.MAIN_INTERFACE.set_child(tabs_notebook)
+    def plug_in_tab(self, file_name, root_id, dock_id):
+        sub_builder = Gtk.Builder()
+        with pkg_resources.as_file(pkg_resources.files(gtk).joinpath(file_name)) as p:
+            sub_builder.add_from_file(str(p))
 
-        # Assign Tabs To Variables
-        tab_names = ('setup', 'programs', 'pywal', 'settings')
-        for tab in tab_names:
-            tabs.append(Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=14))
-            tabs_notebook.append_page(tabs[tab_names.index(tab)], Gtk.Label(label=tab.capitalize()))
-
-        self.MAIN_INTERFACE.present()
+        if (content := sub_builder.get_object(root_id)) and (dock := self.get_object(dock_id)):
+            dock.pack_start(content, True, True, 0) ; content.show_all() 
+            sub_builder.connect_signals(self)
+        else:
+            logging.error(f"Failed to bolt {root_id} into {dock_id}—check your IDs!")

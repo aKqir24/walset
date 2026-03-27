@@ -36,7 +36,7 @@ options: dict = {
     "Settings": {
         "reset": False,
         "reload": False,
-        "verbose": True,
+        "verbose": False,
         "debug": False,
         "load": False,
         "gui": False,
