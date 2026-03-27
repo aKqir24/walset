@@ -1,0 +1,13 @@
+/* walset/gui/style.css */
+
+.preference-button {
+    background-color: transparent;
+    background-image: none;
+}
+
+.preference-button:hover {
+	opacity: 0.7;
+	border-color: transparent;
+	background-color: transparent;
+	box-shadow: 0px 0px 0px 0px transparent;
+}

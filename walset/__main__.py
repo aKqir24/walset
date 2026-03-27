@@ -40,7 +40,7 @@ def main():
     else:
         logging.disable(logging.CRITICAL)
 
-    if args.args_dict['reset'] is True:
+    if args_dict['reset'] is True:
         pass
     
     if args_dict['gui'] is True:

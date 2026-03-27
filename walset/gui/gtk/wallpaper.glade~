@@ -264,7 +264,6 @@
               <object class="GtkBox" id="set_wallpaper">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="spacing">8</property>
                 <child>
                   <object class="GtkSwitch">
                     <property name="visible">True</property>
@@ -280,8 +279,6 @@
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="halign">center</property>
-                    <property name="valign">center</property>
                     <property name="margin-left">8</property>
                     <property name="label" translatable="yes">Set Wallpaper</property>
                   </object>
@@ -302,7 +299,6 @@
               <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="spacing">8</property>
                 <child>
                   <object class="GtkSwitch">
                     <property name="visible">True</property>
@@ -318,8 +314,6 @@
                   <object class="GtkLabel" id="solid_wallpaper">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="halign">center</property>
-                    <property name="valign">center</property>
                     <property name="margin-left">8</property>
                     <property name="label" translatable="yes">Solid Color</property>
                   </object>
@@ -340,7 +334,6 @@
               <object class="GtkBox" id="animated_wallaper">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="spacing">8</property>
                 <child>
                   <object class="GtkSwitch">
                     <property name="visible">True</property>
@@ -356,8 +349,6 @@
                   <object class="GtkLabel" id="animated_wallpaper">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="halign">center</property>
-                    <property name="valign">center</property>
                     <property name="label" translatable="yes">Animated Wallpaper</property>
                   </object>
                   <packing>
