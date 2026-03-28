@@ -2,6 +2,39 @@
 <!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
+  <object class="GtkMenu" id="more-options-menu">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="rect-anchor-dx">-100</property>
+    <property name="rect-anchor-dy">-8</property>
+    <child>
+      <object class="GtkMenuItem" id="about-option">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="tooltip-text" translatable="yes">Shows Information about this program</property>
+        <property name="right-justified">True</property>
+        <property name="label" translatable="yes">About</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="tooltip-text" translatable="yes">Configure the options when applying</property>
+        <property name="label" translatable="yes">Preference</property>
+        <property name="use-underline">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkCheckMenuItem" id="save-settings">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="tooltip-text" translatable="yes">To save the settings even when closing this program</property>
+        <property name="label" translatable="yes">Save settings</property>
+        <property name="use-underline">True</property>
+      </object>
+    </child>
+  </object>
   <object class="GtkApplicationWindow" id="MainWindow">
     <property name="name">MainWindow</property>
     <property name="can-focus">False</property>
@@ -21,6 +54,9 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label" translatable="yes">Wallpaper</property>
+            <style>
+              <class name="main-tabs"/>
+            </style>
           </object>
           <packing>
             <property name="tab-fill">False</property>
@@ -40,6 +76,9 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label" translatable="yes">Templates</property>
+            <style>
+              <class name="main-tabs"/>
+            </style>
           </object>
           <packing>
             <property name="position">1</property>
@@ -60,6 +99,9 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label" translatable="yes">Pywal</property>
+            <style>
+              <class name="main-tabs"/>
+            </style>
           </object>
           <packing>
             <property name="position">2</property>
@@ -72,7 +114,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="halign">end</property>
-            <property name="margin-start">12</property>
+            <property name="margin-start">14</property>
             <property name="margin-end">4</property>
             <property name="hexpand">True</property>
             <property name="spacing">4</property>
@@ -116,12 +158,18 @@
                         <property name="position">1</property>
                       </packing>
                     </child>
+                    <style>
+                      <class name="start-buttons-labels"/>
+                    </style>
                   </object>
                 </child>
+                <style>
+                  <class name="start-buttons-labels"/>
+                </style>
               </object>
               <packing>
                 <property name="expand">False</property>
-                <property name="fill">False</property>
+                <property name="fill">True</property>
                 <property name="position">0</property>
                 <property name="non-homogeneous">True</property>
               </packing>
@@ -164,8 +212,14 @@
                         <property name="position">1</property>
                       </packing>
                     </child>
+                    <style>
+                      <class name="start-buttons-labels"/>
+                    </style>
                   </object>
                 </child>
+                <style>
+                  <class name="start-buttons-labels"/>
+                </style>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -176,26 +230,34 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkMenuButton">
                 <property name="visible">True</property>
-                <property name="can-focus">False</property>
+                <property name="can-focus">True</property>
                 <property name="focus-on-click">False</property>
                 <property name="receives-default">True</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
+                <property name="popup">more-options-menu</property>
+                <property name="direction">up</property>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="halign">center</property>
-                    <property name="valign">center</property>
                     <property name="icon-name">preferences-other</property>
+                    <style>
+                      <class name="optionmenu-icon"/>
+                      <class name="start-buttons-labels"/>
+                    </style>
                   </object>
                 </child>
                 <style>
-                  <class name="preference-button"/>
+                  <class name="moreoptions-button"/>
+                  <class name="start-buttons-labels"/>
                 </style>
               </object>
               <packing>
-                <property name="expand">True</property>
+                <property name="expand">False</property>
                 <property name="fill">True</property>
                 <property name="position">2</property>
                 <property name="non-homogeneous">True</property>

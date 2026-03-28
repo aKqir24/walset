@@ -44,10 +44,10 @@ def main():
         pass
     
     if args_dict['gui'] is True:
-        from .gui import window # Using lazy loading cause you do not need gui to be imported in CLI mode.
+        from .gui import __main__ # Using lazy loading cause you do not need gui to be imported in CLI mode.
         logging.info('Using GUI mode!!')
         from gi.repository import Gtk
-        app = window.Main()
+        app = __main__.Main()
         Gtk.main()
     else:
          logging.info('Using CLI mode!!')

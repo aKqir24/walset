@@ -1,13 +1,39 @@
 import gi
 from os import environ
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GObject
+from gi.repository import Gtk, GObject, Gdk
 
-class WallpaperBackends(Gtk.ListStore):
-    def __init__(self):
-        super().__init__(GObject.TYPE_STRING)
+class StartUp:
+    def __init__(self, style_provider, pkg_resources):
+        self.style_provider = style_provider
+        self.pkg_resources = pkg_resources
+        self.load_custom_css()
+        self.set_config_values()
+
+    def load_custom_css(self):
+        try:
+            with self.pkg_resources.path("walset.gui", "style.css") as css_path:
+                self.style_provider.load_from_path(str(css_path))
+                
+            # Apply it to the screen
+            Gtk.StyleContext.add_provider_for_screen(
+                Gdk.Screen.get_default(),
+                self.style_provider, # Fixed: matched the variable name above
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            )
+        except Exception as e:
+            print(f"!!! CSS LOAD ERROR: {e}")
     
-    def aquire_setters(self, obj):
+    def set_config_values(self):
+        pass
+    
+class WallpaperBackends(Gtk.ListStore):
+    def __init__(self, setters):
+        super().__init__(GObject.TYPE_STRING)
+        self.setters = setters
+        self.aquire_setters()
+    
+    def aquire_setters(self):
         if environ.get('WAYLAND_DISPLAY'):
             WALL_SETTERS_STATIC=('awww', 'swaybg', 'gnome-shell')
             WALL_SETTERS_ANIMATED=('awww',)
@@ -22,13 +48,12 @@ class WallpaperBackends(Gtk.ListStore):
             backends = (WALL_SETTERS_STATIC)
         else:
             backends = (WALL_SETTERS_ANIMATED)
-        print(backends)
         self.append(["pywal"])
         for item in backends:
             self.append([item])
     
-        obj['backends'].set_model(self)
+        self.setters.set_model(self)
         renderer_text = Gtk.CellRendererText()
-        obj['backends'].pack_start(renderer_text, True)
-        obj['backends'].add_attribute(renderer_text, "text", 0)
-        obj['backends'].set_active(0)
+        self.setters.pack_start(renderer_text, True)
+        self.setters.add_attribute(renderer_text, "text", 0)
+        self.setters.set_active(0)
