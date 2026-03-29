@@ -24,7 +24,8 @@ class Main(Gtk.Builder):
 
         # Get wallpaper tab info
         wallpaper_tab_objects = {
-            "backends": self.sub_builder.get_object("wallpaper_backends"),
+            "backends": self.sub_builder.get_object("wall_backs"),
+            "mode": self.sub_builder.get_object("wall_mode")
         }
 
         # Initial setup
@@ -32,7 +33,7 @@ class Main(Gtk.Builder):
         setup.WallpaperBackends(wallpaper_tab_objects['backends'])
 
         # Show GUI and handle the loop when closing
-        window.set_size_request(645, 250)
+        window.set_size_request(490, 250)
         window.show_all()
         window.connect("destroy", Gtk.main_quit)
 

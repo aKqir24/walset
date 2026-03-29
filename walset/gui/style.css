@@ -23,11 +23,12 @@
 	padding-right: 6px;	
 }
 
-.start-buttons-labels:hover, .start-buttons-labels:active .start-buttons-labels:checked {
+.start-buttons-labels:hover, .start-buttons-labels:active, .start-buttons-labels:checked {
 	padding-left: 12px;
 	padding-right: 12px;
 }
 
+/* Some Widgets */
 .color-picker {
 	border-radius: 0px;
 	border: 0px;
@@ -39,6 +40,30 @@
 	background-color: alpha(@theme_fg_color, 0.15);
 }
 
+.path_view {
+	margin-right: 6px;
+	margin-left: 1px;
+}
+
+.wall_containers:not(:backdrop) > border {
+	border: 2px solid alpha(@theme_base_color, 0.15);
+}
+
+.frame_labels {
+	font-weight: bold;
+}
+
+.wall_cycle_fr > border {
+	border-top: 1px solid @theme_bg_color;
+	border-left: 0px;
+	border-right: 0px;
+	border-bottom: 0px;
+
+}
+
+.wall_cycle_fr:not(:backdrop) > border {
+	border-top: 2px solid alpha(@theme_base_color, 0.15);
+}
 /*
  
 ==== Gtk 3 Color Legend ====
