@@ -18,38 +18,52 @@ class StartUp:
             Gtk.StyleContext.add_provider_for_screen(
                 Gdk.Screen.get_default(),
                 style_provider, # Fixed: matched the variable name above
-                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-            )
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         except Exception as e:
             print(f"!!! CSS LOAD ERROR: {e}")
-    
+   
+    # Use the config file to set the configs the dictionary
     def set_config_values(self):
         pass
 
 class RenderChoiceList:
-    renderer_text_no = ( 
-        Gtk.CellRendererText(),
-        Gtk.CellRendererText(),
-        Gtk.CellRendererText())
+    gtk_stored_list = []
+    renderer_text_no = []
 
+    def __init__(self, combo_box_ids):
+        for list_index in range(0,len(combo_box_ids)+1):
+            self.gtk_stored_list.append(Gtk.ListStore(GObject.TYPE_STRING))
+            self.renderer_text_no.append(Gtk.CellRendererText())
+
+    # Append choices to be stored later for packing
     def append_to_gtk(self, gtk_list, items):
         for item in items:
-            self.append([item])
+            gtk_list.append([item])
     
-    def pack_combo_items(self, stored_list, listed_choices, renderer_text_no):
+    # A function to pack all the choices from a list to a combo_box
+    def pack_combo_items(self, listed_choices, stored_list, renderer_text_no):
         listed_choices.set_model(stored_list) 
         listed_choices.pack_start(renderer_text_no, True)
         listed_choices.add_attribute(renderer_text_no, "text", 0)
         listed_choices.set_active(0)
     
-class WallpaperBackends(Gtk.ListStore, RenderChoiceList):
-    def __init__(self, setters):
-        super().__init__(GObject.TYPE_STRING)
-        backends=self.aquire_setters()
-        self.append_to_gtk(self, backends[0])
-        self.pack_combo_items(self, setters, self.renderer_text_no[0])
+class AquireListChoices(RenderChoiceList):
+    def __init__(self, combo_box_ids):
+        super().__init__(combo_box_ids)
+        wall_combo=self.wallpaper_config()
 
-    def aquire_setters(self):
+        # Append the config frame combo_box_ids from wallpaper tab
+        for i, wall_setter in enumerate(wall_combo):
+            self.append_to_gtk(self.gtk_stored_list[i], wall_setter)
+
+        # Pack or set the options in the combo_box_ids
+        for i,  that_combo_box in enumerate(combo_box_ids):
+            self.pack_combo_items(
+                combo_box_ids.get(that_combo_box), 
+                self.gtk_stored_list[i], 
+                self.renderer_text_no[i])
+
+    def wallpaper_config(self):
         if environ.get('WAYLAND_DISPLAY'):
             WALL_SETTERS_STATIC=(
                     'awww',
@@ -77,6 +91,8 @@ class WallpaperBackends(Gtk.ListStore, RenderChoiceList):
         else:
             backend = None
 
-        return (WALL_SETTERS_STATIC, WALL_SETTERS_ANIMATED)
-
-#class
+        return (
+                WALL_SETTERS_STATIC, 
+                WALL_SETTERS_ANIMATED,
+                # Wallpaper Modes to I lazy was to put it in a variable
+                ('full', 'fill', 'tile', 'center', 'crop')) 

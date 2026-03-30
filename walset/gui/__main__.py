@@ -12,6 +12,7 @@ class Main(Gtk.Builder):
     sub_builder = Gtk.Builder()
 
     def __init__(self):
+        combo_box_ids = {}
         Gtk.Builder.__init__(self)
         
         # Load the Main Shell (no more placeholders = no more crash!)
@@ -23,20 +24,19 @@ class Main(Gtk.Builder):
             self.plug_in_tab(f'{tab}.glade', f'{tab}_tab', f'{tab}_dock')
 
         # Get wallpaper tab info
-        wallpaper_tab_objects = {
-            "backends": self.sub_builder.get_object("wall_backs"),
-            "mode": self.sub_builder.get_object("wall_mode")
-        }
+        for tab_object in ('wall_backs', 'anim_backs', 'wall_mode'):
+            combo_box_ids.update({f'{tab_object}': self.sub_builder.get_object(tab_object)})
 
         # Initial setup
         setup.StartUp(Gtk.CssProvider(), pkg_resources)
-        setup.WallpaperBackends(wallpaper_tab_objects['backends'])
+        setup.AquireListChoices(combo_box_ids)
 
         # Show GUI and handle the loop when closing
         window.set_size_request(490, 250)
         window.show_all()
         window.connect("destroy", Gtk.main_quit)
 
+    # Pack or set the tabs in the main window 
     def plug_in_tab(self, file_name, root_id, dock_id):
         with pkg_resources.as_file(pkg_resources.files(gtk).joinpath(file_name)) as p:
             self.sub_builder.add_from_file(str(p))
