@@ -21,7 +21,9 @@ The [youtube video](https://www.youtube.com/watch?v=swEchSYP3_o) showcases realt
 </div>
 
 ## DEVELOPMENT
-A sneakpeek to what I have been doing for a few days. While I was learning the Gtk GUI toolkit, at the same time rewriting parts code the code to python. 
+
+A sneakpeek to what I have been doing for a few days. While I was learning the Gtk GUI toolkit, at the same time rewriting parts code the code to python. If you are curious you can check it [here](https://github.com/aKqir24/walset/tree/release-gui-dev), it is pretty much not done yet.
+
 <div align="center">
 	<img width="852" height="564" alt="gscreenshot_2026-03-31-034303" src="https://github.com/user-attachments/assets/927c07c0-7ca4-4009-9ee3-fd4560491ed0" />
 </div>
