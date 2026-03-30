@@ -2,19 +2,9 @@
 <!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <object class="GtkAdjustment" id="accent-color-adj">
-    <property name="upper">16</property>
-    <property name="value">2</property>
-    <property name="step-increment">1</property>
-    <property name="page-increment">2</property>
-    <property name="page-size">1</property>
-  </object>
   <object class="GtkFileFilter" id="wallpaper_filter">
-    <mime-types>
-      <mime-type>Image</mime-type>
-    </mime-types>
     <patterns>
-      <pattern>*.jpg</pattern>
+      <pattern>*</pattern>
     </patterns>
   </object>
   <object class="GtkBox" id="wallpaper_tab">
@@ -41,7 +31,7 @@
             <property name="margin-end">4</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkImage">
+              <object class="GtkImage" id="wallpaper-preview">
                 <property name="name">wallpaper-preview</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -73,14 +63,14 @@
                 <property name="orientation">vertical</property>
                 <property name="baseline-position">top</property>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkBox" id="get_wallpaper_path">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="margin-start">6</property>
                     <property name="margin-end">6</property>
                     <property name="baseline-position">top</property>
                     <child>
-                      <object class="GtkEntry">
+                      <object class="GtkEntry" id="wall_path_preview">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="editable">False</property>
@@ -97,14 +87,50 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkFileChooserButton">
+                      <object class="GtkButton" id="get_wallpath_bt">
                         <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="title" translatable="yes"/>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <signal name="clicked" handler="get_wallpaper_path" swapped="no"/>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="margin-start">4</property>
+                            <property name="margin-end">4</property>
+                            <property name="spacing">2</property>
+                            <property name="homogeneous">True</property>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="icon-name">document-open</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Open</property>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                        </child>
                       </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
+                        <property name="pack-type">end</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
@@ -117,7 +143,7 @@
                 </child>
                 <child>
                   <!-- n-columns=8 n-rows=2 -->
-                  <object class="GtkGrid">
+                  <object class="GtkGrid" id="aquired_color_grid">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="margin-start">6</property>
@@ -385,7 +411,7 @@
             <property name="spacing">8</property>
             <property name="baseline-position">top</property>
             <child>
-              <object class="GtkFrame">
+              <object class="GtkFrame" id="option-frame">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="is-focus">True</property>
@@ -538,14 +564,14 @@
               </packing>
             </child>
             <child>
-              <object class="GtkFrame">
+              <object class="GtkFrame" id="config-frame">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label-xalign">0.11999999731779099</property>
                 <property name="shadow-type">in</property>
                 <child>
                   <!-- n-columns=3 n-rows=3 -->
-                  <object class="GtkGrid">
+                  <object class="GtkGrid" id="config_container">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="margin-start">6</property>
@@ -581,7 +607,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkComboBox" id="animated_backs">
+                      <object class="GtkComboBox" id="anim_backs">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="has-default">True</property>
@@ -632,7 +658,7 @@ Wallpaper:</property>
                   </object>
                 </child>
                 <child type="label">
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="config_label">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes"> Configuration </property>
@@ -653,7 +679,7 @@ Wallpaper:</property>
               </packing>
             </child>
             <child>
-              <object class="GtkFrame">
+              <object class="GtkFrame" id="source-frame">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label-xalign">0.11999999731779099</property>

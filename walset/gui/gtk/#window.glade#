@@ -127,6 +127,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
+                <property name="action-name">path_dialog.run()path_dialog.run()</property>
                 <child>
                   <object class="GtkBox">
                     <property name="visible">True</property>
