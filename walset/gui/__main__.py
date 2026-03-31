@@ -13,7 +13,6 @@ class Main(Gtk.Builder):
     sub_builder = Gtk.Builder()
 
     def __init__(self):
-        combo_box_ids = {}
         Gtk.Builder.__init__(self)
         
         # Load the Main Shell (no more placeholders = no more crash!)
@@ -27,13 +26,9 @@ class Main(Gtk.Builder):
         for tab in ('wallpaper', 'pywal', 'templates'):
             self.plug_in_tab(f'{tab}.glade', f'{tab}_tab', f'{tab}_dock')
 
-        # Get combo_box wallpaper tab info
-        for tab_object in ('wall_backs', 'anim_backs', 'wall_mode'):
-            combo_box_ids.update({f'{tab_object}': self.sub_builder.get_object(tab_object)})
-
         # Initial setup
         setup.StartUp(Gtk.CssProvider(), pkg_resources)
-        setup.AquireListChoices(combo_box_ids)
+        setup.AquireListChoices(self.sub_builder)
 
         # Handle button's actions
         Signals(self, self.sub_builder, path_dialog) 

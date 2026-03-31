@@ -26,7 +26,7 @@ class StartUp:
     def set_config_values(self):
         pass
 
-class RenderChoiceList:
+class RenderChoiceComboBox:
     gtk_stored_list = []
     renderer_text_no = []
 
@@ -48,8 +48,13 @@ class RenderChoiceList:
         listed_choices.set_active(0)
     
 class AquireListChoices(RenderChoiceList):
-    def __init__(self, combo_box_ids):
-        super().__init__(combo_box_ids)
+    combo_box_ids = {}
+    
+    def __init__(self, sub_builder):
+		# Get combo_box wallpaper tab info
+        for tab_object in ('wall_backs', 'anim_backs', 'wall_mode'):
+            self.combo_box_ids.update({f'{tab_object}': sub_builder.get_object(tab_object)})
+        super().__init__(self.combo_box_ids)
         wall_combo=self.wallpaper_config()
 
         # Append the config frame combo_box_ids from wallpaper tab
