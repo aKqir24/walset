@@ -47,7 +47,7 @@ class RenderChoiceComboBox:
         listed_choices.add_attribute(renderer_text_no, "text", 0)
         listed_choices.set_active(0)
     
-class AquireListChoices(RenderChoiceList):
+class AquireListChoices(RenderChoiceComboBox):
     combo_box_ids = {}
     
     def __init__(self, sub_builder):
@@ -62,9 +62,9 @@ class AquireListChoices(RenderChoiceList):
             self.append_to_gtk(self.gtk_stored_list[i], wall_setter)
 
         # Pack or set the options in the combo_box_ids
-        for i,  that_combo_box in enumerate(combo_box_ids):
+        for i,  that_combo_box in enumerate(self.combo_box_ids):
             self.pack_combo_items(
-                combo_box_ids.get(that_combo_box), 
+                self.combo_box_ids.get(that_combo_box), 
                 self.gtk_stored_list[i], 
                 self.renderer_text_no[i])
 

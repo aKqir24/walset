@@ -45,7 +45,8 @@
 	margin-left: 1px;
 }
 
-.wall_containers:not(:backdrop) > border {
+.wall_containers:not(:backdrop) > border,
+.pywal_containers:not(:backdrop) > border {
 	border: 2px solid alpha(@theme_base_color, 0.15);
 }
 
@@ -53,7 +54,12 @@
 	font-weight: bold;
 }
 
-.wall_cycle_fr > border {
+.pywal_op_wrapper {
+	margin: 6px;
+}
+
+.wall_cycle_fr > border,
+.pywal_config_last_fr > border {
 	border-top: 1px solid @theme_bg_color;
 	border-left: 0px;
 	border-right: 0px;
@@ -61,7 +67,8 @@
 
 }
 
-.wall_cycle_fr:not(:backdrop) > border {
+.wall_cycle_fr:not(:backdrop) > border,
+.pywal_config_last_fr:not(:backdrop) > border {
 	border-top: 2px solid alpha(@theme_base_color, 0.15);
 }
 /*
