@@ -2,8 +2,22 @@ import gi
 from os import environ
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GObject, Gdk
+import importlib.resources as pkg_resources
 
 from .handler import Signals
+from . import components
+from . import tabs
+
+get_resource = lambda ui_file:pkg_resources.as_file(pkg_resources.files(gtk).joinpath(str(ui_file)))
+
+class GtkBuilders:
+    main_builder = Gtk.Builder()
+    sub_builder = Gtk.Builder()
+
+class PackTabWidgets:
+    def __init__(self, builders):
+        pass
+    # Wallpaper tab
 
 class RenderChoiceComboBox:
     def __init__(self, combo_box_ids=None, **kwargs):
@@ -30,24 +44,22 @@ class RenderChoiceComboBox:
             listed_choices.add_attribute(renderer_text_no, "text", 0)
             listed_choices.set_active(0)
 
-class AquireListChoices(RenderChoiceComboBox):
-    def __init__(self, main_builder, sub_builder):
-
+class AquireListChoices(RenderChoiceComboBox, GtkBuilders):
+    def __init__(self):
         self.combo_box_ids = {}
-        for tab_object in ('wall_backs', 'anim_backs', 'wall_mode'):
-            obj = sub_builder.get_object(tab_object)
+        for tab_object in ('wall_backs', 'anim_backs', 'wall_mode', 'color_backs'):
+            obj = self.sub_builder.get_object(tab_object)
             self.combo_box_ids[tab_object] = obj
         super().__init__(self.combo_box_ids)
 
-
-        wall_combo = self.wallpaper_config()
-        combos = list(self.combo_box_ids.values())
+        combo_values = (self.wallpaper_config(), self.color_backs())
+        all_combos = list(self.combo_box_ids.values())
         
-        for i, wall_setter in enumerate(wall_combo):
+        for i, wall_setter in enumerate(combo_values):
             if i < len(self.gtk_stored_list):
                 self.append_to_gtk(self.gtk_stored_list[i], wall_setter)
                 self.pack_combo_items(
-                    combos[i], 
+                    all_combo_box[i], 
                     self.gtk_stored_list[i], 
                     self.renderer_text_no[i])
 
@@ -64,14 +76,17 @@ class AquireListChoices(RenderChoiceComboBox):
         return ( WALL_SETTERS_STATIC, 
                  WALL_SETTERS_ANIMATED, 
                  ('Full', 'Fill', 'Tile', 'Center', 'Crop')) # Wallpaper Modes I lazy was to put it in a variable
+    
+    def colors_backends():
+        pass
 
 class StartUp:
-    def __init__(self, builders, style_provider, pkg_resources, gui_elements):
+    def __init__(self, style_provider, pkg_resources, gui_elements):
         self.pkg_resources = pkg_resources
         self.load_custom_css(style_provider)
         self.set_config_values()
-        AquireListChoices(builders[0], builders[1])
-        Signals(builders, gui_elements)
+        AquireListChoices()
+        Signals(gui_elements)
 
     def load_custom_css(self, style_provider):
         try:

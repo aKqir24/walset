@@ -7,9 +7,8 @@ from ..config import config
 
 class Signals:
     def __init__(self, builders, elements):
-        self.main_builder = builders[0]
-        self.sub_builder = builders[1]
-        
+        self.builders = builders
+
         # Gather all the signal funtions in to a dictionary for easy access
         main_handlers = { 
             "quit_main_app": Gtk.main_quit,
@@ -20,8 +19,8 @@ class Signals:
         }
         
         # Connect both builders to THIS class instance
-        self.main_builder.connect_signals(main_handlers)
-        self.sub_builder.connect_signals(sub_handlers)
+        builders.main_builder.connect_signals(main_handlers)
+        builders.sub_builder.connect_signals(sub_handlers)
         
         # Assign a classes for each UI element
         self.change_wallpaper = change.WallpaperTab
@@ -29,7 +28,7 @@ class Signals:
     # WallpaperTab 
     def get_wallpaper_path(self, path_dialog):
         if path_dialog.run() == Gtk.ResponseType.ACCEPT:
-            file_path=self.sub_builder.get_object("wallpaper_path_chosen").get_filename()
+            file_path=self.builders.sub_builder.get_object("wallpaper_path_chosen").get_filename()
             self.change_wallpaper.wallpaper_path_label(self, file_path)
             config['Wallpaper'].update({"path": file_path})
         path_dialog.hide()
